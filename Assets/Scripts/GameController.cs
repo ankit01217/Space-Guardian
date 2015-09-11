@@ -18,6 +18,8 @@ public class GameController : MonoBehaviour {
 	void Start () {
 		shipAnimator = ship.gameObject.GetComponent<Animator>();
 		audioSource = GetComponent<AudioSource> ();
+
+
 	}
 	
 	// Update is called once per frame
@@ -36,7 +38,7 @@ public class GameController : MonoBehaviour {
 		}
 
 		float dist = currCoord - zCoords.ElementAt (0);
-		Debug.Log ("curr = " + currCoord + ", dist = " + dist);
+		//Debug.Log ("curr = " + currCoord + ", dist = " + dist);
 		if (dist > minDist) {
 			Debug.Log("THROWN!!!");
 			PlayAnimation();
@@ -44,7 +46,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	void PlayAnimation () {
-		Debug.Log("on click");
+		//Debug.Log("on click");
 		shipAnimator.SetTrigger("move");
 		Invoke("playsound",0.2f);
 
