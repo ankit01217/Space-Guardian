@@ -67,11 +67,11 @@ public class AsteroidHandController : MonoBehaviour {
 
 	void OnTriggerEnter (Collider other) {
 		// pick up if it's an asteroid that hasn't been thrown
-		if (other.tag == "Asteroid" && !other.GetComponent<AsteroidController>().thrown) {
+		if (other.tag == "Asteroid" && !other.GetComponent<Asteroid>().thrown) {
 			asteroid = other.gameObject;
 			other.transform.position = transform.position;	// snap asteroid to center of hand
 			pickedUp = true;
-			other.GetComponent<AsteroidController>().thrown = true;
+			other.GetComponent<Asteroid>().thrown = true;
 
 			Debug.Log ("Picked up " + other.gameObject);
 		}
@@ -80,8 +80,12 @@ public class AsteroidHandController : MonoBehaviour {
 	// Only throw if there is an asteroid in hand
 	void AttemptThrow () {
 		if (asteroid) {
-			asteroid.GetComponent<Rigidbody> ().velocity = 
-				crosshair.transform.position - transform.position;
+			// We only want the direction along the x-y plane
+			asteroid.GetComponent<Rigidbody> ().velocity = new Vector3(
+				crosshair.transform.position.x - transform.position.x,
+				crosshair.transform.position.y - transform.position.y,
+				0);
+
 			pickedUp = false;
 			asteroid = null;
 

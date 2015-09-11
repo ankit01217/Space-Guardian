@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{37993F3E-1D3E-2A0C-3272-0D18603EAA47}</ProjectGuid>
+	<ProjectGuid>{BE395DEC-46AF-F719-AB8E-986237EA1E6F}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -46,11 +46,12 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\AsteroidController.cs" />
+     <Compile Include="Assets\Scripts\Asteroid.cs" />
      <Compile Include="Assets\Scripts\AsteroidHandController.cs" />
      <Compile Include="Assets\Scripts\CrosshairController.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
-     <Compile Include="Assets\Scripts\GoldSpikeGameController.cs" />
+     <Compile Include="Assets\Scripts\GoldSpike\GameController.cs" />
+     <Compile Include="Assets\Scripts\GoldSpike\Meteor.cs" />
      <Compile Include="Assets\Scripts\Kinect\KinectImgControllers\DisplayColor.cs" />
      <Compile Include="Assets\Scripts\Kinect\KinectImgControllers\DisplayDepth.cs" />
      <Compile Include="Assets\Scripts\Kinect\KinectModelControllers\KinectModelControllerV2.cs" />
@@ -62,8 +63,9 @@
      <Compile Include="Assets\Scripts\Kinect\KinectWrapper\KinectRecorder.cs" />
      <Compile Include="Assets\Scripts\Kinect\KinectWrapper\KinectSensor.cs" />
      <Compile Include="Assets\Scripts\Kinect\KinectWrapper\SkeletonWrapper.cs" />
-     <Compile Include="Assets\Scripts\Meteor.cs" />
-     <None Include="Assets\Asset\Shaders\Normal-Diffuse.shader" />
+     <Compile Include="Assets\Scripts\Ship.cs" />
+     <Compile Include="Assets\Scripts\SpaceshipController.cs" />
+     <None Include="Assets\Kinect Assets\Shaders\Normal-Diffuse.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
