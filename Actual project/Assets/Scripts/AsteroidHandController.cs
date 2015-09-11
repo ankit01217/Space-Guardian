@@ -47,21 +47,15 @@ public class AsteroidHandController : MonoBehaviour {
 		zCoords.AddLast (currCoord);
 		if (zCoords.Count > interval) {
 			zCoords.RemoveFirst();
-		}		
-		float dist = currCoord - zCoords.ElementAt (0);
-
-		if (asteroid) {
-			Debug.Log (asteroid);
 		}
 
-		// TODO: WHY DOES THIS GET CALLED WHEN ASTEROID IS NULL?!!
-		// throw only if action is big enough, player is not already throwing, and asteroid is in hand
-		if (dist > minDist && !throwing && asteroid) {
-			Debug.Log(asteroid);
-			Debug.Log("Throwing!!!");
+		float dist = currCoord - zCoords.ElementAt (0);
+
+		if (dist > minDist && !throwing) {
+			Debug.Log("Throw action detected");
 
 			throwing = true;			
-			ThrowAsteroid();
+			AttemptThrow();
 			Invoke("ResetCooldown", cooldown);
 		}
 	}
@@ -72,21 +66,26 @@ public class AsteroidHandController : MonoBehaviour {
 
 
 	void OnTriggerEnter (Collider other) {
-		Debug.Log (other.gameObject);
-
-		// pick up asteroid
-		if (other.tag == "Asteroid") {
+		// pick up if it's an asteroid that hasn't been thrown
+		if (other.tag == "Asteroid" && !other.GetComponent<AsteroidController>().thrown) {
 			asteroid = other.gameObject;
 			other.transform.position = transform.position;	// snap asteroid to center of hand
 			pickedUp = true;
+			other.GetComponent<AsteroidController>().thrown = true;
+
+			Debug.Log ("Picked up " + other.gameObject);
 		}
 	}
 
-	void ThrowAsteroid () {
-		Debug.Log (crosshair.transform.position);
-		asteroid.GetComponent<Rigidbody> ().velocity = crosshair.transform.position - transform.position;
+	// Only throw if there is an asteroid in hand
+	void AttemptThrow () {
+		if (asteroid) {
+			asteroid.GetComponent<Rigidbody> ().velocity = 
+				crosshair.transform.position - transform.position;
+			pickedUp = false;
+			asteroid = null;
 
-		throwing = false;
-		asteroid = null;
+			Debug.Log("Throw successful");
+		}
 	}
 }
