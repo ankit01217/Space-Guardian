@@ -14,4 +14,17 @@ public class AsteroidController : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	void OnCollisionEnter(Collision collision) {
+		if (collision.gameObject.tag == "Spaceship") {
+			Debug.Log("Spaceship hit!");
+
+			// Play animation
+
+
+			// Destroy asteroid
+			// TODO: remember to remove reference from data structure of asteroids if needed
+			Destroy(gameObject);
+		}
+	}
 }
