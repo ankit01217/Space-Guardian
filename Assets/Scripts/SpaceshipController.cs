@@ -11,8 +11,7 @@ public class SpaceshipController : MonoBehaviour {
 	public int round2Ship = 5;
 	public int round3Ship = 8;
 
-
-	private int curActiveShipCount = 0;
+	public int curActiveShipCount = 0;
 	public int maxActiveShipCount = 10;
 
 	public static int totShipsDestroyed = 0;
@@ -35,6 +34,10 @@ public class SpaceshipController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+	}
+
+	public void onShipDestroyed(){
+		curActiveShipCount = Mathf.Clamp (curActiveShipCount - 1, 0, maxActiveShipCount);
 	
 	}
 
