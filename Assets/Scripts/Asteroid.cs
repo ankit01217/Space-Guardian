@@ -59,6 +59,7 @@ public class Asteroid : MonoBehaviour {
 		} else if (thrown && other.gameObject.tag == "Spaceship") {
 			Debug.Log("Spaceship hit!");
 
+			other.SendMessage("hitSpaceShip", dmgPoints);
 			//dmgPoints--;
 
 			// Play animation/change state
@@ -78,8 +79,7 @@ public class Asteroid : MonoBehaviour {
 
 	//TODO: NOT DESTROYING PROPERLY!
 	void OnBecameInvisible () {
-		Invoke ("DestroyAsteroid", timeToWait);		// destroy asteroid if it's out of screen for more than 3s
-		Debug.Log ("getting ready to destroy");
+		//Invoke ("DestroyAsteroid", timeToWait);		// destroy asteroid if it's out of screen for more than 3s
 	}
 
 	void OnBecameVisible () {
