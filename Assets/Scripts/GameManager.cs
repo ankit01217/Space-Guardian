@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		DisablePointManCollider ();
 	}
 	
 	// Update is called once per frame
@@ -24,6 +24,12 @@ public class GameManager : MonoBehaviour {
 			point.GetComponent<Renderer>() .enabled = !visible;
 		}
 
+	}
+
+	void DisablePointManCollider () {
+		foreach (Transform point in pointMan.transform) {
+			point.GetComponent<Collider>() .enabled = false;
+		}
 	}
 
 }
