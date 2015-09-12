@@ -13,6 +13,7 @@ public class Ship : MonoBehaviour {
 	public static string FAST = "fasr";
 	public static string SHIELDED = "shielded";
 	public static string ATTACKER = "attacker";
+	SpaceshipController spaceshipGenerator;
 
 	private GameObject[] aliens;
 	private Vector3 targetPosition;
@@ -117,12 +118,17 @@ public class Ship : MonoBehaviour {
 	}
 	void hitPlenet(){
 		Debug.Log ("hit plenet");
+
+		spaceshipGenerator.onShipDestroyed ();
 		Destroy (this.gameObject);
+
+
 	}
 
 	void hitAlien(GameObject alien){
 		Debug.Log("hit alien");
-
+		spaceshipGenerator.onShipDestroyed ();
+		Destroy (this.gameObject);
 		Alien alienSc = alien.GetComponent<Alien> ();
 		alienSc.die ();
 	
@@ -132,8 +138,9 @@ public class Ship : MonoBehaviour {
 	
 	void Start () {
 
-		aliens = (GameObject[])GameObject.FindGameObjectsWithTag("Alien");
+		spaceshipGenerator = GameObject.FindObjectOfType<SpaceshipController> ();
 
+		aliens = (GameObject[])GameObject.FindGameObjectsWithTag("Alien");
 		transform.rotation = Quaternion.identity;
 		planet = GameObject.FindGameObjectWithTag("Planet");
 		Random.seed = (int)System.DateTime.Now.Ticks;
@@ -146,9 +153,8 @@ public class Ship : MonoBehaviour {
 		functioningSpaceShip ();
 
 
-
-
 	}
+
 	void OnTriggerEnter(Collider other){
 		if (other.GetComponent<Collider>().tag == "Asteroid") {
 			hitSpaceShip();

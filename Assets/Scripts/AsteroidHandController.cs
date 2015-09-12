@@ -7,8 +7,8 @@ public class AsteroidHandController : MonoBehaviour {
 
 	public GameObject rightHand;
 	public GameObject crosshair;
-	public int interval = 10;
-	public float minDist = 0.7f;
+	public int interval = 8;
+	public float minDist = 0.5f;
 	public float maxThrowStrength = 25f;
 	public float minThrowStrength = 15f;
 	public bool handIsEmpty = true;
