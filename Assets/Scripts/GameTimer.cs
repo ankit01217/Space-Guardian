@@ -5,9 +5,12 @@ public class GameTimer : MonoBehaviour {
 
 	Slider gameTimer;
 	public float timerSpeed = 0.01f;
+	bool isTimerAudioEnabled = false;
+	AudioSource audioSource;
 	// Use this for initialization
 	void Start () {
 	
+		audioSource = GetComponent<AudioSource> ();
 		gameTimer = GetComponent<Slider> ();
 		gameTimer.value = 1;
 	
@@ -18,6 +21,13 @@ public class GameTimer : MonoBehaviour {
 	void updateTimer(){
 
 		gameTimer.value = Mathf.Clamp (gameTimer.value - Time.deltaTime * timerSpeed, 0, 1);
+
+		if (gameTimer.value < 0.2 && isTimerAudioEnabled == false) {
+			isTimerAudioEnabled = true;
+			//play timer audio
+			//audioSource.Play();
+		}
+
 		if(gameTimer.value == 0)
 		{
 			Debug.Log("Game Over");
@@ -25,6 +35,8 @@ public class GameTimer : MonoBehaviour {
 
 		}
 	}
+
+
 
 	// Update is called once per frame
 	void Update () {

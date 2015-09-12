@@ -23,7 +23,6 @@ public class Alien : MonoBehaviour {
 	}
 
 	public void die(){
-
 		animator.SetTrigger("Die");
 		//Invoke("removeAlien", 3);
 
