@@ -20,8 +20,14 @@ public class Asteroid : MonoBehaviour {
 	public void SetParams (int dmg, Vector3 velocity) {
 		dmgPoints = dmg;
 		gameObject.GetComponent<Rigidbody> ().velocity = velocity;
-		Debug.Log (dmg);
-		// Set model based on start dmg points and destruction animation duration
+
+		// activate respective model based on start dmg points
+		transform.GetChild (dmgPoints).gameObject.SetActive (true);
+		if (dmgPoints == 2) {
+			GetComponent<CapsuleCollider> ().radius = 1f;
+		}
+
+		// TODO: set animDuration
 
 	}
 	
