@@ -7,6 +7,7 @@ public class Asteroid : MonoBehaviour {
 	public bool thrown = false;
 	public bool grabable = true;
 	public GameObject explosion;
+	public bool isVisible = false;
 
 	int dmgPoints = 2;	// how much damage the asteroid does
 	GameObject generator;
@@ -59,7 +60,7 @@ public class Asteroid : MonoBehaviour {
 		} else if (thrown && other.gameObject.tag == "Spaceship") {
 			Debug.Log("Spaceship hit!");
 
-			other.SendMessage("hitSpaceShip", dmgPoints);
+			other.gameObject.SendMessage("hitSpaceShip", dmgPoints);
 			//dmgPoints--;
 
 			// Play animation/change state
@@ -79,10 +80,12 @@ public class Asteroid : MonoBehaviour {
 
 	//TODO: NOT DESTROYING PROPERLY!
 	void OnBecameInvisible () {
-		//Invoke ("DestroyAsteroid", timeToWait);		// destroy asteroid if it's out of screen for more than 3s
+		isVisible = false;
+		Invoke ("DestroyAsteroid", timeToWait);		// destroy asteroid if it's out of screen for more than 3s
 	}
 
 	void OnBecameVisible () {
+		isVisible = true;
 		//CancelInvoke ();
 	}
 

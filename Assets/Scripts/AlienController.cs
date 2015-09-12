@@ -10,11 +10,9 @@ public class AlienController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		audioSource = GetComponent<AudioSource> ();
-
-		InvokeRepeating ("killRandomAlien", 1, 1);
 	}
 
-	void killRandomAlien(){
+	public void killRandomAlien(){
 		aliens = (GameObject[])GameObject.FindGameObjectsWithTag ("Alien");
 		if (aliens != null && aliens.Length > 0) {
 			GameObject alien = aliens [Random.Range (0, aliens.Length)];

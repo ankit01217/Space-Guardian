@@ -17,6 +17,8 @@ public class Ship : MonoBehaviour {
 	private GameObject[] aliens;
 	private Renderer rend;
 	private Vector3 targetPosition;
+	private AlienController alienController;
+	
 
 	bool inScreen(Vector3 pos){
 		//Debug.Log (pos);
@@ -152,42 +154,40 @@ public class Ship : MonoBehaviour {
 
 	}
 	
-	void hitSpaceShip(){
-		///////
+	void hitSpaceShip(int damage){
+		spaceShipLife -= damage;
 		if (spaceShipLife <= 0) {
-			
+			Destroy(gameObject);
 		}
 	}
 	void hitPlenet(){
 		Debug.Log ("hit plenet");
-
+		alienController.killRandomAlien();
 		Destroy (this.gameObject);
+
 	}
 
 	void hitAlien(GameObject alien){
 		Debug.Log("hit alien");
 
-		Alien alienSc = alien.GetComponent<Alien> ();
-		alienSc.die ();
-	
-
 	}
 	// Use this for initialization
 	
 	void Start () {
-		rend = GetComponent<Renderer> ();
+		rend = GetComponentInChildren<Renderer> ();
 		aliens = (GameObject[])GameObject.FindGameObjectsWithTag("Alien");
+		alienController = GameObject.FindObjectOfType<AlienController>();
 
 		//transform.rotation = Quaternion.identity;
 		planet = GameObject.FindGameObjectWithTag("Planet");
 		Random.seed = (int)System.DateTime.Now.Ticks;
 		setUpSpaceShip();
+		functioningSpaceShip ();
 
 	}
 	
 	void Update () {
 		moveSpaceShip ();
-		functioningSpaceShip ();
 		if (rend.isVisible == false && spaceShipType == "attacker") {
 			gameObject.transform.Rotate(new Vector3(180,0,0));
 		}
@@ -198,7 +198,7 @@ public class Ship : MonoBehaviour {
 	}
 	void OnTriggerEnter(Collider other){
 		if (other.GetComponent<Collider>().tag == "Asteroid") {
-			hitSpaceShip();
+		
 		}else if (other.gameObject.tag == "Alien") {
 			hitAlien(other.gameObject);
 		}else if (other.gameObject.tag == "Planet") {
