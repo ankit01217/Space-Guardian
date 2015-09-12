@@ -15,6 +15,7 @@ public class Ship : MonoBehaviour {
 	public static string ATTACKER = "attacker";
 
 	private GameObject[] aliens;
+	private Renderer rend;
 	private Vector3 targetPosition;
 
 	bool inScreen(Vector3 pos){
@@ -37,6 +38,7 @@ public class Ship : MonoBehaviour {
 		//Vector3 dir =  targetPosition - transform.position;
 		//gameObject.transform.Translate(dir * Time.deltaTime, Space.World);
 		gameObject.transform.Translate (Vector3.forward * spaceShipSpeed * 0.05f);
+
 		/*
 		Vector3 newpoas = new Vector3 ();
 		newpoas.x = Mathf.Lerp (transform.position.x, targetPosition.x, spaceShipSpeed * Time.deltaTime);
@@ -74,23 +76,25 @@ public class Ship : MonoBehaviour {
 		Vector2 dir=Random.insideUnitCircle;
 		//float distance=Random.Range(0,1);
 		//dir=dir*distance;
-		Vector3 temppos=gameObject.transform.position+new Vector3(dir.x,dir.y,0);
+		gameObject.transform.Rotate (new Vector3 (Random.Range(0,360), 0, 0));
+		//Vector3.savepos = gameObject.transform.position;
+
+		//gameObject.transform.Translate (Vector3.forward * spaceShipSpeed * 6f);
+
+
+		/*Vector3 temppos=gameObject.transform.position+new Vector3(dir.x,dir.y,0);
 		if(inScreen(temppos)){
-			Debug.Log (ATTACKER);
+			//Debug.Log (ATTACKER);
 			gameObject.transform.LookAt (temppos);
 			//gameObject.transform.position=temppos;
 		}else{
 			gameObject.transform.LookAt (targetPosition);
 			//gameObject.transform.Translate (Vector3.forward * spaceShipSpeed * 0.05f);
-		}
+		}*/
 	}
 	void fixPosition(){
 		//gameObject model = gameObject.GetComponent<SpaceshipModel> ();
-		Transform[] allChildren = GetComponentsInChildren<Transform>();
-		foreach (Transform child in allChildren) {
-			child.Rotate(new Vector3(0,0,180));
-			// do whatever with child transform here
-		}
+		gameObject.transform.Rotate (new Vector3 (0, 0, 180));
 
 	}
 	void pointAtPlenet(){
@@ -156,6 +160,7 @@ public class Ship : MonoBehaviour {
 	}
 	void hitPlenet(){
 		Debug.Log ("hit plenet");
+
 		Destroy (this.gameObject);
 	}
 
@@ -170,7 +175,7 @@ public class Ship : MonoBehaviour {
 	// Use this for initialization
 	
 	void Start () {
-
+		rend = GetComponent<Renderer> ();
 		aliens = (GameObject[])GameObject.FindGameObjectsWithTag("Alien");
 
 		//transform.rotation = Quaternion.identity;
@@ -183,6 +188,9 @@ public class Ship : MonoBehaviour {
 	void Update () {
 		moveSpaceShip ();
 		functioningSpaceShip ();
+		if (rend.isVisible == false && spaceShipType == "attacker") {
+			gameObject.transform.Rotate(new Vector3(180,0,0));
+		}
 
 
 
