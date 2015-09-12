@@ -46,10 +46,12 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Alien.cs" />
      <Compile Include="Assets\Scripts\Asteroid.cs" />
      <Compile Include="Assets\Scripts\AsteroidHandController.cs" />
      <Compile Include="Assets\Scripts\CrosshairController.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\GameTimer.cs" />
      <Compile Include="Assets\Scripts\GoldSpike\GameController.cs" />
      <Compile Include="Assets\Scripts\GoldSpike\Meteor.cs" />
      <Compile Include="Assets\Scripts\Kinect\KinectImgControllers\DisplayColor.cs" />
