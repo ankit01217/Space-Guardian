@@ -9,6 +9,7 @@ public class Alien : MonoBehaviour {
 		animator = GetComponent<Animator> ();
 		Invoke("sartAlienAnimation", Random.Range(0,3));
 
+
 	}
 
 	void Start () {
