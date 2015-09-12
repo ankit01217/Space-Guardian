@@ -13,7 +13,6 @@ public class Ship : MonoBehaviour {
 	public static string FAST = "fasr";
 	public static string SHIELDED = "shielded";
 	public static string ATTACKER = "attacker";
-	SpaceshipController spaceshipGenerator;
 
 	private GameObject[] aliens;
 	private Vector3 targetPosition;
@@ -32,12 +31,12 @@ public class Ship : MonoBehaviour {
 		
 		//gameObject.transform.Translate (-Vector3.up * spaceShipSpeed * 0.05f);
 
-		GameObject randAlien = aliens [Random.Range (0, aliens.Length)];
-		targetPosition = randAlien.transform.position;
+		//GameObject randAlien = aliens [Random.Range (0, aliens.Length)];
+		//targetPosition = randAlien.transform.position;
 
-		Vector3 dir =  targetPosition - transform.position;
-		gameObject.transform.Translate(dir * Time.deltaTime, Space.World);
-
+		//Vector3 dir =  targetPosition - transform.position;
+		//gameObject.transform.Translate(dir * Time.deltaTime, Space.World);
+		gameObject.transform.Translate (Vector3.forward * spaceShipSpeed * 0.05f);
 		/*
 		Vector3 newpoas = new Vector3 ();
 		newpoas.x = Mathf.Lerp (transform.position.x, targetPosition.x, spaceShipSpeed * Time.deltaTime);
@@ -85,12 +84,28 @@ public class Ship : MonoBehaviour {
 			//gameObject.transform.Translate (Vector3.forward * spaceShipSpeed * 0.05f);
 		}
 	}
+	void fixPosition(){
+		//gameObject model = gameObject.GetComponent<SpaceshipModel> ();
+		Transform[] allChildren = GetComponentsInChildren<Transform>();
+		foreach (Transform child in allChildren) {
+			child.Rotate(new Vector3(0,0,180));
+			// do whatever with child transform here
+		}
+
+	}
+	void pointAtPlenet(){
+		gameObject.transform.LookAt (planet.transform.position);
+		if (gameObject.transform.position.x < 0) {
+			fixPosition();
+		}
+
+	}
 	void setUpSpaceShip(){
 
 		//gameObject.transform.LookAt (planet.transform.position);
 		//gameObject.transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
 		//gameObject.transform.RotateAround (Vector3.forward, 20*);
-
+/*
 		if (transform.position.x < -12) {
 			transform.Rotate( new Vector3(0,0,1),35);
 
@@ -106,29 +121,47 @@ public class Ship : MonoBehaviour {
 			transform.Rotate( new Vector3(0,0,1),-20);
 			
 		}
+*/
+		pointAtPlenet ();
 
+
+
+		switch (spaceShipType) {
+		case "normal":
+			spaceShipLife=2;
+			spaceShipSpeed=1;
+			break;
+		case "attacker":
+			spaceShipLife=1;
+			spaceShipSpeed=0.5f;
+			//InvokeRepeating("randomDirection",3f,2f);
+			break;
+		case "shielded":
+			spaceShipLife=3;
+			spaceShipSpeed=1;
+			break;
+		case "fast":
+			spaceShipLife=1;
+			spaceShipSpeed=2;
+			break;
+		}
 
 	}
 	
 	void hitSpaceShip(){
 		///////
-		if (spaceShipLife == 0) {
+		if (spaceShipLife <= 0) {
 			
 		}
 	}
 	void hitPlenet(){
 		Debug.Log ("hit plenet");
-
-		spaceshipGenerator.onShipDestroyed ();
 		Destroy (this.gameObject);
-
-
 	}
 
 	void hitAlien(GameObject alien){
 		Debug.Log("hit alien");
-		spaceshipGenerator.onShipDestroyed ();
-		Destroy (this.gameObject);
+
 		Alien alienSc = alien.GetComponent<Alien> ();
 		alienSc.die ();
 	
@@ -138,10 +171,9 @@ public class Ship : MonoBehaviour {
 	
 	void Start () {
 
-		spaceshipGenerator = GameObject.FindObjectOfType<SpaceshipController> ();
-
 		aliens = (GameObject[])GameObject.FindGameObjectsWithTag("Alien");
-		transform.rotation = Quaternion.identity;
+
+		//transform.rotation = Quaternion.identity;
 		planet = GameObject.FindGameObjectWithTag("Planet");
 		Random.seed = (int)System.DateTime.Now.Ticks;
 		setUpSpaceShip();
@@ -153,15 +185,15 @@ public class Ship : MonoBehaviour {
 		functioningSpaceShip ();
 
 
-	}
 
+
+	}
 	void OnTriggerEnter(Collider other){
 		if (other.GetComponent<Collider>().tag == "Asteroid") {
 			hitSpaceShip();
 		}else if (other.gameObject.tag == "Alien") {
 			hitAlien(other.gameObject);
-		}
-		else if (other.gameObject.tag == "Planet") {
+		}else if (other.gameObject.tag == "Planet") {
 			hitPlenet();
 		}
 	}
