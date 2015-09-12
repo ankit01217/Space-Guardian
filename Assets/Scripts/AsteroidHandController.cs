@@ -9,12 +9,14 @@ public class AsteroidHandController : MonoBehaviour {
 	public GameObject crosshair;
 	public int interval = 10;
 	public float minDist = 0.7f;
+	public float maxThrowStrength = 25f;
+	public float minThrowStrength = 15f;
+	public bool handIsEmpty = true;
 	
 	LinkedList<float> zCoords = new LinkedList<float>();
 	float cooldown = 1f;
 	GameObject asteroid;
 	bool throwing = false;
-	bool pickedUp = false;
 
 	// Use this for initialization
 	void Start () {
@@ -24,7 +26,7 @@ public class AsteroidHandController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// Only link it if player hasn't picked up an asteroid
-		if (!pickedUp) {
+		if (handIsEmpty) {
 			LinkHandToDetector ();
 		}
 	}
@@ -66,12 +68,12 @@ public class AsteroidHandController : MonoBehaviour {
 
 
 	void OnTriggerEnter (Collider other) {
-		// pick up if it's an asteroid that hasn't been thrown
-		if (other.tag == "Asteroid" && !other.GetComponent<Asteroid>().thrown) {
+		if (handIsEmpty && other.tag == "Asteroid" && other.GetComponent<Asteroid>().grabable) {
 			asteroid = other.gameObject;
+			other.GetComponent<Asteroid>().pickedUp = true;
+			other.GetComponent<Rigidbody>().velocity = Vector3.zero;
 			other.transform.position = transform.position;	// snap asteroid to center of hand
-			pickedUp = true;
-			other.GetComponent<Asteroid>().thrown = true;
+			handIsEmpty = false;
 
 			Debug.Log ("Picked up " + other.gameObject);
 		}
@@ -81,12 +83,15 @@ public class AsteroidHandController : MonoBehaviour {
 	void AttemptThrow () {
 		if (asteroid) {
 			// We only want the direction along the x-y plane
+			float strength = Random.Range(minThrowStrength, maxThrowStrength);
 			asteroid.GetComponent<Rigidbody> ().velocity = new Vector3(
 				crosshair.transform.position.x - transform.position.x,
 				crosshair.transform.position.y - transform.position.y,
-				0);
+				0).normalized * strength;
+			asteroid.GetComponent<Asteroid>().pickedUp = false;
+			asteroid.GetComponent<Asteroid>().thrown = true;
 
-			pickedUp = false;
+			handIsEmpty = true;
 			asteroid = null;
 
 			Debug.Log("Throw successful");

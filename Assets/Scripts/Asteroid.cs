@@ -3,28 +3,40 @@ using System.Collections;
 
 public class Asteroid : MonoBehaviour {
 
+	public bool pickedUp = false;
 	public bool thrown = false;
-	public int dmgPoints = 2;	// how much damage the asteroid does
+	public bool grabable = true;
+
+	int dmgPoints = 2;	// how much damage the asteroid does
+	GameObject generator;
+	float animDuration = 0f;
+	float timeToWait = 0f;
 
 	// Use this for initialization
 	void Start () {
-
+		generator = transform.parent.gameObject;
 	}
 
-	void SetParams (int dmg) {
+	public void SetParams (int dmg, Vector3 velocity) {
 		dmgPoints = dmg;
-
-		// Set model based on start dmg points
+		gameObject.GetComponent<Rigidbody> ().velocity = velocity;
+		Debug.Log (dmg);
+		// Set model based on start dmg points and destruction animation duration
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (pickedUp == true || dmgPoints == 0) {
+			grabable = false;
+		}
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.tag == "Spaceship") {
+		if (dmgPoints == 0 && other.gameObject.tag == "hand") {
+			Debug.Log ("Asteroid crumbled");
+			DestroyAsteroid();
+		} else if (thrown && other.gameObject.tag == "Spaceship") {
 			Debug.Log("Spaceship hit!");
 
 			//dmgPoints--;
@@ -34,12 +46,33 @@ public class Asteroid : MonoBehaviour {
 
 			// Destroy asteroid
 			//if(dmgPoints == 0) {
-				Destroy(gameObject);
+			DestroyAsteroid();
 			//}
 		}
 	}
 
 	void AsteroidHit () {
-		Destroy(gameObject);
+		DestroyAsteroid ();
+	}
+
+
+	//TODO: NOT DESTROYING PROPERLY!
+	void OnBecameInvisible () {
+		Invoke ("DestroyAsteroid", timeToWait);		// destroy asteroid if it's out of screen for more than 3s
+		Debug.Log ("getting ready to destroy");
+	}
+
+	void OnBecameVisible () {
+		//CancelInvoke ();
+	}
+
+	void DestroyAsteroid () {
+		// play destruction animation 
+		if (GetComponent<Renderer> ().isVisible) {
+
+		}
+
+		generator.GetComponent<AsteroidGenerator> ().asteroidCount--;
+		Destroy (gameObject, animDuration);
 	}
 }

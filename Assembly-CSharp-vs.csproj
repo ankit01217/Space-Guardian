@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Asteroid.cs" />
+     <Compile Include="Assets\Scripts\AsteroidGenerator.cs" />
      <Compile Include="Assets\Scripts\AsteroidHandController.cs" />
      <Compile Include="Assets\Scripts\CrosshairController.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
