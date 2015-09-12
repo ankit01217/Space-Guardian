@@ -76,16 +76,29 @@ public class Ship : MonoBehaviour {
 	}
 	void setUpSpaceShip(){
 
-		Debug.Log ("fwd vector " + Vector3.forward);
 		//gameObject.transform.LookAt (planet.transform.position);
 		//gameObject.transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
 		//gameObject.transform.RotateAround (Vector3.forward, 20*);
-		if (transform.position.x < 0) {
-			transform.Rotate( new Vector3(0,0,1),30);
 
-		} else if (transform.position.x > 0) {
-			transform.Rotate( new Vector3(0,0,1),-30);
+		Vector3 v1 = transform.position - planet.transform.position;
+		v1.z = 0;
+		float angle = Vector3.Angle(v1,new Vector3(planet.transform.position.x,planet.transform.position.y,0));
 
+
+		if (transform.position.x < -12) {
+			transform.Rotate( new Vector3(0,0,1),35);
+
+		}else if (transform.position.x < 0) {
+			transform.Rotate( new Vector3(0,0,1),20);
+			
+		}
+		else if (transform.position.x > 12) {
+			transform.Rotate( new Vector3(0,0,1),-35);
+
+		}
+		else if (transform.position.x > 0) {
+			transform.Rotate( new Vector3(0,0,1),-20);
+			
 		}
 
 
