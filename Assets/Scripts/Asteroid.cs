@@ -23,6 +23,7 @@ public class Asteroid : MonoBehaviour {
 
 		// activate respective model based on start dmg points
 		transform.GetChild (dmgPoints).gameObject.SetActive (true);
+
 		if (dmgPoints == 2) {
 			GetComponent<CapsuleCollider> ().radius = 1f;
 		}
@@ -39,7 +40,7 @@ public class Asteroid : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if (dmgPoints == 0 && other.gameObject.tag == "hand") {
+		if (dmgPoints == 0 && other.gameObject.tag == "Hand") {
 			Debug.Log ("Asteroid crumbled");
 			DestroyAsteroid();
 		} else if (thrown && other.gameObject.tag == "Spaceship") {
