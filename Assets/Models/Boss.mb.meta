@@ -4,7 +4,10 @@ timeCreated: 1442032336
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    100000: //RootNode
+    400000: //RootNode
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
