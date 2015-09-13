@@ -181,13 +181,14 @@ public class Ship : MonoBehaviour {
 		//transform.rotation = Quaternion.identity;
 		planet = GameObject.FindGameObjectWithTag("Planet");
 		Random.seed = (int)System.DateTime.Now.Ticks;
+		functioningSpaceShip ();
 		setUpSpaceShip();
 
 	}
 	
 	void Update () {
 		moveSpaceShip ();
-		functioningSpaceShip ();
+
 		if (rend.isVisible == false && spaceShipType == "attacker") {
 			gameObject.transform.Rotate(new Vector3(180,0,0));
 		}
