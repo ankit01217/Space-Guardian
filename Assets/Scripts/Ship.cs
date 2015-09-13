@@ -161,16 +161,13 @@ public class Ship : MonoBehaviour {
 		}
 	}
 	void hitPlenet(){
-		Debug.Log ("hit plenet");
-		alienController.killRandomAlien();
+		Debug.Log ("hit plqnet");
+		alienController.killRandomAlien(this.transform.position);
 		Destroy (this.gameObject);
 
 	}
 
-	void hitAlien(GameObject alien){
-		Debug.Log("hit alien");
 
-	}
 	// Use this for initialization
 	
 	void Start () {
@@ -201,17 +198,12 @@ public class Ship : MonoBehaviour {
 		}*/
 
 
-
-
 	}
 	void OnTriggerEnter(Collider other){
-		if (other.GetComponent<Collider>().tag == "Asteroid") {
-		
-		}else if (other.gameObject.tag == "Alien") {
-			hitAlien(other.gameObject);
-		}else if (other.gameObject.tag == "Planet") {
-			Invoke("hitPlenet",0.3f);
-			//hitPlenet();
+		Debug.Log ("OnTriggerEnter");
+
+		if (other.gameObject.tag == "Planet") {
+			Invoke("hitPlenet",0.1f);
 		}
 	}
 }

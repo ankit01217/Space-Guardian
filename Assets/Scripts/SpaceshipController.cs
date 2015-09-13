@@ -10,26 +10,20 @@ public class SpaceshipController : MonoBehaviour {
 	public int round1Ship = 3;
 	public int round2Ship = 5;
 	public int round3Ship = 8;
+	AudioSource audioSource;
 
 	//public int curActiveShipCount = 0;
 	//public int maxActiveShipCount = 10;
 
 	public static int totShipsDestroyed = 0;
 	public int levelShipCount = 20;
-
 	public Transform[] spawnPoints;
 
-
-	void Awake(){
-
-		Debug.Log ("Screen size" + Screen.width + "height " + Screen.height);
-
-	}
 
 	// Use this for initialization
 	void Start () {
 
-
+		audioSource = GetComponent<AudioSource> ();
 		InvokeRepeating ("SpawnShip", shipSpawnInterval, shipSpawnInterval);
 
 	}
@@ -77,6 +71,7 @@ public class SpaceshipController : MonoBehaviour {
 			newShip.transform.parent = transform;
 			//curActiveShipCount++;
 
-
+			
 	}
+
 }

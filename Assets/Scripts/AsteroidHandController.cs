@@ -12,7 +12,9 @@ public class AsteroidHandController : MonoBehaviour {
 	public float maxThrowStrength = 25f;
 	public float minThrowStrength = 15f;
 	public bool handIsEmpty = true;
-	
+	public AudioClip throwAudio,pickupAudio;
+	AudioSource audioSource;
+
 	LinkedList<float> zCoords = new LinkedList<float>();
 	float cooldown = 1f;
 	GameObject asteroid;
@@ -20,7 +22,7 @@ public class AsteroidHandController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		audioSource = GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -73,6 +75,7 @@ public class AsteroidHandController : MonoBehaviour {
 			handIsEmpty = false;
 
 			Debug.Log ("Picked up " + other.gameObject);
+			audioSource.PlayOneShot(pickupAudio);
 		}
 	}
 
@@ -92,6 +95,8 @@ public class AsteroidHandController : MonoBehaviour {
 			asteroid = null;
 
 			Debug.Log("Throw successful");
+
+			audioSource.PlayOneShot(throwAudio);
 		}
 	}
 }

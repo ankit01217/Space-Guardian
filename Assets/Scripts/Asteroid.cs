@@ -8,6 +8,9 @@ public class Asteroid : MonoBehaviour {
 	public bool grabable = true;
 	public GameObject explosion;
 	public bool isVisible = false;
+	public AudioClip blastAudio,crumbleAudio;
+
+	AudioSource audioSource;
 
 	GameObject hand;
 	int dmgPoints = 2;	// how much damage the asteroid does
@@ -60,10 +63,11 @@ public class Asteroid : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		if (dmgPoints == 0 && other.gameObject.tag == "Hand") {
 			Debug.Log ("Asteroid crumbled");
+			audioSource.PlayOneShot(crumbleAudio);
 			DestroyAsteroid();
 		} else if (thrown && other.gameObject.tag == "Spaceship") {
 			Debug.Log("Spaceship hit!");
-
+			audioSource.PlayOneShot (blastAudio);
 			other.gameObject.SendMessage("hitSpaceShip", dmgPoints);
 			//dmgPoints--;
 
@@ -101,5 +105,7 @@ public class Asteroid : MonoBehaviour {
 
 		generator.GetComponent<AsteroidGenerator> ().asteroidCount--;
 		Destroy (gameObject, animDuration);
+
+
 	}
 }
