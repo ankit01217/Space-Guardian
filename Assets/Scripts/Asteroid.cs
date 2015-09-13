@@ -61,16 +61,23 @@ public class Asteroid : MonoBehaviour {
 //		}
 	}
 
-	void OnTriggerEnter(Collider other) {
-		if (dmgPoints == 0 && other.gameObject.tag == "Hand") {
+	
+	// Hands require collision
+	void OnCollisionEnter(Collision collision) {
+		if (dmgPoints == 0 && collision.gameObject.tag == "Hand") {
 			Debug.Log ("Asteroid crumbled");
-			audioSource.PlayOneShot (crumbleAudio);
+			//audioSource.PlayOneShot (crumbleAudio);
 			DestroyAsteroid ();
-		} else if (!live && other.gameObject.tag == "Hand") {
+		} else if (!live && collision.gameObject.tag == "Hand") {
 			live = true;
-		} else if (live && other.gameObject.tag == "Spaceship") {
+		}
+	}
+
+	// Spaceships use trigger collider
+	void OnTriggerEnter(Collider other) {
+		if (live && other.gameObject.tag == "Spaceship") {
 			Debug.Log("Spaceship hit!");
-			audioSource.PlayOneShot (blastAudio);
+			//audioSource.PlayOneShot (blastAudio);
 			other.gameObject.SendMessage("hitSpaceShip", dmgPoints);
 			//dmgPoints--;
 
