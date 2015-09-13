@@ -5,7 +5,7 @@ public class AlienController : MonoBehaviour {
 
 	GameObject[] aliens;
 	AudioSource audioSource;
-	public AudioClip deathClip, gameoverClip;
+	public AudioClip gameoverClip;
 
 	// Use this for initialization
 	void Start () {
@@ -17,10 +17,8 @@ public class AlienController : MonoBehaviour {
 		if (aliens != null && aliens.Length > 0) {
 			GameObject alien = aliens [Random.Range (0, aliens.Length)];
 			Alien alienScript = alien.GetComponent<Alien>();
-			audioSource.clip = deathClip;
-			audioSource.Play();
 			alienScript.die();
-		
+
 		}
 
 		if (aliens.Length == 0) {
@@ -30,6 +28,8 @@ public class AlienController : MonoBehaviour {
 		}
 
 	}
+
+
 	
 	// Update is called once per frame
 	void Update () {

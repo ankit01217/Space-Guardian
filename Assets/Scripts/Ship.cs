@@ -210,7 +210,8 @@ public class Ship : MonoBehaviour {
 		}else if (other.gameObject.tag == "Alien") {
 			hitAlien(other.gameObject);
 		}else if (other.gameObject.tag == "Planet") {
-			hitPlenet();
+			Invoke("hitPlenet",0.3f);
+			//hitPlenet();
 		}
 	}
 }

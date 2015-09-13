@@ -4,8 +4,12 @@ using System.Collections;
 public class Alien : MonoBehaviour {
 
 	Animator animator;
+	AudioSource audioSource;
+	public AudioClip deathClip;
+
 	// Use this for initialization
 	void Awake(){
+		audioSource = GetComponent<AudioSource> ();
 		animator = GetComponent<Animator> ();
 		Invoke("sartAlienAnimation", Random.Range(0,3));
 
@@ -24,8 +28,12 @@ public class Alien : MonoBehaviour {
 
 	public void die(){
 		animator.SetTrigger("Die");
-		//Invoke("removeAlien", 3);
+		Invoke("playDeathSound", 0.1f);
+	}
 
+	void playDeathSound(){
+		audioSource.clip = deathClip;
+		audioSource.Play();
 	}
 
 	public void OnDeathAnimComplete(){
