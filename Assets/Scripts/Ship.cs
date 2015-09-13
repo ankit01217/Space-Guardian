@@ -131,7 +131,7 @@ public class Ship : MonoBehaviour {
 		pointAtPlenet ();
 
 
-
+		/*
 		switch (spaceShipType) {
 		case "normal":
 			spaceShipLife=2;
@@ -150,7 +150,7 @@ public class Ship : MonoBehaviour {
 			spaceShipLife=1;
 			spaceShipSpeed=2;
 			break;
-		}
+		}*/
 
 	}
 	
@@ -188,9 +188,17 @@ public class Ship : MonoBehaviour {
 	
 	void Update () {
 		moveSpaceShip ();
-		if (rend.isVisible == false && spaceShipType == "attacker") {
+		/*
+		if (!inScreen(gameObject.transform.position)) {
 			gameObject.transform.Rotate(new Vector3(180,0,0));
-		}
+
+
+			/*
+			var lookPos = planet.transform.position - transform.position;
+			lookPos.z = 0;
+			var rotation = Quaternion.LookRotation(lookPos);
+			transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * damping);
+		}*/
 
 
 

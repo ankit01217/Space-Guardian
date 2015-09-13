@@ -51,7 +51,8 @@ public class SpaceshipController : MonoBehaviour {
 
 	void SpawnShip(){
 
-		if (curActiveShipCount < maxActiveShipCount) {
+		//if (curActiveShipCount < maxActiveShipCount)
+		{
 			GameObject newShip;
 			Vector3 randShipPos = new Vector3();
 
