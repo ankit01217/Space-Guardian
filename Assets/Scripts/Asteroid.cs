@@ -9,6 +9,7 @@ public class Asteroid : MonoBehaviour {
 	public GameObject explosion;
 	public bool isVisible = false;
 
+	GameObject hand;
 	int dmgPoints = 2;	// how much damage the asteroid does
 	GameObject generator;
 	float animDuration = 0f;
@@ -18,6 +19,7 @@ public class Asteroid : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		generator = transform.parent.gameObject;
+		hand = GameObject.Find ("Hand");
 	}
 
 	public void SetParams (int dmg, Vector3 velocity) {
@@ -46,8 +48,10 @@ public class Asteroid : MonoBehaviour {
 		}
 
 		// TODO: add fractured asteroid in
+		// make this a function and send message to it instead
 		if (pickedUp == true && dmgPoints != 0) {
 			anim.SetBool ("pickedUp", true);
+			transform.position = hand.transform.position;
 		} else if (dmgPoints != 0) {
 			anim.SetBool ("pickedUp", false);
 		}

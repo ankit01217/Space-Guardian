@@ -25,10 +25,7 @@ public class AsteroidHandController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		// Only link it if player hasn't picked up an asteroid
-		if (handIsEmpty) {
-			LinkHandToDetector ();
-		}
+		LinkHandToDetector ();
 	}
 
 	// Link the x and y-coords of the asteroid hand to that of the player's right hand
