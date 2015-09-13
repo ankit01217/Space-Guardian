@@ -13,10 +13,14 @@ public class Ship : MonoBehaviour {
 	public static string FAST = "fasr";
 	public static string SHIELDED = "shielded";
 	public static string ATTACKER = "attacker";
-	SpaceshipController spaceshipGenerator;
 
 	private GameObject[] aliens;
+	private Renderer rend;
 	private Vector3 targetPosition;
+	private AlienController alienController;
+	private SpaceshipController spaceshipController;
+
+	
 
 	bool inScreen(Vector3 pos){
 		//Debug.Log (pos);
@@ -32,11 +36,12 @@ public class Ship : MonoBehaviour {
 		
 		//gameObject.transform.Translate (-Vector3.up * spaceShipSpeed * 0.05f);
 
-		GameObject randAlien = aliens [Random.Range (0, aliens.Length)];
-		targetPosition = randAlien.transform.position;
+		//GameObject randAlien = aliens [Random.Range (0, aliens.Length)];
+		//targetPosition = randAlien.transform.position;
 
-		Vector3 dir =  targetPosition - transform.position;
-		gameObject.transform.Translate(dir * Time.deltaTime, Space.World);
+		//Vector3 dir =  targetPosition - transform.position;
+		//gameObject.transform.Translate(dir * Time.deltaTime, Space.World);
+		gameObject.transform.Translate (Vector3.forward * spaceShipSpeed * 0.05f);
 
 		/*
 		Vector3 newpoas = new Vector3 ();
@@ -75,22 +80,40 @@ public class Ship : MonoBehaviour {
 		Vector2 dir=Random.insideUnitCircle;
 		//float distance=Random.Range(0,1);
 		//dir=dir*distance;
-		Vector3 temppos=gameObject.transform.position+new Vector3(dir.x,dir.y,0);
+		gameObject.transform.Rotate (new Vector3 (Random.Range(0,360), 0, 0));
+		//Vector3.savepos = gameObject.transform.position;
+
+		//gameObject.transform.Translate (Vector3.forward * spaceShipSpeed * 6f);
+
+
+		/*Vector3 temppos=gameObject.transform.position+new Vector3(dir.x,dir.y,0);
 		if(inScreen(temppos)){
-			Debug.Log (ATTACKER);
+			//Debug.Log (ATTACKER);
 			gameObject.transform.LookAt (temppos);
 			//gameObject.transform.position=temppos;
 		}else{
 			gameObject.transform.LookAt (targetPosition);
 			//gameObject.transform.Translate (Vector3.forward * spaceShipSpeed * 0.05f);
+		}*/
+	}
+	void fixPosition(){
+		//gameObject model = gameObject.GetComponent<SpaceshipModel> ();
+		gameObject.transform.Rotate (new Vector3 (0, 0, 180));
+
+	}
+	void pointAtPlenet(){
+		gameObject.transform.LookAt (planet.transform.position);
+		if (gameObject.transform.position.x < 0) {
+			fixPosition();
 		}
+
 	}
 	void setUpSpaceShip(){
 
 		//gameObject.transform.LookAt (planet.transform.position);
 		//gameObject.transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
 		//gameObject.transform.RotateAround (Vector3.forward, 20*);
-
+/*
 		if (transform.position.x < -12) {
 			transform.Rotate( new Vector3(0,0,1),35);
 
@@ -106,63 +129,86 @@ public class Ship : MonoBehaviour {
 			transform.Rotate( new Vector3(0,0,1),-20);
 			
 		}
+*/
+		pointAtPlenet ();
 
+
+		/*
+		switch (spaceShipType) {
+		case "normal":
+			spaceShipLife=2;
+			spaceShipSpeed=1;
+			break;
+		case "attacker":
+			spaceShipLife=1;
+			spaceShipSpeed=0.5f;
+			//InvokeRepeating("randomDirection",3f,2f);
+			break;
+		case "shielded":
+			spaceShipLife=3;
+			spaceShipSpeed=1;
+			break;
+		case "fast":
+			spaceShipLife=1;
+			spaceShipSpeed=2;
+			break;
+		}*/
 
 	}
 	
-	void hitSpaceShip(){
-		///////
-		if (spaceShipLife == 0) {
-			
+	void hitSpaceShip(int damage){
+		spaceShipLife -= damage;
+		if (spaceShipLife <= 0) {
+			spaceshipController.onShipDestroyed();
+			Destroy(gameObject);
+
 		}
 	}
 	void hitPlenet(){
-		Debug.Log ("hit plenet");
-
-		spaceshipGenerator.onShipDestroyed ();
+		Debug.Log ("hit plqnet");
+		alienController.killRandomAlien(this.transform.position);
 		Destroy (this.gameObject);
-
 
 	}
 
-	void hitAlien(GameObject alien){
-		Debug.Log("hit alien");
-		spaceshipGenerator.onShipDestroyed ();
-		Destroy (this.gameObject);
-		Alien alienSc = alien.GetComponent<Alien> ();
-		alienSc.die ();
-	
 
-	}
 	// Use this for initialization
 	
 	void Start () {
-
-		spaceshipGenerator = GameObject.FindObjectOfType<SpaceshipController> ();
-
+		rend = GetComponentInChildren<Renderer> ();
 		aliens = (GameObject[])GameObject.FindGameObjectsWithTag("Alien");
-		transform.rotation = Quaternion.identity;
+		alienController = GameObject.FindObjectOfType<AlienController>();
+		spaceshipController = GameObject.FindObjectOfType<SpaceshipController>();
+
+		//transform.rotation = Quaternion.identity;
 		planet = GameObject.FindGameObjectWithTag("Planet");
 		Random.seed = (int)System.DateTime.Now.Ticks;
 		setUpSpaceShip();
+		functioningSpaceShip ();
 
 	}
 	
 	void Update () {
 		moveSpaceShip ();
-		functioningSpaceShip ();
+		/*
+		if (!inScreen(gameObject.transform.position)) {
+			gameObject.transform.Rotate(new Vector3(180,0,0));
+
+
+			/*
+			var lookPos = planet.transform.position - transform.position;
+			lookPos.z = 0;
+			var rotation = Quaternion.LookRotation(lookPos);
+			transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * damping);
+		}*/
 
 
 	}
-
 	void OnTriggerEnter(Collider other){
-		if (other.GetComponent<Collider>().tag == "Asteroid") {
-			hitSpaceShip();
-		}else if (other.gameObject.tag == "Alien") {
-			hitAlien(other.gameObject);
-		}
-		else if (other.gameObject.tag == "Planet") {
-			hitPlenet();
+		Debug.Log ("OnTriggerEnter");
+
+		if (other.gameObject.tag == "Planet") {
+			Invoke("hitPlenet",0.1f);
 		}
 	}
 }

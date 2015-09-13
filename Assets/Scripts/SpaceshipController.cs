@@ -10,35 +10,33 @@ public class SpaceshipController : MonoBehaviour {
 	public int round1Ship = 3;
 	public int round2Ship = 5;
 	public int round3Ship = 8;
+	AudioSource audioSource;
 
-	public int curActiveShipCount = 0;
-	public int maxActiveShipCount = 10;
+	//public int curActiveShipCount = 0;
+	//public int maxActiveShipCount = 10;
 
-	public static int totShipsDestroyed = 0;
+	public int totShipsDestroyed = 0;
 	public int levelShipCount = 20;
-
 	public Transform[] spawnPoints;
 
 
-	void Awake(){
-
-		Debug.Log ("Screen size" + Screen.width + "height " + Screen.height);
-
-	}
-
 	// Use this for initialization
 	void Start () {
+
+		audioSource = GetComponent<AudioSource> ();
 		InvokeRepeating ("SpawnShip", shipSpawnInterval, shipSpawnInterval);
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
 	}
 
 	public void onShipDestroyed(){
-		curActiveShipCount = Mathf.Clamp (curActiveShipCount - 1, 0, maxActiveShipCount);
-	
+		//curActiveShipCount = Mathf.Clamp (curActiveShipCount - 1, 0, maxActiveShipCount);
+		totShipsDestroyed++;
+		Debug.Log ("total ships destroyed :" + totShipsDestroyed);
 	}
 
 	Vector3 getRandPosition(){
@@ -48,10 +46,8 @@ public class SpaceshipController : MonoBehaviour {
 
 	void SpawnShip(){
 
-		if (curActiveShipCount < maxActiveShipCount) {
 			GameObject newShip;
 			Vector3 randShipPos = new Vector3();
-
 			Debug.Log("totShipsDestroyed : " + totShipsDestroyed);
 			if (totShipsDestroyed < round1Ship) {
 				// if < %20 of ships then generate 
@@ -74,11 +70,9 @@ public class SpaceshipController : MonoBehaviour {
 
 
 			newShip.transform.parent = transform;
-			curActiveShipCount++;
-		
-		}
+			//curActiveShipCount++;
 
-
-
+			
 	}
+
 }

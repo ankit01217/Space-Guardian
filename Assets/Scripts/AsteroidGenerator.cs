@@ -8,10 +8,10 @@ public class AsteroidGenerator : MonoBehaviour {
 	public float minSpeed = 3f;
 	public float maxSpeed = 5f;
 	public int asteroidCount = 0;
-	public float spawnRate = 1.5f;
+	public float spawnRate = 5f;
 	public int initCount = 5;
 
-	float zPlane = 10f;
+	float zPlane = 18f;
 	float minWorldX;
 	float maxWorldX;
 	int minDmg = 0;
