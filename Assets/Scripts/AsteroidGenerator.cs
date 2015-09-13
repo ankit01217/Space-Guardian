@@ -14,7 +14,7 @@ public class AsteroidGenerator : MonoBehaviour {
 	float zPlane = 18f;
 	float minWorldX;
 	float maxWorldX;
-	int minDmg = 0;
+	int minDmg = 1;
 	int maxDmg = 2;
 	bool initDone = false;
 
