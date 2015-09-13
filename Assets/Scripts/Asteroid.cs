@@ -90,7 +90,7 @@ public class Asteroid : MonoBehaviour {
 
 	void OnBecameVisible () {
 		isVisible = true;
-		//CancelInvoke ();
+		CancelInvoke ();
 	}
 
 	void DestroyAsteroid () {
