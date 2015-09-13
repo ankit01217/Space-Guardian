@@ -18,6 +18,8 @@ public class Ship : MonoBehaviour {
 	private Renderer rend;
 	private Vector3 targetPosition;
 	private AlienController alienController;
+	private SpaceshipController spaceshipController;
+
 	
 
 	bool inScreen(Vector3 pos){
@@ -157,7 +159,9 @@ public class Ship : MonoBehaviour {
 	void hitSpaceShip(int damage){
 		spaceShipLife -= damage;
 		if (spaceShipLife <= 0) {
+			spaceshipController.onShipDestroyed();
 			Destroy(gameObject);
+
 		}
 	}
 	void hitPlenet(){
@@ -174,6 +178,7 @@ public class Ship : MonoBehaviour {
 		rend = GetComponentInChildren<Renderer> ();
 		aliens = (GameObject[])GameObject.FindGameObjectsWithTag("Alien");
 		alienController = GameObject.FindObjectOfType<AlienController>();
+		spaceshipController = GameObject.FindObjectOfType<SpaceshipController>();
 
 		//transform.rotation = Quaternion.identity;
 		planet = GameObject.FindGameObjectWithTag("Planet");

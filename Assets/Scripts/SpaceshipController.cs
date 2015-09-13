@@ -15,7 +15,7 @@ public class SpaceshipController : MonoBehaviour {
 	//public int curActiveShipCount = 0;
 	//public int maxActiveShipCount = 10;
 
-	public static int totShipsDestroyed = 0;
+	public int totShipsDestroyed = 0;
 	public int levelShipCount = 20;
 	public Transform[] spawnPoints;
 
@@ -35,7 +35,8 @@ public class SpaceshipController : MonoBehaviour {
 
 	public void onShipDestroyed(){
 		//curActiveShipCount = Mathf.Clamp (curActiveShipCount - 1, 0, maxActiveShipCount);
-	
+		totShipsDestroyed++;
+		Debug.Log ("total ships destroyed :" + totShipsDestroyed);
 	}
 
 	Vector3 getRandPosition(){
