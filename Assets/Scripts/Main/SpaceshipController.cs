@@ -7,9 +7,9 @@ public class SpaceshipController : MonoBehaviour {
 	public GameObject normalShipPF, fastShipPF, shieldedShipPF, attackerShipPF;
 	public GameObject[] spipPrefabs;
 	public float shipSpawnInterval = 3f;
-	public int round1Ship = 3;
-	public int round2Ship = 5;
-	public int round3Ship = 8;
+	public int round1Ship = 5;
+	public int round2Ship = 10;
+	public int round3Ship = 15;
 	AudioSource audioSource;
 
 	//public int curActiveShipCount = 0;
@@ -51,7 +51,7 @@ public class SpaceshipController : MonoBehaviour {
 			Debug.Log("totShipsDestroyed : " + totShipsDestroyed);
 			if (totShipsDestroyed < round1Ship) {
 				// if < %20 of ships then generate 
-				newShip = (GameObject)Instantiate (normalShipPF, getRandPosition (), Quaternion.identity);
+			newShip = (GameObject)Instantiate (shieldedShipPF, getRandPosition (), Quaternion.identity);
 			} else if (totShipsDestroyed >= round1Ship && totShipsDestroyed < round2Ship) {
 				GameObject[] arr = new GameObject[]{normalShipPF, fastShipPF};
 				newShip = (GameObject)Instantiate (arr[Random.Range(0,arr.Length)], getRandPosition (), Quaternion.identity);
