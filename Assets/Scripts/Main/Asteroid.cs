@@ -3,16 +3,16 @@ using System.Collections;
 
 public class Asteroid : MonoBehaviour {
 
-//	public bool pickedUp = false;
-//	public bool thrown = false;
-//	public bool grabable = true;
+	public bool pickedUp = false;
+	public bool thrown = false;
+	public bool grabable = true;
 	public GameObject explosion;
 	public bool isVisible = false;
 	public AudioClip blastAudio,crumbleAudio;
 
 	AudioSource audioSource;
 
-//	GameObject hand;
+	GameObject hand;
 	int dmgPoints = 2;	// how much damage the asteroid does
 	GameObject generator;
 	float animDuration = 0f;
@@ -23,7 +23,7 @@ public class Asteroid : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		generator = transform.parent.gameObject;
-//		hand = GameObject.Find ("Hand");
+		hand = GameObject.Find ("Hand");
 	}
 
 	public void SetParams (int dmg, Vector3 velocity) {
@@ -40,42 +40,24 @@ public class Asteroid : MonoBehaviour {
 		if (dmgPoints == 2) {
 			GetComponent<CapsuleCollider> ().radius = 1f;
 		}
-
-		// TODO: set animDuration
-
 	}
 	
 	// Update is called once per frame
 	void Update () {
-//		if (pickedUp == true || dmgPoints == 0) {
-//			grabable = false;
-//		}
-//
-//		// TODO: add fractured asteroid in
-//		// make this a function and send message to it instead
-//		if (pickedUp == true && dmgPoints != 0) {
-//			anim.SetBool ("pickedUp", true);
-//			transform.position = hand.transform.position;
-//		} else if (dmgPoints != 0) {
-//			anim.SetBool ("pickedUp", false);
-//		}
-	}
-
-	
-	// Hands require collision
-	void OnCollisionEnter(Collision collision) {
-		if (dmgPoints == 0 && collision.gameObject.tag == "Hand") {
-			Debug.Log ("Asteroid crumbled");
-			//audioSource.PlayOneShot (crumbleAudio);
-			DestroyAsteroid ();
-		} else if (!live && collision.gameObject.tag == "Hand") {
-			live = true;
+		if (pickedUp) {
+			grabable = false;
+			anim.SetBool ("pickedUp", true);
+			//transform.position = hand.transform.position;
+		} else {
+			anim.SetBool ("pickedUp", false);
 		}
 	}
 
 	// Spaceships use trigger collider
 	void OnTriggerEnter(Collider other) {
-		if (live && other.gameObject.tag == "Spaceship") {
+		if (!pickedUp && other.gameObject.tag == "Hand") {
+			pickedUp = true;
+		} else if (thrown && other.gameObject.tag == "Spaceship") {
 			Debug.Log("Spaceship hit!");
 			//audioSource.PlayOneShot (blastAudio);
 			other.gameObject.SendMessage("hitSpaceShip", dmgPoints);

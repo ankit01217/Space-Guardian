@@ -19,11 +19,10 @@ public class LiftCutOut : MonoBehaviour {
 	}
 
 	void SetSize () {
-//		if (image) {
-//			float worldScreenHeight = (float)(cam.orthographicSize * 2.0);
-//			float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
-//			//float newLocalScale = (worldScreenWidth / image.sprite.bounds.);
-//			transform.localScale = new Vector3(newLocalScale, newLocalScale, 1);
-//		}
+		if (image) {
+
+			//float newLocalScale = (cam.orthographicSize*2 / image.sprite.bounds.size.y);
+			//transform.localScale = new Vector3(newLocalScale, newLocalScale, 1);
+		}
 	}
 }
