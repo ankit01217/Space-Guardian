@@ -48,7 +48,7 @@ public class Asteroid : MonoBehaviour {
 		if (pickedUp) {
 			grabable = false;
 			anim.SetBool ("pickedUp", true);
-			audioSource.PlayOneShot (pickupAudio);
+			//audioSource.PlayOneShot (pickupAudio);
 
 			//transform.position = hand.transform.position;
 		} else {
