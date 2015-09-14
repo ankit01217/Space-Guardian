@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Ship : MonoBehaviour {
+public class Ship : MonoBehaviour
+{
 	private GameObject planet;
 	public string spaceShipType;
 	public int spaceShipLife;
 	public float spaceShipSpeed;
 	//public GameObject normalShipPF, fastShipPF, shieldedShipPF, attackerShipPF;
 	Vector3 spaceShipPosition;
-	bool startRandomDir =false;
+	bool startRandomDir = false;
 	public static string NORMAL = "normal";
 	public static string FAST = "fasr";
 	public static string SHIELDED = "shielded";
@@ -21,10 +22,11 @@ public class Ship : MonoBehaviour {
 	private SpaceshipController spaceshipController;
 	private AudioSource audioSource;
 	public AudioClip[] shipClips;
-	private bool isInToScreen=false;
+	private bool isInToScreen = false;
 	//public AudioSource a[3];
 
-	bool inScreen(Vector3 pos){
+	bool inScreen (Vector3 pos)
+	{
 		//Debug.Log (pos);
 		if (pos.x > -15 && pos.x < 15 && pos.y > -4 && pos.y < 8)
 
@@ -35,7 +37,8 @@ public class Ship : MonoBehaviour {
 		
 	}
 	
-	void moveSpaceShip (){
+	void moveSpaceShip ()
+	{
 		
 		//gameObject.transform.Translate (-Vector3.up * spaceShipSpeed * 0.05f);
 
@@ -54,17 +57,18 @@ public class Ship : MonoBehaviour {
 		gameObject.transform.position = newpoas;
 	 */
 
-		if(startRandomDir==false&&spaceShipType==ATTACKER && inScreen(gameObject.transform.position)){
-			startRandomDir=true;
-			InvokeRepeating("randomDirection",3f,2f);
+		if (startRandomDir == false && spaceShipType == ATTACKER && inScreen (gameObject.transform.position)) {
+			startRandomDir = true;
+			InvokeRepeating ("randomDirection", 3f, 2f);
 		}
 		
 	}
 	
-	void asteroidAttackerAttack(){
-		GameObject[] asteroid = GameObject.FindGameObjectsWithTag("Asteroid");
-		if (asteroid.Length!= 0) {
-			asteroid[Random.Range(0,asteroid.Length)].SendMessage("AsteroidHit");
+	void asteroidAttackerAttack ()
+	{
+		GameObject[] asteroid = GameObject.FindGameObjectsWithTag ("Asteroid");
+		if (asteroid.Length != 0) {
+			asteroid [Random.Range (0, asteroid.Length)].SendMessage ("AsteroidHit");
 
 		}
 		
@@ -73,24 +77,26 @@ public class Ship : MonoBehaviour {
 		GameObject[] arr = new GameObject[]{normalShipPF, fastShipPF,shieldedShipPF, attackerShipPF};
 		GameObject newSpaceShip=(GameObject)Instantiate (arr[Random.Range(0,arr.Length)], getRandPosition (), Quaternion.identity);
 	}*/
-	void functioningSpaceShip (){
+	void functioningSpaceShip ()
+	{
 		switch (spaceShipType) {
 		case "attacker":
 			//Invoke("asteroidAttackerAttack",3f);
-			InvokeRepeating("asteroidAttackerAttack",5f,3f);
+			InvokeRepeating ("asteroidAttackerAttack", 5f, 3f);
 			break;
-	/*	case "boss":
+		/*	case "boss":
 
 			InvokeRepeating("spaceShipGenerater",5f,3f);
 			break;
 	*/		
 		}
 	}
-	void randomDirection(){
+	void randomDirection ()
+	{
 		//Vector2 dir=Random.insideUnitCircle;
 		//float distance=Random.Range(0,1);
 		//dir=dir*distance;
-		Debug.Log("rotate!");
+		Debug.Log ("rotate!");
 		if (startRandomDir && spaceShipType == ATTACKER && !inScreen (gameObject.transform.position)) {
 			/*gameObject.transform.Rotate (new Vector3 (180, 0, 0));
 			
@@ -101,7 +107,7 @@ public class Ship : MonoBehaviour {
 			gameObject.transform.Rotate (new Vector3 (180, 0, 0));
 
 		} else {
-			gameObject.transform.Rotate (new Vector3 (Random.Range(0,360), 0, 0));
+			gameObject.transform.Rotate (new Vector3 (Random.Range (0, 360), 0, 0));
 
 		}
 
@@ -121,19 +127,22 @@ public class Ship : MonoBehaviour {
 			//gameObject.transform.Translate (Vector3.forward * spaceShipSpeed * 0.05f);
 		}*/
 	}
-	void fixPosition(){
+	void fixPosition ()
+	{
 		//gameObject model = gameObject.GetComponent<SpaceshipModel> ();
 		gameObject.transform.Rotate (new Vector3 (0, 0, 180));
 
 	}
-	void pointAtPlenet(){
-		gameObject.transform.LookAt (new Vector3(planet.transform.position.x,planet.transform.position.y,18) );
+	void pointAtPlenet ()
+	{
+		gameObject.transform.LookAt (new Vector3 (planet.transform.position.x, planet.transform.position.y, 18));
 		if (gameObject.transform.position.x < 0) {
-			fixPosition();
+			fixPosition ();
 		}
 
 	}
-	void setUpSpaceShip(){
+	void setUpSpaceShip ()
+	{
 
 		//gameObject.transform.LookAt (planet.transform.position);
 		//gameObject.transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
@@ -181,20 +190,22 @@ public class Ship : MonoBehaviour {
 
 	}
 	
-	void hitSpaceShip(int damage){
+	void hitSpaceShip (int damage)
+	{
 		spaceShipLife -= damage;
 		if (spaceShipType == SHIELDED) {
-			Destroy(GameObject.FindGameObjectWithTag("shieldSphere"));
-			spaceShipType=NORMAL;
-		}
-		else if (spaceShipLife <= 0) {
+			Debug.Log ("HAHAHAHA");
+			GameObject.FindGameObjectWithTag ("shieldSphere").SetActive (false);
+			spaceShipType = NORMAL;
+		} else if (spaceShipLife <= 0) {
 			spaceshipController.onShipDestroyed ();
 			Destroy (gameObject);
 		}
 	}
-	void hitPlenet(){
+	void hitPlenet ()
+	{
 		Debug.Log ("hit plqnet");
-		alienController.killRandomAlien(this.transform.position);
+		alienController.killRandomAlien (this.transform.position);
 		Destroy (this.gameObject);
 
 	}
@@ -202,28 +213,30 @@ public class Ship : MonoBehaviour {
 
 	// Use this for initialization
 
-	void Start () {
+	void Start ()
+	{
 		audioSource = GetComponent<AudioSource> ();
 		rend = GetComponentInChildren<Renderer> ();
-		aliens = (GameObject[])GameObject.FindGameObjectsWithTag("Alien");
-		alienController = GameObject.FindObjectOfType<AlienController>();
-		spaceshipController = GameObject.FindObjectOfType<SpaceshipController>();
+		aliens = (GameObject[])GameObject.FindGameObjectsWithTag ("Alien");
+		alienController = GameObject.FindObjectOfType<AlienController> ();
+		spaceshipController = GameObject.FindObjectOfType<SpaceshipController> ();
 
 		//transform.rotation = Quaternion.identity;
-		planet = GameObject.FindGameObjectWithTag("Planet");
+		planet = GameObject.FindGameObjectWithTag ("Planet");
 		Random.seed = (int)System.DateTime.Now.Ticks;
-		setUpSpaceShip();
+		setUpSpaceShip ();
 		functioningSpaceShip ();
 
 	}
 	
-	void Update () {
+	void Update ()
+	{
 
-		if (rend.isVisible && !isInToScreen) {
+		if (rend && rend.isVisible && !isInToScreen) {
 
-			audioSource.PlayOneShot(shipClips[Random.Range(0,shipClips.Length)]);
-			isInToScreen = true ;
-	//		AudioSource tmp=Random
+			audioSource.PlayOneShot (shipClips [Random.Range (0, 3)]);
+			isInToScreen = true;
+			//		AudioSource tmp=Random
 		}
 		moveSpaceShip ();
 
@@ -232,11 +245,12 @@ public class Ship : MonoBehaviour {
 		
 
 	}
-	void OnTriggerEnter(Collider other){
+	void OnTriggerEnter (Collider other)
+	{
 		Debug.Log ("OnTriggerEnter");
 
 		if (other.gameObject.tag == "Planet") {
-			Invoke("hitPlenet",0.1f);
+			Invoke ("hitPlenet", 0.1f);
 		}
 	}
 }

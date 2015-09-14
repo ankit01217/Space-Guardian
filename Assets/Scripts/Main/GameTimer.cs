@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-public class GameTimer : MonoBehaviour {
+public class GameTimer : MonoBehaviour
+{
 
 	Slider gameTimer;
 	public float timerSpeed = 0.01f;
@@ -10,7 +11,8 @@ public class GameTimer : MonoBehaviour {
 	bool isTimerAudioEnabled = false;
 	bool isGameOver = false;
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 	
 		audioSource = GetComponent<AudioSource> ();
 		gameTimer = GetComponent<Slider> ();
@@ -20,22 +22,22 @@ public class GameTimer : MonoBehaviour {
 	}
 
 
-	void updateTimer(){
+	void updateTimer ()
+	{
 
 		gameTimer.value = Mathf.Clamp (gameTimer.value - Time.deltaTime * timerSpeed, 0, 1);
 
-		if (gameTimer.value < 0.15f && isTimerAudioEnabled == false) {
+		if (gameTimer.value < 0.01f && isTimerAudioEnabled == false) {
 			Debug.Log (gameTimer.value);
 			isTimerAudioEnabled = true;
 			//play timer audio
-			audioSource.PlayOneShot(timerAudio);
+			audioSource.PlayOneShot (timerAudio);
 		}
 
-		if(gameTimer.value == 0 && isGameOver == false)
-		{
-			Debug.Log("Game Over");
+		if (gameTimer.value == 0 && isGameOver == false) {
+			Debug.Log ("Game Over");
 			isGameOver = true;
-			audioSource.PlayOneShot(gameEndAudio);
+			audioSource.PlayOneShot (gameEndAudio);
 
 		}
 	}
@@ -43,7 +45,8 @@ public class GameTimer : MonoBehaviour {
 
 
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 	
 	}
 }
