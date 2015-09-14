@@ -19,7 +19,7 @@ public class AsteroidHandController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-//		audioSource = GetComponent<AudioSource> ();
+		audioSource = GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -58,7 +58,7 @@ public class AsteroidHandController : MonoBehaviour {
 			//other.transform.position = transform.position;	// snap asteroid to center of hand
 
 			Debug.Log ("Picked up " + other.gameObject);
-//			audioSource.PlayOneShot(pickupAudio);
+			audioSource.PlayOneShot(pickupAudio);
 
 			Invoke("ThrowAsteroid", interval/30);
 		}
@@ -79,6 +79,6 @@ public class AsteroidHandController : MonoBehaviour {
 
 		Debug.Log("Throw successful");
 
-//		audioSource.PlayOneShot(throwAudio);
+		audioSource.PlayOneShot(throwAudio);
 	}
 }

@@ -8,7 +8,7 @@ public class Asteroid : MonoBehaviour {
 	public bool grabable = true;
 	public GameObject explosion;
 	public bool isVisible = false;
-	public AudioClip blastAudio,crumbleAudio;
+	public AudioClip blastAudio,pickupAudio,pushAudio;
 
 	AudioSource audioSource;
 
@@ -22,6 +22,7 @@ public class Asteroid : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		audioSource = GetComponent<AudioSource> ();
 		generator = transform.parent.gameObject;
 		hand = GameObject.Find ("Hand");
 	}
@@ -47,6 +48,8 @@ public class Asteroid : MonoBehaviour {
 		if (pickedUp) {
 			grabable = false;
 			anim.SetBool ("pickedUp", true);
+			audioSource.PlayOneShot (pickupAudio);
+
 			//transform.position = hand.transform.position;
 		} else {
 			anim.SetBool ("pickedUp", false);
@@ -59,7 +62,7 @@ public class Asteroid : MonoBehaviour {
 			pickedUp = true;
 		} else if (thrown && other.gameObject.tag == "Spaceship") {
 			Debug.Log("Spaceship hit!");
-			//audioSource.PlayOneShot (blastAudio);
+			audioSource.PlayOneShot (blastAudio);
 			other.gameObject.SendMessage("hitSpaceShip", dmgPoints);
 			//dmgPoints--;
 
