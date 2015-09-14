@@ -8,7 +8,7 @@ public class AlienController : MonoBehaviour {
 	public AudioClip gameoverClip;
 	private GameObject planet;
 	bool isGameOver = false;
-	private float rotationSpeed = 5f;
+	private float rotationSpeed = 10f;
 
 	// Use this for initialization
 	void Start () {
