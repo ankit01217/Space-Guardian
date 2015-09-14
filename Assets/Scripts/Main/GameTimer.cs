@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class GameTimer : MonoBehaviour
 {
 
-	Slider gameTimer;
+	GameObject gameTimer;
 	public float timerSpeed = 0.01f;
 	public AudioClip timerAudio, gameEndAudio;
 	AudioSource audioSource;
@@ -15,8 +15,10 @@ public class GameTimer : MonoBehaviour
 	{
 	
 		audioSource = GetComponent<AudioSource> ();
-		gameTimer = GetComponent<Slider> ();
-		gameTimer.value = 1;
+		gameTimer = GameObject.FindGameObjectWithTag ("GameTimer");
+		Vector3 localScale = gameTimer.transform.localScale;
+		Vector3 newScale = new Vector3 (1,localScale.y,localScale.z);
+		gameTimer.transform.localScale = newScale;
 	
 		InvokeRepeating ("updateTimer", 0.01f, 0.01f);
 	}
@@ -25,16 +27,23 @@ public class GameTimer : MonoBehaviour
 	void updateTimer ()
 	{
 
-		gameTimer.value = Mathf.Clamp (gameTimer.value - Time.deltaTime * timerSpeed, 0, 1);
+		Vector3 localScale = gameTimer.transform.localScale;
+		float newXScale = Mathf.Clamp (localScale.x - Time.deltaTime * timerSpeed, 0, 1);
+		Vector3 newScale = new Vector3 (newXScale,localScale.y,localScale.z);
+		gameTimer.transform.localScale = newScale;
+		
 
-		if (gameTimer.value < 0.01f && isTimerAudioEnabled == false) {
-			Debug.Log (gameTimer.value);
+		gameTimer.transform.localScale = newScale;
+
+
+		if (newXScale < 0.1f && isTimerAudioEnabled == false) {
+			Debug.Log (newXScale);
 			isTimerAudioEnabled = true;
 			//play timer audio
 			audioSource.PlayOneShot (timerAudio);
 		}
 
-		if (gameTimer.value == 0 && isGameOver == false) {
+		if (newXScale == 0 && isGameOver == false) {
 			Debug.Log ("Game Over");
 			isGameOver = true;
 			audioSource.PlayOneShot (gameEndAudio);

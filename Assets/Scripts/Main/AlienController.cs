@@ -8,11 +8,13 @@ public class AlienController : MonoBehaviour {
 	public AudioClip gameoverClip;
 	private GameObject planet;
 	bool isGameOver = false;
+	private float rotationSpeed = 5f;
 
 	// Use this for initialization
 	void Start () {
 		audioSource = GetComponent<AudioSource> ();
 		planet = GameObject.FindGameObjectWithTag("Planet");
+
 
 	}
 
@@ -48,6 +50,7 @@ public class AlienController : MonoBehaviour {
 			Debug.Log("game over");
 			isGameOver = true;
 			audioSource.PlayOneShot(gameoverClip);
+
 		}
 
 	}
@@ -56,6 +59,9 @@ public class AlienController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
+		planet.transform.RotateAround (planet.transform.position, new Vector3 (0, 0, 1), 0.3f * Time.deltaTime * rotationSpeed);
+		
+
 	}
 }
