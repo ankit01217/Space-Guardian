@@ -11,11 +11,11 @@ public class AsteroidHandController : MonoBehaviour {
 	public float minThrowStrength = 15f;
 	public AudioClip throwAudio,pickupAudio;
 	public GameObject arrowhead;
+	public bool handIsEmpty = true;
 
 	LineRenderer line;
 	Vector3[] lineVertices = new Vector3[2];
 	AudioSource audioSource;
-	LinkedList<Vector3> zCoords = new LinkedList<Vector3>();
 	GameObject asteroid;
 	bool throwing = false;
 
@@ -45,24 +45,12 @@ public class AsteroidHandController : MonoBehaviour {
 		                          transform.position.z);
 		transform.position = pos;
 	}
-	
-	// Called 30 times a second to match Kinect fps
-	void FixedUpdate () {		
-		if (asteroid && asteroid.GetComponent<Asteroid> ().pickedUp) {
-			StoreCoords ();
-		}
-	}
-
-	void StoreCoords () {
-		zCoords.AddLast (hand.transform.position);
-		if (zCoords.Count > interval) {
-			zCoords.RemoveFirst();
-		}
-	}
 
 
 	void OnTriggerEnter (Collider other) {
 		if (asteroid == null && other.tag == "Asteroid" && other.GetComponent<Asteroid>().grabable) {
+			handIsEmpty = false;
+
 			asteroid = other.gameObject;
 			other.GetComponent<Asteroid>().pickedUp = true;
 			other.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -84,18 +72,18 @@ public class AsteroidHandController : MonoBehaviour {
 	void ThrowAsteroid () {
 		// We only want the direction along the x-y plane
 		float strength = Random.Range(minThrowStrength, maxThrowStrength);
-		Vector3 oldPos = zCoords.First ();
-		asteroid.GetComponent<Rigidbody> ().velocity = new Vector3(transform.position.x - oldPos.x,
+		Vector3 oldPos = asteroid.transform.position;
+		asteroid.GetComponent<Rigidbody> ().velocity = new Vector3 (transform.position.x - oldPos.x,
 		                                                           transform.position.y - oldPos.y,
-																   0).normalized * strength;
+		                                                           0);/*.normalized * strength;*/
 		asteroid.GetComponent<Asteroid>().pickedUp = false;
 		asteroid.GetComponent<Asteroid>().thrown = true;
 		asteroid = null;
 
-		zCoords.Clear ();
 		line.SetVertexCount (0);	// remove line		
 		arrowhead.SetActive (false);
-		
+		handIsEmpty = true;
+
 		Debug.Log("Throw successful");
 
 		audioSource.PlayOneShot(throwAudio);
