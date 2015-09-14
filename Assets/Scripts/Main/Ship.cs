@@ -227,6 +227,10 @@ public class Ship : MonoBehaviour
 		setUpSpaceShip ();
 		functioningSpaceShip ();
 
+
+		float curScale = this.transform.localScale.x;
+		LeanTween.scale( this.gameObject, new Vector3 (curScale + 0.05f, curScale + 0.05f, curScale + 0.05f), 0.25f).setEase(LeanTweenType.easeOutCirc).setLoopPingPong(-1);
+
 	}
 	
 	void Update ()

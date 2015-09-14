@@ -7,21 +7,19 @@ public class AlienController : MonoBehaviour {
 	AudioSource audioSource;
 	public AudioClip gameoverClip;
 	private GameObject planet;
-	private ParticleSystem planetPS;
 	bool isGameOver = false;
 
 	// Use this for initialization
 	void Start () {
 		audioSource = GetComponent<AudioSource> ();
 		planet = GameObject.FindGameObjectWithTag("Planet");
-		//planetPS = planet.GetComponent<ParticleSystem>();
-		//planetPS.enableEmission = true;
+
 	}
 
 	public void killRandomAlien(Vector3 shipPosition){
 
-		//if(planetPS.isPlaying) planetPS.Stop();
-		//if(!planetPS.isPlaying) planetPS.Play();
+
+
 		aliens = (GameObject[])GameObject.FindGameObjectsWithTag ("Alien");
 		if (aliens != null && aliens.Length > 0) {
 
