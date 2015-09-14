@@ -6,7 +6,8 @@ public class Alien : MonoBehaviour {
 	Animator animator;
 	AudioSource audioSource;
 	public AudioClip deathClip, explosionClip;
-	public ParticleSystem planetPS;
+	public GameObject waterExplosionPF;
+	private GameObject waterExplosion;
 
 	// Use this for initialization
 	void Awake(){
@@ -31,12 +32,13 @@ public class Alien : MonoBehaviour {
 	public void die(){
 
 		//animator.SetTrigger("Die");
-		Invoke("removeAlien", 2f);
+		Invoke("removeAlien", 0.7f);
 
 		audioSource.PlayOneShot (explosionClip);
-		ParticleSystem ps = (ParticleSystem)Instantiate (planetPS, transform.position, Quaternion.identity);
-		ps.enableEmission = true;
-		ps.Play();
+		waterExplosion = (GameObject)Instantiate (waterExplosionPF, transform.position, Quaternion.identity);
+		//waterExplosion.transform.parent = this.gameObject.transform;
+		Animator anim = waterExplosion.GetComponent<Animator> ();
+
 
 		audioSource.PlayOneShot (deathClip);
 		Vector3 pos = transform.position;
@@ -52,6 +54,7 @@ public class Alien : MonoBehaviour {
 	}
 
 	void removeAlien(){
+		Destroy(waterExplosion);
 		Destroy (this.gameObject);	
 	
 	}
