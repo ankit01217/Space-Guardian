@@ -51,7 +51,7 @@ public class Asteroid : MonoBehaviour {
 
 	// Spaceships use trigger collider
 	void OnTriggerEnter(Collider other) {
-		if (!pickedUp && other.gameObject.tag == "Hand" && other.GetComponent<AsteroidHandController>().handIsEmpty) {
+		if (grabable && other.gameObject.tag == "Hand" && other.GetComponent<AsteroidHandController>().handIsEmpty) {
 			pickedUp = true;
 			hand = other.gameObject;
 		} else if (thrown && other.gameObject.tag == "Spaceship") {

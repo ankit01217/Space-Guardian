@@ -75,7 +75,7 @@ public class AsteroidHandController : MonoBehaviour {
 		Vector3 oldPos = asteroid.transform.position;
 		asteroid.GetComponent<Rigidbody> ().velocity = new Vector3 (transform.position.x - oldPos.x,
 		                                                           transform.position.y - oldPos.y,
-		                                                           0);/*.normalized * strength;*/
+		                                                           0).normalized * strength;
 		asteroid.GetComponent<Asteroid>().pickedUp = false;
 		asteroid.GetComponent<Asteroid>().thrown = true;
 		asteroid = null;
