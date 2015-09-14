@@ -47,7 +47,7 @@ public class GameTimer : MonoBehaviour
 			Debug.Log ("Game Over");
 			isGameOver = true;
 			audioSource.PlayOneShot (gameEndAudio);
-			Application.LoadLevel(Application.loadedLevel);
+			AutoFade.LoadLevel(2,2,1,Color.black);
 
 		}
 	}

@@ -46,8 +46,7 @@ public class AlienController : MonoBehaviour {
 			Debug.Log("game over");
 			isGameOver = true;
 			audioSource.PlayOneShot(gameoverClip);
-
-			Application.LoadLevel(Application.loadedLevel);
+			AutoFade.LoadLevel(2,2,1,Color.black);
 
 		}
 
