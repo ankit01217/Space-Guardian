@@ -20,8 +20,6 @@ public class AlienController : MonoBehaviour {
 
 	public void killRandomAlien(Vector3 shipPosition){
 
-
-
 		aliens = (GameObject[])GameObject.FindGameObjectsWithTag ("Alien");
 		if (aliens != null && aliens.Length > 0) {
 
@@ -44,12 +42,12 @@ public class AlienController : MonoBehaviour {
 		}
 
 
-		
-
 		if (aliens.Length == 0 && isGameOver == false) {
 			Debug.Log("game over");
 			isGameOver = true;
 			audioSource.PlayOneShot(gameoverClip);
+
+			Application.LoadLevel(Application.loadedLevel);
 
 		}
 

@@ -36,7 +36,7 @@ public class GameTimer : MonoBehaviour
 		gameTimer.transform.localScale = newScale;
 
 
-		if (newXScale < 0.1f && isTimerAudioEnabled == false) {
+		if (newXScale < 0.07f && isTimerAudioEnabled == false) {
 			Debug.Log (newXScale);
 			isTimerAudioEnabled = true;
 			//play timer audio
@@ -47,6 +47,7 @@ public class GameTimer : MonoBehaviour
 			Debug.Log ("Game Over");
 			isGameOver = true;
 			audioSource.PlayOneShot (gameEndAudio);
+			Application.LoadLevel(Application.loadedLevel);
 
 		}
 	}
