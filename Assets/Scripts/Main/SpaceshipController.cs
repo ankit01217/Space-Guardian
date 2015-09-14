@@ -7,9 +7,9 @@ public class SpaceshipController : MonoBehaviour {
 	public GameObject normalShipPF, fastShipPF, shieldedShipPF, attackerShipPF;
 	public GameObject[] spipPrefabs;
 	public float shipSpawnInterval = 3f;
-	public int round1Ship = 3;
-	public int round2Ship = 5;
-	public int round3Ship = 8;
+	public int round1Ship = 5;
+	public int round2Ship = 10;
+	public int round3Ship = 15;
 	AudioSource audioSource;
 
 	//public int curActiveShipCount = 0;

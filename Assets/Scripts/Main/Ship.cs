@@ -193,8 +193,6 @@ public class Ship : MonoBehaviour {
 		/*
 		if (!inScreen(gameObject.transform.position)) {
 			gameObject.transform.Rotate(new Vector3(180,0,0));
-
-
 			/*
 			var lookPos = planet.transform.position - transform.position;
 			lookPos.z = 0;
