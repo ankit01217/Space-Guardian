@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	// toggle visibility for debugging
-	void ShowPointMan (){
+	void ShowPointMan () {
 		bool visible = pointMan.transform.GetChild(0).GetComponent<Renderer>().isVisible;
 		foreach (Transform point in pointMan.transform) {
 			point.GetComponent<Renderer>() .enabled = !visible;

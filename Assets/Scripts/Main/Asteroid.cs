@@ -7,36 +7,23 @@ public class Asteroid : MonoBehaviour {
 	public bool thrown = false;
 	public bool grabable = true;
 	public GameObject explosion;
-	public bool isVisible = false;
 	public AudioClip blastAudio;
+	public Animator anim;
+	public GameObject glow;
 
+	AlienController alienController;
 	AudioSource audioSource;
 
 	GameObject hand;
-	int dmgPoints = 2;	// how much damage the asteroid does
-	GameObject generator;
-	float animDuration = 0f;
-	float timeToWait = 0f;
-	Animator anim;
-	bool live = false;
 
 	// Use this for initialization
 	void Start () {
 		audioSource = GetComponent<AudioSource> ();
-		generator = transform.parent.gameObject;
+		alienController = GameObject.FindObjectOfType<AlienController> ();
 	}
 
-	public void SetParams (int dmg, Vector3 velocity) {
-		dmgPoints = dmg;
+	public void SetVelocity (Vector3 velocity) {
 		gameObject.GetComponent<Rigidbody> ().velocity = velocity;
-
-		// activate respective model based on start dmg points
-		transform.GetChild (dmgPoints).gameObject.SetActive (true);
-		anim = transform.GetChild (dmgPoints).GetComponent<Animator> ();
-
-//		if (dmgPoints == 2) {
-//			GetComponent<CapsuleCollider> ().radius = 1f;
-//		}
 	}
 	
 	// Update is called once per frame
@@ -49,7 +36,7 @@ public class Asteroid : MonoBehaviour {
 		}
 	}
 
-	// Spaceships use trigger collider
+
 	void OnTriggerEnter(Collider other) {
 		if (grabable && other.gameObject.tag == "Hand" && other.GetComponent<AsteroidHandController>().handIsEmpty) {
 			pickedUp = true;
@@ -57,24 +44,32 @@ public class Asteroid : MonoBehaviour {
 		} else if (thrown && other.gameObject.tag == "Spaceship") {
 			Debug.Log("Spaceship hit!");
 			audioSource.PlayOneShot (blastAudio);
-			other.gameObject.SendMessage("hitSpaceShip", dmgPoints);
+			other.gameObject.SendMessage("hitSpaceShip");
 			DestroyAsteroid();
+		} else if (other.gameObject.tag == "Planet") {
+			if (thrown) {
+				alienController.killRandomAlien(transform.position);
+				DestroyAsteroid();
+			} else {
+				grabable = false;
+			}
+		}
+	}
+
+	void OnTriggerExit (Collider other) {
+		if (!thrown && other.gameObject.tag == "Planet") {
+			grabable = true;
 		}
 	}
 
 	void AsteroidHit () {
-		DestroyAsteroid ();
+		GetComponent<Rigidbody> ().velocity = Vector3.zero;
+		Invoke("DestroyAsteroid", 0.5f);
 	}
 
 
 	void OnBecameInvisible () {
-		isVisible = false;
-		Invoke ("DestroyAsteroid", timeToWait);		// destroy asteroid if it's out of screen for more than 3s
-	}
-
-	void OnBecameVisible () {
-		isVisible = true;
-		CancelInvoke ();
+		DestroyAsteroid ();
 	}
 
 	void DestroyAsteroid () {
@@ -82,9 +77,7 @@ public class Asteroid : MonoBehaviour {
 		if (GetComponent<Renderer> ().isVisible) {
 			Instantiate(explosion, transform.position, Quaternion.identity);
 		}
-
-		generator.GetComponent<AsteroidGenerator> ().asteroidCount--;
-		Destroy (gameObject, animDuration);
+		Destroy (gameObject);
 
 	}
 }
