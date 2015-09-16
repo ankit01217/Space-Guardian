@@ -15,12 +15,10 @@ public class Asteroid : MonoBehaviour {
 	AudioSource audioSource;
 
 	GameObject hand;
-	GameObject generator;
 
 	// Use this for initialization
 	void Start () {
 		audioSource = GetComponent<AudioSource> ();
-		generator = transform.parent.gameObject;
 		alienController = GameObject.FindObjectOfType<AlienController> ();
 	}
 
@@ -38,7 +36,7 @@ public class Asteroid : MonoBehaviour {
 		}
 	}
 
-	// Spaceships use trigger collider
+
 	void OnTriggerEnter(Collider other) {
 		if (grabable && other.gameObject.tag == "Hand" && other.GetComponent<AsteroidHandController>().handIsEmpty) {
 			pickedUp = true;
@@ -65,7 +63,8 @@ public class Asteroid : MonoBehaviour {
 	}
 
 	void AsteroidHit () {
-		DestroyAsteroid ();
+		GetComponent<Rigidbody> ().velocity = Vector3.zero;
+		Invoke("DestroyAsteroid", 0.5f);
 	}
 
 
@@ -78,8 +77,6 @@ public class Asteroid : MonoBehaviour {
 		if (GetComponent<Renderer> ().isVisible) {
 			Instantiate(explosion, transform.position, Quaternion.identity);
 		}
-
-		generator.GetComponent<AsteroidGenerator> ().asteroidCount--;
 		Destroy (gameObject);
 
 	}
