@@ -10,11 +10,11 @@ FBXHeaderExtension:  {
 		Version: 1000
 		Year: 2015
 		Month: 9
-		Day: 11
-		Hour: 13
+		Day: 14
+		Hour: 17
 		Minute: 22
-		Second: 18
-		Millisecond: 534
+		Second: 1
+		Millisecond: 431
 	}
 	Creator: "FBX SDK/FBX Plugins version 2016.1"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -30,21 +30,21 @@ FBXHeaderExtension:  {
 			Comment: ""
 		}
 		Properties70:  {
-			P: "DocumentUrl", "KString", "Url", "", "C:\Users\evonfisc\Documents\RHOG\Assets\Models\Fighter.fbx"
-			P: "SrcDocumentUrl", "KString", "Url", "", "C:\Users\evonfisc\Documents\RHOG\Assets\Models\Fighter.fbx"
+			P: "DocumentUrl", "KString", "Url", "", "C:\Users\evonfisc\Documents\RHOG Local\Assets\Models\Fighter.fbx"
+			P: "SrcDocumentUrl", "KString", "Url", "", "C:\Users\evonfisc\Documents\RHOG Local\Assets\Models\Fighter.fbx"
 			P: "Original", "Compound", "", ""
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "Maya"
 			P: "Original|ApplicationVersion", "KString", "", "", "2016"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "11/09/2015 17:22:18.532"
-			P: "Original|FileName", "KString", "", "", "C:\Users\evonfisc\Documents\RHOG\Assets\Models\Fighter.fbx"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "14/09/2015 21:22:01.429"
+			P: "Original|FileName", "KString", "", "", "C:\Users\evonfisc\Documents\RHOG Local\Assets\Models\Fighter.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "Maya"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "2016"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "11/09/2015 17:22:18.532"
-			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Users\evonfisc\Documents\RHOG\Assets\Models"
-			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\evonfisc\Documents\RHOG\Assets\Models\Fighter.mb"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "14/09/2015 21:22:01.429"
+			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Users\evonfisc\Documents\RHOG Local\Assets\Models"
+			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\evonfisc\Documents\RHOG Local\Assets\Models\Fighter.mb"
 		}
 	}
 }
@@ -79,7 +79,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 215226256, "", "Scene" {
+	Document: 1356391984, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", "Take 001"
@@ -262,7 +262,7 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Geometry: 1392393744, "Geometry::", "Mesh" {
+	Geometry: 1341034736, "Geometry::", "Mesh" {
 		Vertices: *15 {
 			a: 0.324342399835587,-0.353553384542465,-0.70710676908493,-0.35502827167511,-0.0555204451084137,0.0156211806461215,5.84983474993805e-008,-0.353553384542465,0.70710676908493,0.70710676908493,-0.353553384542465,0,0.353594660758972,-0.0336266160011292,-0.685977339744568
 		} 
@@ -335,7 +335,7 @@ Objects:  {
 			}
 		}
 	}
-	Geometry: 1392393232, "Geometry::", "Mesh" {
+	Geometry: 1341037296, "Geometry::", "Mesh" {
 		Vertices: *15 {
 			a: 0.538453757762909,-0.340006440877914,-0.709406197071075,0.30127364397049,-0.353553384542465,-0.0578580051660538,0.900931179523468,-0.353553384542465,0.698841333389282,1.24435877799988,-0.0484645664691925,-0.0165308527648449,0.537251949310303,-0.0528550744056702,-0.710139870643616
 		} 
@@ -408,7 +408,7 @@ Objects:  {
 			}
 		}
 	}
-	Geometry: 1392392720, "Geometry::", "Mesh" {
+	Geometry: 1341039344, "Geometry::", "Mesh" {
 		Vertices: *15 {
 			a: 9.27258483329751e-008,-0.353553384542465,-0.707107245922089,-0.70710676908493,-0.353553384542465,-5.38654376214254e-007,-3.09086196637054e-008,-0.35551118850708,0.703438222408295,0.70710676908493,-0.353553384542465,-4.76837158203125e-007,0,0.353553354740143,-0.704440236091614
 		} 
@@ -481,7 +481,7 @@ Objects:  {
 			}
 		}
 	}
-	Geometry: 1392392208, "Geometry::", "Mesh" {
+	Geometry: 1341040880, "Geometry::", "Mesh" {
 		Vertices: *33 {
 			a: -0.362753391265869,-0.353553384542465,-1.13031899929047,-1.00466179847717,-0.353553384542465,-0.537252068519592,-0.389415413141251,-0.353553384542465,-0.156232595443726,0.378831058740616,-0.353553384542465,-0.559244871139526,-0.388474404811859,0.648620367050171,-0.175155252218246,0.276559382677078,-0.345582902431488,0.510434627532959,0.664052248001099,-0.360717415809631,1.20719563961029,0.306709468364716,-0.0274522304534912,0.530678749084473,-1.33301377296448,-0.355967104434967,1.20019423961639,-1.08670389652252,-0.34635403752327,0.525947690010071,-1.08576273918152,-0.0309126973152161,0.531544148921967
 		} 
@@ -555,7 +555,7 @@ Objects:  {
 			}
 		}
 	}
-	Geometry: 1392391696, "Geometry::", "Mesh" {
+	Geometry: 1341042928, "Geometry::", "Mesh" {
 		Vertices: *126 {
 			a: 0.190211430191994,-0.25,-0.061803437769413,0.161803513765335,-0.25,-0.117557123303413,0.117557123303413,-0.25,-0.161803498864174,0.0618034303188324,-0.25,-0.190211400389671,0,-0.25,-0.200000092387199,-0.0618034303188324,-0.25,-0.190211400389671,-0.117557100951672,-0.25,-0.161803469061852,-0.16180345416069,-0.25,-0.11755708605051,-0.190211355686188,-0.25,-0.0618034116923809,-0.200000047683716,-0.25,0,-0.190211355686188,-0.25,0.0618034116923809,-0.161803439259529,-0.25,0.117557071149349,-0.117557071149349,-0.25,0.161803424358368,-0.0618034116923809,-0.25,0.190211340785027,-5.9604645663569e-009,-0.25,0.200000032782555,0.0618033967912197,-0.25,0.190211325883865,0.117557048797607,-0.25,0.161803409457207,0.161803409457207,-0.25,0.117557063698769,0.190211310982704,-0.25,0.06180340051651,0.200000002980232,-0.25,0,0.190211430191994,0.25,-0.061803437769413,0.161803513765335,0.25,-0.117557123303413,0.117557123303413,0.25,-0.161803498864174,0.0618034303188324,0.25,-0.190211400389671,0,0.25,-0.200000092387199,-0.0618034303188324,0.25,-0.190211400389671,-0.117557100951672,0.25,-0.161803469061852,-0.16180345416069,0.25,-0.11755708605051,-0.190211355686188,0.25,-0.0618034116923809,-0.200000047683716,0.25,0,-0.190211355686188,0.25,0.0618034116923809,-0.161803439259529,0.25,0.117557071149349,-0.117557071149349,0.25,0.161803424358368,-0.0618034116923809,0.25,0.190211340785027,-5.9604645663569e-009,0.25,0.200000032782555,0.0618033967912197,0.25,0.190211325883865,0.117557048797607,0.25,0.161803409457207,0.161803409457207,0.25,0.117557063698769,0.190211310982704,0.25,0.06180340051651,0.200000002980232,0.25,0,0,-0.25,0,0,0.25,0
 		} 
@@ -631,7 +631,7 @@ Objects:  {
 			}
 		}
 	}
-	Geometry: 1392390160, "Geometry::", "Mesh" {
+	Geometry: 1341039856, "Geometry::", "Mesh" {
 		Vertices: *126 {
 			a: 0.190211430191994,-0.25,-0.061803437769413,0.161803513765335,-0.25,-0.117557123303413,0.117557123303413,-0.25,-0.161803498864174,0.0618034303188324,-0.25,-0.190211400389671,0,-0.25,-0.200000092387199,-0.0618034303188324,-0.25,-0.190211400389671,-0.117557100951672,-0.25,-0.161803469061852,-0.16180345416069,-0.25,-0.11755708605051,-0.190211355686188,-0.25,-0.0618034116923809,-0.200000047683716,-0.25,0,-0.190211355686188,-0.25,0.0618034116923809,-0.161803439259529,-0.25,0.117557071149349,-0.117557071149349,-0.25,0.161803424358368,-0.0618034116923809,-0.25,0.190211340785027,-5.9604645663569e-009,-0.25,0.200000032782555,0.0618033967912197,-0.25,0.190211325883865,0.117557048797607,-0.25,0.161803409457207,0.161803409457207,-0.25,0.117557063698769,0.190211310982704,-0.25,0.06180340051651,0.200000002980232,-0.25,0,0.190211430191994,0.25,-0.061803437769413,0.161803513765335,0.25,-0.117557123303413,0.117557123303413,0.25,-0.161803498864174,0.0618034303188324,0.25,-0.190211400389671,0,0.25,-0.200000092387199,-0.0618034303188324,0.25,-0.190211400389671,-0.117557100951672,0.25,-0.161803469061852,-0.16180345416069,0.25,-0.11755708605051,-0.190211355686188,0.25,-0.0618034116923809,-0.200000047683716,0.25,0,-0.190211355686188,0.25,0.0618034116923809,-0.161803439259529,0.25,0.117557071149349,-0.117557071149349,0.25,0.161803424358368,-0.0618034116923809,0.25,0.190211340785027,-5.9604645663569e-009,0.25,0.200000032782555,0.0618033967912197,0.25,0.190211325883865,0.117557048797607,0.25,0.161803409457207,0.161803409457207,0.25,0.117557063698769,0.190211310982704,0.25,0.06180340051651,0.200000002980232,0.25,0,0,-0.25,0,0,0.25,0
 		} 
@@ -707,13 +707,13 @@ Objects:  {
 			}
 		}
 	}
-	NodeAttribute: 1388800768, "NodeAttribute::", "Null" {
+	NodeAttribute: 1368736048, "NodeAttribute::", "Null" {
 		Properties70:  {
 			P: "Look", "enum", "", "",0
 		}
 		TypeFlags: "Null"
 	}
-	Geometry: 1392390672, "Geometry::", "Mesh" {
+	Geometry: 1341037808, "Geometry::", "Mesh" {
 		Vertices: *24 {
 			a: -0.776256799697876,-0.183214485645294,-0.718690991401672,-0.97988486289978,-0.304579555988312,0.605224907398224,-0.3022141456604,-0.183214485645294,0.70710676908493,-0.409185647964478,-0.183214485645294,-0.191547751426697,-1.15743017196655,0.61777400970459,-0.338410019874573,-1.29818606376648,-0.179105132818222,-0.70358407497406,-1.35347032546997,0.0214442759752274,-0.0905548334121704,-2.04178309440613,0.702869415283203,-0.784308671951294
 		} 
@@ -786,7 +786,7 @@ Objects:  {
 			}
 		}
 	}
-	Geometry: 1392388112, "Geometry::", "Mesh" {
+	Geometry: 521491616, "Geometry::", "Mesh" {
 		Vertices: *24 {
 			a: -1.82011532783508,-0.183214485645294,-0.718690991401672,-2.18718647956848,-0.183214485645294,-0.191547751426697,-2.29415798187256,-0.183214485645294,0.70710676908493,-1.51074349880219,-0.304579555988312,0.605224907398224,-1.29818606376648,-0.179105132818222,-0.70358407497406,-1.27294266223907,0.00822630804032087,-0.0905548334121704,-0.583428263664246,0.700466156005859,-0.784308671951294,-1.43894195556641,0.61777400970459,-0.338410019874573
 		} 
@@ -859,13 +859,13 @@ Objects:  {
 			}
 		}
 	}
-	NodeAttribute: 1388800416, "NodeAttribute::", "Null" {
+	NodeAttribute: 1368739040, "NodeAttribute::", "Null" {
 		Properties70:  {
 			P: "Look", "enum", "", "",0
 		}
 		TypeFlags: "Null"
 	}
-	Model: 326275328, "Model::pPyramid1", "Mesh" {
+	Model: 339944528, "Model::pPyramid1", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -877,7 +877,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Model: 326259088, "Model::pPyramid3", "Mesh" {
+	Model: 339942208, "Model::pPyramid3", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -890,7 +890,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Model: 1388765360, "Model::pPyramid5", "Mesh" {
+	Model: 339930608, "Model::pPyramid5", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -903,7 +903,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Model: 1388767680, "Model::pPyramid6", "Mesh" {
+	Model: 1363630656, "Model::pPyramid6", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -916,7 +916,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Model: 1388770000, "Model::pCylinder1", "Mesh" {
+	Model: 1363632976, "Model::pCylinder1", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -930,7 +930,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Model: 1388772320, "Model::pCylinder2", "Mesh" {
+	Model: 1363635296, "Model::pCylinder2", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -944,7 +944,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Model: 1388774640, "Model::pPyramid7", "Null" {
+	Model: 1363637616, "Model::pPyramid7", "Null" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -956,7 +956,7 @@ Objects:  {
 		Shading: Y
 		Culling: "CullingOff"
 	}
-	Model: 1388776960, "Model::polySurface1", "Mesh" {
+	Model: 1363639936, "Model::polySurface1", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationPivot", "Vector3D", "Vector", "",-1.04988800712174,0,0
@@ -971,7 +971,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Model: 1388779280, "Model::polySurface2", "Mesh" {
+	Model: 1363642256, "Model::polySurface2", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -984,7 +984,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Model: 1388781600, "Model::transform1", "Null" {
+	Model: 1363644576, "Model::transform1", "Null" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -996,7 +996,7 @@ Objects:  {
 		Shading: Y
 		Culling: "CullingOff"
 	}
-	Material: 222613600, "Material::BlackMatte", "" {
+	Material: 1361922752, "Material::BlackMatte", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -1011,28 +1011,28 @@ Objects:  {
 			P: "Opacity", "double", "Number", "",1
 		}
 	}
-	Material: 222614800, "Material::RedStripe", "" {
+	Material: 1361923152, "Material::RedStripe", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
 		Properties70:  {
 			P: "AmbientColor", "Color", "", "A",0,0,0
-			P: "DiffuseColor", "Color", "", "A",0.200000002980232,0,0.00769338617101312
+			P: "DiffuseColor", "Color", "", "A",1,0,0.0384669303894043
 			P: "DiffuseFactor", "Number", "", "A",0.800000011920929
 			P: "TransparencyFactor", "Number", "", "A",1
 			P: "Emissive", "Vector3D", "Vector", "",0,0,0
 			P: "Ambient", "Vector3D", "Vector", "",0,0,0
-			P: "Diffuse", "Vector3D", "Vector", "",0.160000004768372,0,0.0061547090285228
+			P: "Diffuse", "Vector3D", "Vector", "",0.800000011920929,0,0.030773544770085
 			P: "Opacity", "double", "Number", "",1
 		}
 	}
-	Material: 1526564864, "Material::FighterGlass", "" {
+	Material: 1365898064, "Material::FighterGlass", "" {
 		Version: 102
 		ShadingModel: "phong"
 		MultiLayer: 0
 		Properties70:  {
 			P: "AmbientColor", "Color", "", "A",0,0,0
-			P: "DiffuseColor", "Color", "", "A",0.0914798974990845,0.217242807149887,0.222222223877907
+			P: "DiffuseColor", "Color", "", "A",0.186009123921394,0.441727042198181,0.451851844787598
 			P: "DiffuseFactor", "Number", "", "A",0.800000011920929
 			P: "TransparencyFactor", "Number", "", "A",1
 			P: "SpecularColor", "Color", "", "A",0.5,0.5,0.5
@@ -1040,14 +1040,14 @@ Objects:  {
 			P: "ReflectionFactor", "Number", "", "A",0.5
 			P: "Emissive", "Vector3D", "Vector", "",0,0,0
 			P: "Ambient", "Vector3D", "Vector", "",0,0,0
-			P: "Diffuse", "Vector3D", "Vector", "",0.0731839190897929,0.173794248309646,0.177777781751421
+			P: "Diffuse", "Vector3D", "Vector", "",0.148807301354517,0.353381639024342,0.361481481216572
 			P: "Specular", "Vector3D", "Vector", "",0.5,0.5,0.5
 			P: "Shininess", "double", "Number", "",6.31179093816824
 			P: "Opacity", "double", "Number", "",1
 			P: "Reflectivity", "double", "Number", "",0
 		}
 	}
-	Material: 222618800, "Material::lambert1", "" {
+	Material: 1366884256, "Material::lambert1", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -1062,7 +1062,7 @@ Objects:  {
 			P: "Opacity", "double", "Number", "",1
 		}
 	}
-	Material: 222619600, "Material::EnginePaint", "" {
+	Material: 1366884656, "Material::EnginePaint", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -1077,7 +1077,7 @@ Objects:  {
 			P: "Opacity", "double", "Number", "",1
 		}
 	}
-	AnimationStack: 1277072576, "AnimStack::Take 001", "" {
+	AnimationStack: 1366390720, "AnimStack::Take 001", "" {
 		Properties70:  {
 			P: "LocalStart", "KTime", "Time", "",1924423250
 			P: "LocalStop", "KTime", "Time", "",230930790000
@@ -1085,7 +1085,7 @@ Objects:  {
 			P: "ReferenceStop", "KTime", "Time", "",230930790000
 		}
 	}
-	AnimationLayer: 1258285552, "AnimLayer::BaseLayer", "" {
+	AnimationLayer: 1360820528, "AnimLayer::BaseLayer", "" {
 	}
 }
 
@@ -1095,109 +1095,109 @@ Objects:  {
 Connections:  {
 	
 	;Model::pPyramid1, Model::RootNode
-	C: "OO",326275328,0
+	C: "OO",339944528,0
 	
 	;Model::pPyramid3, Model::RootNode
-	C: "OO",326259088,0
+	C: "OO",339942208,0
 	
 	;Model::pPyramid5, Model::RootNode
-	C: "OO",1388765360,0
+	C: "OO",339930608,0
 	
 	;Model::pPyramid6, Model::RootNode
-	C: "OO",1388767680,0
+	C: "OO",1363630656,0
 	
 	;Model::pCylinder1, Model::RootNode
-	C: "OO",1388770000,0
+	C: "OO",1363632976,0
 	
 	;Model::pCylinder2, Model::RootNode
-	C: "OO",1388772320,0
+	C: "OO",1363635296,0
 	
 	;Model::pPyramid7, Model::RootNode
-	C: "OO",1388774640,0
+	C: "OO",1363637616,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",1258285552,1277072576
+	C: "OO",1360820528,1366390720
 	
 	;Geometry::, Model::pPyramid1
-	C: "OO",1392393744,326275328
+	C: "OO",1341034736,339944528
 	
 	;Material::BlackMatte, Model::pPyramid1
-	C: "OO",222613600,326275328
+	C: "OO",1361922752,339944528
 	
 	;Material::RedStripe, Model::pPyramid1
-	C: "OO",222614800,326275328
+	C: "OO",1361923152,339944528
 	
 	;Geometry::, Model::pPyramid3
-	C: "OO",1392393232,326259088
+	C: "OO",1341037296,339942208
 	
 	;Material::BlackMatte, Model::pPyramid3
-	C: "OO",222613600,326259088
+	C: "OO",1361922752,339942208
 	
 	;Material::RedStripe, Model::pPyramid3
-	C: "OO",222614800,326259088
+	C: "OO",1361923152,339942208
 	
 	;Geometry::, Model::pPyramid5
-	C: "OO",1392392720,1388765360
+	C: "OO",1341039344,339930608
 	
 	;Material::BlackMatte, Model::pPyramid5
-	C: "OO",222613600,1388765360
+	C: "OO",1361922752,339930608
 	
 	;Material::FighterGlass, Model::pPyramid5
-	C: "OO",1526564864,1388765360
+	C: "OO",1365898064,339930608
 	
 	;Geometry::, Model::pPyramid6
-	C: "OO",1392392208,1388767680
+	C: "OO",1341040880,1363630656
 	
 	;Material::BlackMatte, Model::pPyramid6
-	C: "OO",222613600,1388767680
+	C: "OO",1361922752,1363630656
 	
 	;Material::lambert1, Model::pPyramid6
-	C: "OO",222618800,1388767680
+	C: "OO",1366884256,1363630656
 	
 	;Geometry::, Model::pCylinder1
-	C: "OO",1392391696,1388770000
+	C: "OO",1341042928,1363632976
 	
 	;Material::EnginePaint, Model::pCylinder1
-	C: "OO",222619600,1388770000
+	C: "OO",1366884656,1363632976
 	
 	;Geometry::, Model::pCylinder2
-	C: "OO",1392390160,1388772320
+	C: "OO",1341039856,1363635296
 	
 	;Material::EnginePaint, Model::pCylinder2
-	C: "OO",222619600,1388772320
+	C: "OO",1366884656,1363635296
 	
 	;NodeAttribute::, Model::pPyramid7
-	C: "OO",1388800768,1388774640
+	C: "OO",1368736048,1363637616
 	
 	;Model::polySurface1, Model::pPyramid7
-	C: "OO",1388776960,1388774640
+	C: "OO",1363639936,1363637616
 	
 	;Model::polySurface2, Model::pPyramid7
-	C: "OO",1388779280,1388774640
+	C: "OO",1363642256,1363637616
 	
 	;Model::transform1, Model::pPyramid7
-	C: "OO",1388781600,1388774640
+	C: "OO",1363644576,1363637616
 	
 	;Geometry::, Model::polySurface1
-	C: "OO",1392390672,1388776960
+	C: "OO",1341037808,1363639936
 	
 	;Material::BlackMatte, Model::polySurface1
-	C: "OO",222613600,1388776960
+	C: "OO",1361922752,1363639936
 	
 	;Material::RedStripe, Model::polySurface1
-	C: "OO",222614800,1388776960
+	C: "OO",1361923152,1363639936
 	
 	;Geometry::, Model::polySurface2
-	C: "OO",1392388112,1388779280
+	C: "OO",521491616,1363642256
 	
 	;Material::BlackMatte, Model::polySurface2
-	C: "OO",222613600,1388779280
+	C: "OO",1361922752,1363642256
 	
 	;Material::RedStripe, Model::polySurface2
-	C: "OO",222614800,1388779280
+	C: "OO",1361923152,1363642256
 	
 	;NodeAttribute::, Model::transform1
-	C: "OO",1388800416,1388781600
+	C: "OO",1368739040,1363644576
 }
 ;Takes section
 ;----------------------------------------------------

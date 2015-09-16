@@ -8,7 +8,7 @@ public class Asteroid : MonoBehaviour {
 	public bool grabable = true;
 	public GameObject explosion;
 	public bool isVisible = false;
-	public AudioClip blastAudio,crumbleAudio;
+	public AudioClip blastAudio;
 
 	AudioSource audioSource;
 
@@ -22,8 +22,8 @@ public class Asteroid : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		audioSource = GetComponent<AudioSource> ();
 		generator = transform.parent.gameObject;
-		hand = GameObject.Find ("Hand");
 	}
 
 	public void SetParams (int dmg, Vector3 velocity) {
@@ -32,14 +32,11 @@ public class Asteroid : MonoBehaviour {
 
 		// activate respective model based on start dmg points
 		transform.GetChild (dmgPoints).gameObject.SetActive (true);
+		anim = transform.GetChild (dmgPoints).GetComponent<Animator> ();
 
-		// TODO: Clean this up once fractured asteroid is added
-		if (dmgPoints != 0) {
-			anim = transform.GetChild (dmgPoints).GetComponent<Animator> ();
-		}
-		if (dmgPoints == 2) {
-			GetComponent<CapsuleCollider> ().radius = 1f;
-		}
+//		if (dmgPoints == 2) {
+//			GetComponent<CapsuleCollider> ().radius = 1f;
+//		}
 	}
 	
 	// Update is called once per frame
@@ -47,7 +44,6 @@ public class Asteroid : MonoBehaviour {
 		if (pickedUp) {
 			grabable = false;
 			anim.SetBool ("pickedUp", true);
-			//transform.position = hand.transform.position;
 		} else {
 			anim.SetBool ("pickedUp", false);
 		}
@@ -55,21 +51,14 @@ public class Asteroid : MonoBehaviour {
 
 	// Spaceships use trigger collider
 	void OnTriggerEnter(Collider other) {
-		if (!pickedUp && other.gameObject.tag == "Hand") {
+		if (grabable && other.gameObject.tag == "Hand" && other.GetComponent<AsteroidHandController>().handIsEmpty) {
 			pickedUp = true;
+			hand = other.gameObject;
 		} else if (thrown && other.gameObject.tag == "Spaceship") {
 			Debug.Log("Spaceship hit!");
-			//audioSource.PlayOneShot (blastAudio);
+			audioSource.PlayOneShot (blastAudio);
 			other.gameObject.SendMessage("hitSpaceShip", dmgPoints);
-			//dmgPoints--;
-
-			// Play animation/change state
-
-
-			// Destroy asteroid
-			//if(dmgPoints == 0) {
 			DestroyAsteroid();
-			//}
 		}
 	}
 
@@ -78,7 +67,6 @@ public class Asteroid : MonoBehaviour {
 	}
 
 
-	//TODO: NOT DESTROYING PROPERLY!
 	void OnBecameInvisible () {
 		isVisible = false;
 		Invoke ("DestroyAsteroid", timeToWait);		// destroy asteroid if it's out of screen for more than 3s
@@ -97,7 +85,6 @@ public class Asteroid : MonoBehaviour {
 
 		generator.GetComponent<AsteroidGenerator> ().asteroidCount--;
 		Destroy (gameObject, animDuration);
-
 
 	}
 }

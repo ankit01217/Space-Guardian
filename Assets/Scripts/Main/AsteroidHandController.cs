@@ -10,21 +10,32 @@ public class AsteroidHandController : MonoBehaviour {
 	public float maxThrowStrength = 25f;
 	public float minThrowStrength = 15f;
 	public AudioClip throwAudio,pickupAudio;
-	AudioSource audioSource;
+	public GameObject arrowhead;
+	public bool handIsEmpty = true;
 
-	LinkedList<Vector3> zCoords = new LinkedList<Vector3>();
-	bool storing = false;
+	LineRenderer line;
+	Vector3[] lineVertices = new Vector3[2];
+	AudioSource audioSource;
 	GameObject asteroid;
 	bool throwing = false;
 
 	// Use this for initialization
 	void Start () {
-//		audioSource = GetComponent<AudioSource> ();
+		line = GetComponent<LineRenderer> ();
+		audioSource = GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		LinkHandToDetector ();
+		if (asteroid) {
+			lineVertices [1] = transform.position;
+			line.SetPosition (1, lineVertices [1]);
+			Vector3 midpoint = Vector3.Lerp (lineVertices [0], lineVertices [1], 0.5f);
+			arrowhead.transform.position = midpoint;
+			arrowhead.transform.rotation = Quaternion.FromToRotation (Vector3.up,
+			                                                          lineVertices [1] - lineVertices [0]);
+		}
 	}
 
 	// Link the x and y-coords of the asteroid hand to that of the player's hand
@@ -34,31 +45,24 @@ public class AsteroidHandController : MonoBehaviour {
 		                          transform.position.z);
 		transform.position = pos;
 	}
-	
-	// Called 30 times a second to match Kinect fps
-	void FixedUpdate () {		
-		StoreCoords ();
-	}
-
-	void StoreCoords () {
-		zCoords.AddLast (hand.transform.position);
-		if (zCoords.Count > interval) {
-			zCoords.RemoveFirst();
-		}
-	}
 
 
 	void OnTriggerEnter (Collider other) {
-		//TODO: can add sound here when asteroid bounces off hand
-
 		if (asteroid == null && other.tag == "Asteroid" && other.GetComponent<Asteroid>().grabable) {
+			handIsEmpty = false;
+
 			asteroid = other.gameObject;
 			other.GetComponent<Asteroid>().pickedUp = true;
 			other.GetComponent<Rigidbody>().velocity = Vector3.zero;
 			//other.transform.position = transform.position;	// snap asteroid to center of hand
 
 			Debug.Log ("Picked up " + other.gameObject);
-//			audioSource.PlayOneShot(pickupAudio);
+			audioSource.PlayOneShot(pickupAudio);
+
+			line.SetVertexCount(2);
+			line.SetPosition(0, asteroid.transform.position);
+			lineVertices[0] = (asteroid.transform.position);
+			arrowhead.SetActive(true);
 
 			Invoke("ThrowAsteroid", interval/30);
 		}
@@ -68,17 +72,20 @@ public class AsteroidHandController : MonoBehaviour {
 	void ThrowAsteroid () {
 		// We only want the direction along the x-y plane
 		float strength = Random.Range(minThrowStrength, maxThrowStrength);
-		Vector3 oldPos = zCoords.First ();
-		asteroid.GetComponent<Rigidbody> ().velocity = new Vector3(transform.position.x - oldPos.x,
+		Vector3 oldPos = asteroid.transform.position;
+		asteroid.GetComponent<Rigidbody> ().velocity = new Vector3 (transform.position.x - oldPos.x,
 		                                                           transform.position.y - oldPos.y,
-																   0).normalized * strength;
+		                                                           0).normalized * strength;
 		asteroid.GetComponent<Asteroid>().pickedUp = false;
 		asteroid.GetComponent<Asteroid>().thrown = true;
-
 		asteroid = null;
+
+		line.SetVertexCount (0);	// remove line		
+		arrowhead.SetActive (false);
+		handIsEmpty = true;
 
 		Debug.Log("Throw successful");
 
-//		audioSource.PlayOneShot(throwAudio);
+		audioSource.PlayOneShot(throwAudio);
 	}
 }

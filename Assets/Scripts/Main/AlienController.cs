@@ -7,21 +7,19 @@ public class AlienController : MonoBehaviour {
 	AudioSource audioSource;
 	public AudioClip gameoverClip;
 	private GameObject planet;
-	private ParticleSystem planetPS;
 	bool isGameOver = false;
+	private float rotationSpeed = 10f;
 
 	// Use this for initialization
 	void Start () {
 		audioSource = GetComponent<AudioSource> ();
 		planet = GameObject.FindGameObjectWithTag("Planet");
-		//planetPS = planet.GetComponent<ParticleSystem>();
-		//planetPS.enableEmission = true;
+
+
 	}
 
 	public void killRandomAlien(Vector3 shipPosition){
 
-		//if(planetPS.isPlaying) planetPS.Stop();
-		//if(!planetPS.isPlaying) planetPS.Play();
 		aliens = (GameObject[])GameObject.FindGameObjectsWithTag ("Alien");
 		if (aliens != null && aliens.Length > 0) {
 
@@ -44,12 +42,12 @@ public class AlienController : MonoBehaviour {
 		}
 
 
-		
-
 		if (aliens.Length == 0 && isGameOver == false) {
 			Debug.Log("game over");
 			isGameOver = true;
 			audioSource.PlayOneShot(gameoverClip);
+			AutoFade.LoadLevel(2,2,1,Color.black);
+
 		}
 
 	}
@@ -58,6 +56,9 @@ public class AlienController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
+		planet.transform.RotateAround (planet.transform.position, new Vector3 (0, 0, 1), 0.3f * Time.deltaTime * rotationSpeed);
+		
+
 	}
 }
