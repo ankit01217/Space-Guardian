@@ -18,7 +18,7 @@ public class AlienController : MonoBehaviour {
 
 	}
 
-	public void killRandomAlien(Vector3 shipPosition){
+	public void killRandomAlien(Vector3 objectPosition){
 
 		aliens = (GameObject[])GameObject.FindGameObjectsWithTag ("Alien");
 		if (aliens != null && aliens.Length > 0) {
@@ -27,7 +27,7 @@ public class AlienController : MonoBehaviour {
 			GameObject alien = null;
 			for(int i=0;i<aliens.Length;i++)
 			{
-				float dis = Vector3.Distance(shipPosition,aliens[i].transform.position);
+				float dis = Vector3.Distance(objectPosition,aliens[i].transform.position);
 				if(dis < minDis)
 				{
 					minDis = dis;

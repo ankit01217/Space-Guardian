@@ -1,10 +1,15 @@
 fileFormatVersion: 2
 guid: 4c35a15ebd0e4e04f861ea57a6f9fa09
-timeCreated: 1441977546
+timeCreated: 1442424536
 licenseType: Pro
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - explosion: {fileID: 137216, guid: 8dfe2e0440bbf2f41ae206fd2b5363e7, type: 2}
+  - blastAudio: {instanceID: 0}
+  - anim: {instanceID: 0}
+  - glow: {fileID: 143688, guid: 7d6919e5f3c476e488a1d39f7a8d09c9, type: 2}
+  - alienController: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

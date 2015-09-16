@@ -11,6 +11,7 @@ public class Asteroid : MonoBehaviour {
 	public Animator anim;
 	public GameObject glow;
 
+	AlienController alienController;
 	AudioSource audioSource;
 
 	GameObject hand;
@@ -20,6 +21,7 @@ public class Asteroid : MonoBehaviour {
 	void Start () {
 		audioSource = GetComponent<AudioSource> ();
 		generator = transform.parent.gameObject;
+		alienController = GameObject.FindObjectOfType<AlienController> ();
 	}
 
 	public void SetVelocity (Vector3 velocity) {
@@ -46,6 +48,19 @@ public class Asteroid : MonoBehaviour {
 			audioSource.PlayOneShot (blastAudio);
 			other.gameObject.SendMessage("hitSpaceShip");
 			DestroyAsteroid();
+		} else if (other.gameObject.tag == "Planet") {
+			if (thrown) {
+				alienController.killRandomAlien(transform.position);
+				DestroyAsteroid();
+			} else {
+				grabable = false;
+			}
+		}
+	}
+
+	void OnTriggerExit (Collider other) {
+		if (!thrown && other.gameObject.tag == "Planet") {
+			grabable = true;
 		}
 	}
 

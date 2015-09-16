@@ -133,7 +133,7 @@ public class Ship : MonoBehaviour
 		gameObject.transform.Rotate (new Vector3 (0, 0, 180));
 
 	}
-	void pointAtPlenet ()
+	void pointAtPlanet ()
 	{
 		gameObject.transform.LookAt (new Vector3 (planet.transform.position.x, planet.transform.position.y, 18));
 		if (gameObject.transform.position.x < 0) {
@@ -164,7 +164,7 @@ public class Ship : MonoBehaviour
 			
 		}
 */
-		pointAtPlenet ();
+		pointAtPlanet ();
 
 
 		/*
@@ -190,21 +190,14 @@ public class Ship : MonoBehaviour
 
 	}
 	
-	void hitSpaceShip (int damage)
+	void hitSpaceShip ()
 	{
-		spaceShipLife -= damage;
-		if (spaceShipType == SHIELDED) {
-			Debug.Log ("HAHAHAHA");
-			GameObject.FindGameObjectWithTag ("shieldSphere").SetActive (false);
-			spaceShipType = NORMAL;
-		} else if (spaceShipLife <= 0) {
 			spaceshipController.onShipDestroyed ();
 			Destroy (gameObject);
-		}
 	}
-	void hitPlenet ()
+	void hitPlanet ()
 	{
-		Debug.Log ("hit plqnet");
+		Debug.Log ("hit planet");
 		alienController.killRandomAlien (this.transform.position);
 		Destroy (this.gameObject);
 
@@ -254,7 +247,7 @@ public class Ship : MonoBehaviour
 		Debug.Log ("OnTriggerEnter");
 
 		if (other.gameObject.tag == "Planet") {
-			Invoke ("hitPlenet", 0.1f);
+			Invoke ("hitPlanet", 0.1f);
 		}
 	}
 }
