@@ -6,9 +6,9 @@ using System.Linq;
 public class AsteroidHandController : MonoBehaviour {
 
 	public GameObject hand;
-	public int interval = 30;
-	public float maxThrowStrength = 25f;
-	public float minThrowStrength = 15f;
+	public float aimTime = 1f;
+	public float maxThrowStrength = 30f;
+	public float minThrowStrength = 20f;
 	public AudioClip throwAudio,pickupAudio;
 	public GameObject arrowhead;
 	public bool handIsEmpty = true;
@@ -52,9 +52,10 @@ public class AsteroidHandController : MonoBehaviour {
 			handIsEmpty = false;
 
 			asteroid = other.gameObject;
-			other.GetComponent<Asteroid>().pickedUp = true;
-			other.GetComponent<Rigidbody>().velocity = Vector3.zero;
-			//other.transform.position = transform.position;	// snap asteroid to center of hand
+			asteroid.GetComponent<Asteroid>().pickedUp = true;
+			asteroid.GetComponent<Asteroid>().glow.SetActive(true);
+			asteroid.GetComponent<Rigidbody>().velocity = Vector3.zero;
+			asteroid.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
 			Debug.Log ("Picked up " + other.gameObject);
 			audioSource.PlayOneShot(pickupAudio);
@@ -64,7 +65,7 @@ public class AsteroidHandController : MonoBehaviour {
 			lineVertices[0] = (asteroid.transform.position);
 			arrowhead.SetActive(true);
 
-			Invoke("ThrowAsteroid", interval/30);
+			Invoke("ThrowAsteroid", aimTime);
 		}
 	}
 
@@ -78,6 +79,7 @@ public class AsteroidHandController : MonoBehaviour {
 		                                                           0).normalized * strength;
 		asteroid.GetComponent<Asteroid>().pickedUp = false;
 		asteroid.GetComponent<Asteroid>().thrown = true;
+		asteroid.transform.localScale = new Vector3(1f, 1f, 1f);
 		asteroid = null;
 
 		line.SetVertexCount (0);	// remove line		
