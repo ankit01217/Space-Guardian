@@ -22,12 +22,19 @@ public class AsteroidHandController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		line = GetComponent<LineRenderer> ();
-		audioSource = GetComponent<AudioSource> ();
+
+		if (Application.loadedLevelName == "Main") {
+			audioSource = GetComponent<AudioSource> ();
+		}
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		LinkHandToDetector ();
+		if (Application.loadedLevelName == "Main") {
+			LinkHandToDetector ();
+		}
+
 		if (asteroid) {
 			lineVertices [1] = transform.position;
 			line.SetPosition (1, lineVertices [1]);
@@ -58,7 +65,10 @@ public class AsteroidHandController : MonoBehaviour {
 			asteroid.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
 			Debug.Log ("Picked up " + other.gameObject);
-			audioSource.PlayOneShot(pickupAudio);
+
+			if (Application.loadedLevelName == "Main") {
+				audioSource.PlayOneShot(pickupAudio);
+			}
 
 			line.SetVertexCount(2);
 			line.SetPosition(0, asteroid.transform.position);
@@ -87,7 +97,8 @@ public class AsteroidHandController : MonoBehaviour {
 		handIsEmpty = true;
 
 		Debug.Log("Throw successful");
-
-		audioSource.PlayOneShot(throwAudio);
+		if (Application.loadedLevelName == "Main") {
+			audioSource.PlayOneShot (throwAudio);
+		}
 	}
 }
