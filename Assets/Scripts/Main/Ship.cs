@@ -204,7 +204,7 @@ public class Ship : MonoBehaviour
 	}
 	void hitPlenet ()
 	{
-		Debug.Log ("hit plqnet");
+		Debug.Log ("hit planet");
 		alienController.killRandomAlien (this.transform.position);
 		Destroy (this.gameObject);
 
