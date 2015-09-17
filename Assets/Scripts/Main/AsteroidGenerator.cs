@@ -8,7 +8,6 @@ public class AsteroidGenerator : MonoBehaviour
 	public Camera cam;
 	public float minSpeed = 3f;
 	public float maxSpeed = 5f;
-	public int asteroidCount = 0;
 	public float spawnRate = 1f;
 	public int initCount = 5;
 
@@ -46,11 +45,8 @@ public class AsteroidGenerator : MonoBehaviour
 		}
 
 		GameObject newAsteroid = (GameObject)Instantiate (asteroid, pos, Quaternion.identity);
-		newAsteroid.transform.Rotate (Vector3.right, 90);
 		newAsteroid.transform.SetParent (transform);
 		newAsteroid.GetComponent<Asteroid> ().SetVelocity (velocity);
-
-		asteroidCount++;
 	}
 
 	// Only generate on the left, top and right of screen

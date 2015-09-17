@@ -11,15 +11,17 @@ public class Asteroid : MonoBehaviour {
 	public Animator anim;
 	public GameObject glow;
 
+	AlienController alienController;
 	AudioSource audioSource;
 
 	GameObject hand;
-	GameObject generator;
 
 	// Use this for initialization
 	void Start () {
-		audioSource = GetComponent<AudioSource> ();
-		generator = transform.parent.gameObject;
+		if (Application.loadedLevelName != "Instructions") {
+			audioSource = GetComponent<AudioSource> ();
+		}
+		alienController = GameObject.FindObjectOfType<AlienController> ();
 	}
 
 	public void SetVelocity (Vector3 velocity) {
@@ -36,21 +38,39 @@ public class Asteroid : MonoBehaviour {
 		}
 	}
 
-	// Spaceships use trigger collider
+
 	void OnTriggerEnter(Collider other) {
 		if (grabable && other.gameObject.tag == "Hand" && other.GetComponent<AsteroidHandController>().handIsEmpty) {
 			pickedUp = true;
 			hand = other.gameObject;
 		} else if (thrown && other.gameObject.tag == "Spaceship") {
-			Debug.Log("Spaceship hit!");
-			audioSource.PlayOneShot (blastAudio);
-			other.gameObject.SendMessage("hitSpaceShip");
+			if(Application.loadedLevelName == "Main"){
+				audioSource.PlayOneShot (blastAudio);
+				other.gameObject.SendMessage("hitSpaceShip");
+			} else if (Application.loadedLevelName == "Start") {				
+				audioSource.PlayOneShot (blastAudio);
+				GameObject.Find("GameManager").GetComponent<StartScene>().StartGame();
+			}
 			DestroyAsteroid();
+		} else if (other.gameObject.tag == "Planet") {
+			if (thrown) {
+				alienController.killRandomAlien(transform.position);
+				DestroyAsteroid();
+			} else {
+				grabable = false;
+			}
+		}
+	}
+
+	void OnTriggerExit (Collider other) {
+		if (!thrown && other.gameObject.tag == "Planet") {
+			grabable = true;
 		}
 	}
 
 	void AsteroidHit () {
-		DestroyAsteroid ();
+		GetComponent<Rigidbody> ().velocity = Vector3.zero;
+		Invoke("DestroyAsteroid", 0.5f);
 	}
 
 
@@ -63,8 +83,6 @@ public class Asteroid : MonoBehaviour {
 		if (GetComponent<Renderer> ().isVisible) {
 			Instantiate(explosion, transform.position, Quaternion.identity);
 		}
-
-		generator.GetComponent<AsteroidGenerator> ().asteroidCount--;
 		Destroy (gameObject);
 
 	}

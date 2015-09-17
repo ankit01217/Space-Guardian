@@ -30,6 +30,10 @@ ModelImporter:
     100044: polySurface9
     100046: Volcano
     100048: //RootNode
+    100050: group4
+    100052: pSphere1
+    100054: Tree
+    100056: Tree2
     400000: group2
     400002: group3
     400004: pCone1
@@ -55,6 +59,10 @@ ModelImporter:
     400044: polySurface9
     400046: Volcano
     400048: //RootNode
+    400050: group4
+    400052: pSphere1
+    400054: Tree
+    400056: Tree2
     2300000: pCone1
     2300002: pCone2
     2300004: pCone3
@@ -77,6 +85,7 @@ ModelImporter:
     2300038: polySurface7
     2300040: polySurface9
     2300042: Volcano
+    2300044: pSphere1
     3300000: pCone1
     3300002: pCone2
     3300004: pCone3
@@ -99,6 +108,7 @@ ModelImporter:
     3300038: polySurface7
     3300040: polySurface9
     3300042: Volcano
+    3300044: pSphere1
     4300000: polySurface12
     4300002: polySurface13
     4300004: polySurface11
@@ -121,6 +131,7 @@ ModelImporter:
     4300038: pCylinder6
     4300040: pCylinder7
     4300042: pCube1
+    4300044: pSphere1
     9500000: //RootNode
   materials:
     importMaterials: 1
