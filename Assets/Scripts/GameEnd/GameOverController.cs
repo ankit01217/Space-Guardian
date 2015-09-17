@@ -14,7 +14,7 @@ public class GameOverController : MonoBehaviour {
 	}
 
 	public void onRetry(){
-			AutoFade.LoadLevel(1,3,1,Color.black);
+		Application.LoadLevel(1);
 
 	}
 }
