@@ -17,9 +17,10 @@ public class GameTimer : MonoBehaviour
 	private MeshRenderer shieldRenderer;
 	public float maxAlpha = 0.5f;
 	public float flickerPerc = 10f;
-
+	public Image tranTint;
 
 	void Awake(){
+
 		shieldRenderer = shield.GetComponent<MeshRenderer> ();
 		setShieldAlpha(0);
 		shield.SetActive (true);
@@ -60,7 +61,6 @@ public class GameTimer : MonoBehaviour
 			isGameOver = true;
 			//audioSource.PlayOneShot (gameEndAudio);
 			onGameOverSuccess();
-			//AutoFade.LoadLevel(2,3,1,Color.white);
 
 		}
 
@@ -99,8 +99,14 @@ public class GameTimer : MonoBehaviour
 		shieldRenderer.material.color = newColor;
 		LeanTween.alpha (shield, 0.3f, 0.5f).setEase(LeanTweenType.easeOutCirc);
 	
+		Invoke("startEndCinematic",0.8f);
+
+
 	}
 
+	void startEndCinematic(){
+		Application.LoadLevel(2);
+	}
 
 	// Update is called once per frame
 	void Update ()
