@@ -1,10 +1,15 @@
 fileFormatVersion: 2
 guid: 37c0e730bf9ee6641a426cd6bf223651
-timeCreated: 1441917831
+timeCreated: 1442459400
 licenseType: Pro
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - hand: {instanceID: 0}
+  - throwAudio: {instanceID: 0}
+  - pickupAudio: {instanceID: 0}
+  - arrowhead: {instanceID: 0}
+  - asteroidPF: {fileID: 143276, guid: 7d6919e5f3c476e488a1d39f7a8d09c9, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

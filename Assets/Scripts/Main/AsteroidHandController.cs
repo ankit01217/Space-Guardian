@@ -12,6 +12,7 @@ public class AsteroidHandController : MonoBehaviour {
 	public AudioClip throwAudio,pickupAudio;
 	public GameObject arrowhead;
 	public bool handIsEmpty = true;
+	public GameObject asteroidPF;
 
 	LineRenderer line;
 	Vector3[] lineVertices = new Vector3[2];
@@ -23,7 +24,7 @@ public class AsteroidHandController : MonoBehaviour {
 	void Start () {
 		line = GetComponent<LineRenderer> ();
 
-		if (Application.loadedLevelName == "Main") {
+		if (Application.loadedLevelName != "Instructions") {
 			audioSource = GetComponent<AudioSource> ();
 		}
 
@@ -31,7 +32,7 @@ public class AsteroidHandController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Application.loadedLevelName == "Main") {
+		if (Application.loadedLevelName != "Instructions") {
 			LinkHandToDetector ();
 		}
 
@@ -56,6 +57,8 @@ public class AsteroidHandController : MonoBehaviour {
 
 	void OnTriggerEnter (Collider other) {
 		if (asteroid == null && other.tag == "Asteroid" && other.GetComponent<Asteroid>().grabable) {
+			asteroid = other.gameObject;
+
 			handIsEmpty = false;
 
 			asteroid = other.gameObject;
@@ -64,9 +67,7 @@ public class AsteroidHandController : MonoBehaviour {
 			asteroid.GetComponent<Rigidbody>().velocity = Vector3.zero;
 			asteroid.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
-			Debug.Log ("Picked up " + other.gameObject);
-
-			if (Application.loadedLevelName == "Main") {
+			if (Application.loadedLevelName != "Instructions") {
 				audioSource.PlayOneShot(pickupAudio);
 			}
 
@@ -81,6 +82,10 @@ public class AsteroidHandController : MonoBehaviour {
 
 	// Only throw if there is an asteroid in hand
 	void ThrowAsteroid () {
+		if(Application.loadedLevelName == "Start") {
+			Instantiate(asteroidPF, asteroid.transform.position, Quaternion.identity);
+		}
+
 		// We only want the direction along the x-y plane
 		float strength = Random.Range(minThrowStrength, maxThrowStrength);
 		Vector3 oldPos = asteroid.transform.position;
@@ -96,9 +101,8 @@ public class AsteroidHandController : MonoBehaviour {
 		arrowhead.SetActive (false);
 		handIsEmpty = true;
 
-		Debug.Log("Throw successful");
-		if (Application.loadedLevelName == "Main") {
+		if (Application.loadedLevelName != "Instructions") {
 			audioSource.PlayOneShot (throwAudio);
-		}
+		}		
 	}
 }
