@@ -71,9 +71,7 @@ public class SpaceshipController : MonoBehaviour
 		} else {
 			GameObject[] arr = new GameObject[]{normalShipPF, fastShipPF,shieldedShipPF, attackerShipPF};
 			newShip = (GameObject)Instantiate (arr [Random.Range (0, arr.Length)], getRandPosition (), Quaternion.identity);
-
 		}
-
 
 		newShip.transform.parent = transform;
 		//curActiveShipCount++;
