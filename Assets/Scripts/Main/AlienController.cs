@@ -12,9 +12,10 @@ public class AlienController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		audioSource = GetComponent<AudioSource> ();
-		planet = GameObject.FindGameObjectWithTag("Planet");
-
+		if (Application.loadedLevelName == "Main") {
+			audioSource = GetComponent<AudioSource> ();
+			planet = GameObject.FindGameObjectWithTag ("Planet");
+		}
 
 	}
 
@@ -41,13 +42,14 @@ public class AlienController : MonoBehaviour {
 			
 		}
 
+		if (Application.loadedLevelName == "Main") {
+			if (aliens.Length == 0 && isGameOver == false) {
+				Debug.Log ("game over");
+				isGameOver = true;
+				audioSource.PlayOneShot (gameoverClip);
+				AutoFade.LoadLevel (2, 2, 1, Color.black);
 
-		if (aliens.Length == 0 && isGameOver == false) {
-			Debug.Log("game over");
-			isGameOver = true;
-			audioSource.PlayOneShot(gameoverClip);
-			AutoFade.LoadLevel(2,2,1,Color.black);
-
+			}
 		}
 
 	}
@@ -56,9 +58,9 @@ public class AlienController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-		planet.transform.RotateAround (planet.transform.position, new Vector3 (0, 0, 1), 0.3f * Time.deltaTime * rotationSpeed);
-		
+		if (Application.loadedLevelName == "Main") {
+			planet.transform.RotateAround (planet.transform.position, new Vector3 (0, 0, 1), 0.3f * Time.deltaTime * rotationSpeed);
+		}
 
 	}
 }

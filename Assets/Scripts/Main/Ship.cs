@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+//using System;
 public class Ship : MonoBehaviour
 {
 	private GameObject planet;
@@ -15,7 +15,8 @@ public class Ship : MonoBehaviour
 	public static string FAST = "fasr";
 	public static string SHIELDED = "shielded";
 	public static string ATTACKER = "attacker";
-	public static string BOSS = "boss";
+	public static string VANISHED = "vanished";
+	private Animator anim;
 	private GameObject[] aliens;
 	private Renderer rend;
 	private Vector3 targetPosition;
@@ -120,22 +121,32 @@ public class Ship : MonoBehaviour
 
 		
 	}
-/*	void spaceShipGenerater(){
-		GameObject[] arr = new GameObject[]{normalShipPF, fastShipPF,shieldedShipPF, attackerShipPF};
-		GameObject newSpaceShip=(GameObject)Instantiate (arr[Random.Range(0,arr.Length)], getRandPosition (), Quaternion.identity);
-	}*/
+	void vanishing(){
+		float distance = Vector3.Distance (planet.transform.position, transform.position);
+		float newPosX = (float)Random.Range (0, 360f)/10f - 18f;
+		float newPosY = Mathf.Sqrt (distance * distance - newPosX * newPosX);
+
+		GameObject newShip = (GameObject)Instantiate (this.gameObject, new Vector3 (newPosX, newPosY - 12.8f, 18f), Quaternion.identity);
+
+		Destroy (this.gameObject);
+	}
+	void startVanished(){
+		anim.SetTrigger ("vanish");
+		Invoke ("vanishing", 2f);
+
+	}
 	void functioningSpaceShip ()
 	{
 		switch (spaceShipType) {
 		case "attacker":
 			//Invoke("asteroidAttackerAttack",3f);
-			InvokeRepeating ("asteroidAttackerAttack", 5f, 5f);
+			InvokeRepeating ("asteroidAttackerAttack", 6f, 6.5f);
 			break;
-		/*	case "boss":
+		case "vanished":
 
-			InvokeRepeating("spaceShipGenerater",5f,3f);
+			InvokeRepeating("startVanished",5f,3f);
 			break;
-	*/		
+
 		}
 	}
 	void randomDirection ()
@@ -266,6 +277,10 @@ public class Ship : MonoBehaviour
 
 	void Start ()
 	{
+		if (spaceShipType == VANISHED) {
+			anim=GetComponentInChildren<Animator>();
+
+		}
 		audioSource = GetComponent<AudioSource> ();
 		rend = GetComponentInChildren<Renderer> ();
 		aliens = (GameObject[])GameObject.FindGameObjectsWithTag ("Alien");
