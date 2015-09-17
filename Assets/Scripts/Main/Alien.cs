@@ -15,8 +15,6 @@ public class Alien : MonoBehaviour {
 		audioSource = GetComponent<AudioSource> ();
 		animator = GetComponent<Animator> ();
 		startAlienAnimation ();
-		//Invoke("startAlienAnimation", Random.Range(0,3));
-
 
 	}
 
