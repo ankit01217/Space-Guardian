@@ -11,6 +11,10 @@ public class InstructionsScene : MonoBehaviour {
 	public GameObject hand;
 	public GameObject planetPF;
 	public Text timer;
+	public GameObject cross;
+	public GameObject tick;
+	public int duration = 8;
+	public GameObject fader;
 
 	GameObject planet;
 	GameObject topHand;
@@ -52,24 +56,19 @@ public class InstructionsScene : MonoBehaviour {
 		}
 
 		// TOP
-		// Asteroid
+		Instantiate (tick, new Vector3 (minWorldX/3*2, cam.orthographicSize/2, 0), Quaternion.identity);
 		GameObject tempAsteroid = (GameObject) Instantiate (asteroid, 
 		                                       new Vector3 (minWorldX/3, cam.orthographicSize/2, 0),
 		                                       Quaternion.identity);
 		tempAsteroid.transform.localScale = new Vector3 (1.2f, 1.2f, 1.2f);
-
-
-		// Spaceship
 		Instantiate (spaceship, new Vector3 (maxWorldX/2, cam.orthographicSize/2, 0), Quaternion.identity);
 
 		// BOTTOM
-		// Asteroid
+		Instantiate (cross, new Vector3 (minWorldX/3*2, -cam.orthographicSize/2, 0), Quaternion.identity);
 		tempAsteroid = (GameObject) Instantiate (asteroid, 
 		                                       new Vector3 (minWorldX/3, -cam.orthographicSize/2, 0),
 		                                       Quaternion.identity);
 		tempAsteroid.transform.localScale = new Vector3 (1.2f, 1.2f, 1.2f);
-
-		// Planet
 		planet = (GameObject) Instantiate (planetPF, 
 		                      new Vector3 (maxWorldX / 2, -cam.orthographicSize / 2, 0),
 			                  Quaternion.identity);
@@ -83,29 +82,14 @@ public class InstructionsScene : MonoBehaviour {
 	}
 
 	IEnumerator GoToStart () {
-		for (int i = 5; i > 0; i--) {
+		for (int i = duration; i > 0; i--) {
 			timer.text = i.ToString();
 			yield return new WaitForSeconds(1f);
 		}
+		Animator anim = fader.GetComponent<Animator> ();
+		anim.SetTrigger ("FadeIn");
+		yield return new WaitForSeconds (anim.GetCurrentAnimatorClipInfo(0).Length);
 		Application.LoadLevel ("Start");
-
-//		GameObject[] asteroids = GameObject.FindGameObjectsWithTag ("Asteroid");
-//		foreach (GameObject asteroidSingle in asteroids) {
-//			Destroy(asteroidSingle);
-//		}
-//		GameObject[] hands = GameObject.FindGameObjectsWithTag ("Hand");
-//		foreach (GameObject hand in hands) {
-//			Destroy(hand);
-//		}		
-//		Destroy(GameObject.FindGameObjectWithTag ("Spaceship"));
-//		Destroy(GameObject.FindGameObjectWithTag ("Planet"));
-//		line.SetVertexCount (0);
-//
-//		GameObject tempAsteroid = (GameObject) Instantiate (asteroid,
-//		                                                    new Vector3 (minWorldX/2, 0, 0),
-//		                                        			Quaternion.identity);
-//		tempAsteroid.transform.localScale = new Vector3 (1.2f, 1.2f, 1.2f);
-//		Instantiate (spaceship, new Vector3 (maxWorldX/2, 0, 0), Quaternion.identity);
 	}
 	
 }
