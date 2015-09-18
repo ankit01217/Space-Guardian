@@ -7,7 +7,6 @@ public class AlienController : MonoBehaviour {
 	AudioSource audioSource;
 	public AudioClip gameoverClip;
 	private GameObject planet;
-	bool isGameOver = false;
 	private float rotationSpeed = 10f;
 
 	// Use this for initialization
@@ -43,9 +42,9 @@ public class AlienController : MonoBehaviour {
 		}
 
 		if (Application.loadedLevelName == "Main") {
-			if (aliens.Length == 0 && isGameOver == false) {
+			if (aliens.Length == 0 && GameManager.isGameOver == false) {
 				Debug.Log ("game over");
-				isGameOver = true;
+				GameManager.isGameOver = true;
 				audioSource.PlayOneShot (gameoverClip);
 				Application.LoadLevel (2);
 
