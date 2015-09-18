@@ -33,6 +33,8 @@ public class Ship : MonoBehaviour
 	GameObject laserBeam;
 	float timeCount;
 	private bool isCreateLaserBeam=false;
+	//private bool isRotate=false;
+	private float rotateDegree=0;
 	bool inScreen (Vector3 pos)
 	{
 		//Debug.Log (pos);
@@ -78,7 +80,8 @@ public class Ship : MonoBehaviour
 				InvokeRepeating ("randomDirection", 3f, 2f);
 			} else if (rotatebackward == false && startRandomDir == true && !inScreen (gameObject.transform.position) && spaceShipType == ATTACKER) {
 				//gameObject.transform.Rotate (new Vector3 (160, 0, 0));
-				LeanTween.rotateAround (this.gameObject, new Vector3 (0, 0, 1f), 170f, 0.5f);
+				//LeanTween.rotateAround (this.gameObject, new Vector3 (0, 0, 1f), 170f, 0.5f);
+				rotateDegree=170;
 				freezeRotatebackward ();
 				Invoke ("unfreezeRotatebackward", 1f);
 				Debug.Log ("!!!");
@@ -93,20 +96,25 @@ public class Ship : MonoBehaviour
 	}
 	void startAttackAsteroid(){
 		GameObject[] asteroid = GameObject.FindGameObjectsWithTag ("Asteroid");
-		if (asteroid.Length != 0) {
-			int tmp=Random.Range (0, asteroid.Length);
-			//GameObject laserbeam=(GameObject)Instantiate(laser,this.gameObject.transform.position,Quaternion.identity);
-			//LeanTween.move ( laserbeam,asteroid[tmp].transform.position,0.2f );
-			attackerShoot=true;
-			attackerTarget=asteroid[tmp].transform.position;
-			
-			asteroid [tmp].SendMessage ("AsteroidHit");
-			//Invoke("unfreezeAsteroidAttackerMove",0.5f);
-			//float curScale = this.transform.localScale.x;
-
-			freeze=false;
-			Invoke("resetLaser",1f);
+		for (int i=0; i<asteroid.Length; i++) {
+			if(asteroid[i].GetComponent<Asteroid>().grabable==true)
+			{
+				int tmp=Random.Range (0, asteroid.Length);
+				//GameObject laserbeam=(GameObject)Instantiate(laser,this.gameObject.transform.position,Quaternion.identity);
+				//LeanTween.move ( laserbeam,asteroid[tmp].transform.position,0.2f );
+				attackerShoot=true;
+				attackerTarget=asteroid[tmp].transform.position;
+				
+				asteroid [tmp].SendMessage ("AsteroidHit");
+				//Invoke("unfreezeAsteroidAttackerMove",0.5f);
+				//float curScale = this.transform.localScale.x;
+				
+				freeze=false;
+				Invoke("resetLaser",1f);
+				break;
+			}
 		}
+
 	}
 	
 
@@ -170,8 +178,11 @@ public class Ship : MonoBehaviour
 
 		} else {
 			*/
-		if(!rotatebackward&&!freeze)
-			LeanTween.rotateAround(this.gameObject,new Vector3(0,0,1f),Random.Range(-170f,-20f),0.5f);
+		if (!rotatebackward && !freeze) {
+			//LeanTween.rotateAround(this.gameObject,new Vector3(0,0,1f),Random.Range(-170f,-20f),0.5f);
+			rotateDegree=Random.Range(-170f,-20f);
+		}
+			
 			//gameObject.transform.Rotate (new Vector3 (Random.Range (45, 360), 0, 0));
 
 		//}
@@ -328,6 +339,18 @@ public class Ship : MonoBehaviour
 			laserBeam.transform.position=newpoas;
 
 		}
+		if (rotateDegree!=0) {
+			if(rotateDegree>0){
+				float tmp=rotateDegree>1?2:1;
+				gameObject.transform.Rotate (new Vector3 (tmp, 0, 0));
+				rotateDegree-=tmp;
+			}else{
+				float tmp=rotateDegree<-1?-2:-1;
+				gameObject.transform.Rotate (new Vector3 (tmp, 0, 0));
+				rotateDegree-=tmp;
+			}
+
+		}
 
 
 		
@@ -336,10 +359,12 @@ public class Ship : MonoBehaviour
 	void OnTriggerEnter (Collider other)
 	{
 		Debug.Log ("OnTriggerEnter");
-		//if(isGameOver && other.gameObject.tag == "Shield" )
+		if (GameManager.isGameOver && other.gameObject.tag == "Shield") {
+			Destroy(gameObject);
+		}
 		if (other.gameObject.tag == "Planet") {
 
-			Invoke ("hitPlenet", 0.1f);
+			Invoke ("hitPlanet", 0.1f);
 		}
 	}
 }
