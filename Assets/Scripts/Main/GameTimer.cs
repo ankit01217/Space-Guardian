@@ -9,7 +9,7 @@ public class GameTimer : MonoBehaviour
 	public GameObject shield;
 	public float maxAlpha = 0.5f;
 	public float flickerPerc = 10f;
-	public Image tranTint;
+	public Image fader;
 	public AudioClip timerAudio,gameEndAudio, flickerAudio, shieldCompleteAudio, shieldRefillAudio;
 	public static float timer = 90f;
 
@@ -21,10 +21,13 @@ public class GameTimer : MonoBehaviour
 	SpaceshipController spaceshipController;
 
 	void Awake(){
+
 		timer = 0;
 		shieldRenderer = shield.GetComponent<MeshRenderer> ();
 		setShieldAlpha(0);
 		shield.SetActive (true);
+
+
 	}
 
 	// Use this for initialization
@@ -33,6 +36,8 @@ public class GameTimer : MonoBehaviour
 		audioSource = GetComponent<AudioSource> ();
 		spaceshipController = GameObject.FindObjectOfType<SpaceshipController> ();
 		InvokeRepeating ("updateTimer", 0.01f, 0.01f);
+
+
 	}
 
 
@@ -102,8 +107,8 @@ public class GameTimer : MonoBehaviour
 
 
 	void startTransition(){
-		Invoke("startEndCinematic",0.6f);
-
+		fader.GetComponent<Animator>().SetTrigger("FadeIn");
+		Invoke("startEndCinematic",1f);
 	}
 
 	void startEndCinematic(){
