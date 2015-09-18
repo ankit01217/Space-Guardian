@@ -9,7 +9,7 @@ public class StartScene : MonoBehaviour {
 	public GameObject asteroid;
 	public GameObject pointMan;
 	public Text text;
-	public GameObject blackScreen;
+	public GameObject fader;
 
 	float minWorldX;
 	float maxWorldX;
@@ -40,8 +40,9 @@ public class StartScene : MonoBehaviour {
 		text.fontSize = 150;
 		yield return new WaitForSeconds(1f);
 		
-		blackScreen.GetComponent<Animator> ().SetTrigger ("FadeIn");
-		yield return new WaitForSeconds(1.5f);
+		Animator anim = fader.GetComponent<Animator> ();
+		anim.SetTrigger ("FadeIn");
+		yield return new WaitForSeconds (anim.GetCurrentAnimatorClipInfo(0).Length);
 
 		Application.LoadLevel ("Main");
 	}
