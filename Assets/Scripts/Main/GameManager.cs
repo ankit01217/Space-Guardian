@@ -4,6 +4,7 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
 
 	public GameObject pointMan;
+	public static bool isGameOver = false;
 
 	// Use this for initialization
 	void Start () {

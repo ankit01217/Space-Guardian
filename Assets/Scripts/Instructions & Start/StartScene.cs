@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class StartScene : MonoBehaviour {
 
@@ -7,6 +8,8 @@ public class StartScene : MonoBehaviour {
 	public GameObject ship;
 	public GameObject asteroid;
 	public GameObject pointMan;
+	public Text text;
+	public GameObject blackScreen;
 
 	float minWorldX;
 	float maxWorldX;
@@ -27,20 +30,19 @@ public class StartScene : MonoBehaviour {
 
 	}
 
-	public void StartGame () {		
-		// Deactivate everything
-		Invoke ("FreezeScene", 0.5f);
-		pointMan.SetActive (false);
-//		GameObject controller = GameObject.Find ("Controllers");
-//		controller.transform.GetChild(0).GetComponent<AsteroidHandController>().enabled = false;
-//		controller.transform.GetChild(1).GetComponent<AsteroidHandController>().enabled = false;
-//		GameObject.Find ("Asteroid(Clone)").GetComponent<Asteroid>().enabled = false;
-
-		// wait for 3s and load main
-		Debug.Log ("test");
+	void PrepareMain () {
+		StartCoroutine ("StartGame");
 	}
 
-	void FreezeScene () {		
-		Time.timeScale = 0;
+
+	IEnumerator StartGame () {
+		text.text = "Good job!";
+		text.fontSize = 150;
+		yield return new WaitForSeconds(1f);
+		
+		blackScreen.GetComponent<Animator> ().SetTrigger ("FadeIn");
+		yield return new WaitForSeconds(1.5f);
+
+		Application.LoadLevel ("Main");
 	}
 }

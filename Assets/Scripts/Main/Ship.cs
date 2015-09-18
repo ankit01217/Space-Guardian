@@ -28,6 +28,12 @@ public class Ship : MonoBehaviour
 	private bool rotatebackward=false;
 	private bool freeze=false;
 	private float curScale;
+	private bool attackerShoot;
+	private Vector3 attackerTarget;
+	GameObject laserBeam;
+	float timeCount;
+	private bool isCreateLaserBeam=false;
+
 	bool inScreen (Vector3 pos)
 	{
 		//Debug.Log (pos);
@@ -82,27 +88,25 @@ public class Ship : MonoBehaviour
 		}
 		
 	}
-	void unfreezeAsteroidAttackerMove(){
-		LeanTween.cancel(this.gameObject);
-		this.gameObject.transform.localScale = new Vector3 (curScale, curScale, curScale);
-		LeanTween.scale( this.gameObject, new Vector3 (curScale + 0.1f, curScale + 0.1f, curScale + 0.1f), 0.25f).setEase(LeanTweenType.easeOutCirc).setLoopPingPong(-1);
-		freeze=false;
-
+	void resetLaser(){
+		attackerShoot = false;
+		timeCount = 0;
 	}
-
 	void startAttackAsteroid(){
 		GameObject[] asteroid = GameObject.FindGameObjectsWithTag ("Asteroid");
 		if (asteroid.Length != 0) {
 			int tmp=Random.Range (0, asteroid.Length);
-			GameObject laserbeam=(GameObject)Instantiate(laser,this.gameObject.transform.position,Quaternion.identity);
-			LeanTween.move ( laserbeam,asteroid[tmp].transform.position,0.2f );
-			
-			
+			//GameObject laserbeam=(GameObject)Instantiate(laser,this.gameObject.transform.position,Quaternion.identity);
+			//LeanTween.move ( laserbeam,asteroid[tmp].transform.position,0.2f );
+			attackerShoot=true;
+			attackerTarget=asteroid[tmp].transform.position;
 			
 			asteroid [tmp].SendMessage ("AsteroidHit");
-			Invoke("unfreezeAsteroidAttackerMove",0.5f);
+			//Invoke("unfreezeAsteroidAttackerMove",0.5f);
 			//float curScale = this.transform.localScale.x;
 
+			freeze=false;
+			Invoke("resetLaser",1f);
 		}
 	}
 	
@@ -111,12 +115,12 @@ public class Ship : MonoBehaviour
 	{
 		//Debug.Log("attack!");
 		freeze = true;
-		Invoke ("startAttackAsteroid", 1f);
+		Invoke ("startAttackAsteroid", 1.5f);
 		//float curScale = this.transform.localScale.x;
-		LeanTween.cancel (this.gameObject);
-		this.gameObject.transform.localScale = new Vector3 (curScale, curScale, curScale);
-		LeanTween.scale( this.gameObject, new Vector3 (curScale + 0.3f, curScale + 0.3f, curScale + 0.3f), 0.15f).setEase(LeanTweenType.easeOutBounce).setLoopPingPong(-1);
-
+	//	LeanTween.cancel (this.gameObject);
+	//	this.gameObject.transform.localScale = new Vector3 (curScale, curScale, curScale);
+	//	LeanTween.scale( this.gameObject, new Vector3 (curScale + 0.3f, curScale + 0.3f, curScale + 0.3f), 0.15f).setEase(LeanTweenType.easeOutBounce).setLoopPingPong(-1);
+		anim.SetTrigger("attack");
 
 
 		
@@ -266,7 +270,7 @@ public class Ship : MonoBehaviour
 	}
 	void hitPlanet ()
 	{
-		Debug.Log ("hit plqnet");
+		Debug.Log ("hit planet");
 		alienController.killRandomAlien (this.transform.position);
 		Destroy (this.gameObject);
 
@@ -277,10 +281,10 @@ public class Ship : MonoBehaviour
 
 	void Start ()
 	{
-		if (spaceShipType == VANISHED) {
+		//if (spaceShipType == VANISHED) {
 			anim=GetComponentInChildren<Animator>();
 
-		}
+		
 		audioSource = GetComponent<AudioSource> ();
 		rend = GetComponentInChildren<Renderer> ();
 		aliens = (GameObject[])GameObject.FindGameObjectsWithTag ("Alien");
@@ -294,8 +298,8 @@ public class Ship : MonoBehaviour
 		functioningSpaceShip ();
 
 
-		curScale  = this.transform.localScale.x;
-		LeanTween.scale( this.gameObject, new Vector3 (curScale + 0.1f, curScale + 0.1f, curScale + 0.1f), 0.25f).setEase(LeanTweenType.easeOutCirc).setLoopPingPong(-1);
+		//curScale  = this.transform.localScale.x;
+		//LeanTween.scale( this.gameObject, new Vector3 (curScale + 0.1f, curScale + 0.1f, curScale + 0.1f), 0.25f).setEase(LeanTweenType.easeOutCirc).setLoopPingPong(-1);
 
 	}
 	
@@ -309,7 +313,22 @@ public class Ship : MonoBehaviour
 			//		AudioSource tmp=Random
 		}
 		moveSpaceShip ();
+		if (attackerShoot) {
+			if(isCreateLaserBeam==false){
+				laserBeam=(GameObject)Instantiate(laser,this.gameObject.transform.position,Quaternion.identity);
+				isCreateLaserBeam=true;
+				timeCount=0;
+			}
+			Vector3 newpoas = new Vector3 ();
+			timeCount+=Time.deltaTime;
+			float flyingspeed=10*(timeCount);
+			newpoas.x = Mathf.Lerp (transform.position.x, attackerTarget.x, flyingspeed);
+			newpoas.y = Mathf.Lerp (transform.position.y, attackerTarget.y,  flyingspeed);
+			newpoas.z = Mathf.Lerp (transform.position.z, attackerTarget.z, flyingspeed);
+			laserBeam.transform.position = newpoas;
+			laserBeam.transform.position=newpoas;
 
+		}
 
 
 		
@@ -318,9 +337,12 @@ public class Ship : MonoBehaviour
 	void OnTriggerEnter (Collider other)
 	{
 		Debug.Log ("OnTriggerEnter");
+		if (GameManager.isGameOver && other.gameObject.tag == "Shield") {
+			Destroy(gameObject);
+		}
 
 		if (other.gameObject.tag == "Planet") {
-			Invoke ("hitPlenet", 0.1f);
+			Invoke ("hitPlanet", 0.1f);
 		}
 	}
 }
