@@ -12,6 +12,7 @@ public class AsteroidHandController : MonoBehaviour {
 	public AudioClip throwAudio,pickupAudio;
 	public GameObject arrowhead;
 	public bool handIsEmpty = true;
+	public GameObject asteroidPF;
 
 	LineRenderer line;
 	Vector3[] lineVertices = new Vector3[2];
@@ -22,12 +23,19 @@ public class AsteroidHandController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		line = GetComponent<LineRenderer> ();
-		audioSource = GetComponent<AudioSource> ();
+
+		if (Application.loadedLevelName != "Instructions") {
+			audioSource = GetComponent<AudioSource> ();
+		}
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		LinkHandToDetector ();
+		if (Application.loadedLevelName != "Instructions") {
+			LinkHandToDetector ();
+		}
+
 		if (asteroid) {
 			lineVertices [1] = transform.position;
 			line.SetPosition (1, lineVertices [1]);
@@ -49,6 +57,8 @@ public class AsteroidHandController : MonoBehaviour {
 
 	void OnTriggerEnter (Collider other) {
 		if (asteroid == null && other.tag == "Asteroid" && other.GetComponent<Asteroid>().grabable) {
+			asteroid = other.gameObject;
+
 			handIsEmpty = false;
 
 			asteroid = other.gameObject;
@@ -57,8 +67,9 @@ public class AsteroidHandController : MonoBehaviour {
 			asteroid.GetComponent<Rigidbody>().velocity = Vector3.zero;
 			asteroid.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
-			Debug.Log ("Picked up " + other.gameObject);
-			audioSource.PlayOneShot(pickupAudio);
+			if (Application.loadedLevelName != "Instructions") {
+				audioSource.PlayOneShot(pickupAudio);
+			}
 
 			line.SetVertexCount(2);
 			line.SetPosition(0, asteroid.transform.position);
@@ -71,6 +82,10 @@ public class AsteroidHandController : MonoBehaviour {
 
 	// Only throw if there is an asteroid in hand
 	void ThrowAsteroid () {
+		if(Application.loadedLevelName == "Start") {
+			Instantiate(asteroidPF, asteroid.transform.position, Quaternion.identity);
+		}
+
 		// We only want the direction along the x-y plane
 		float strength = Random.Range(minThrowStrength, maxThrowStrength);
 		Vector3 oldPos = asteroid.transform.position;
@@ -86,8 +101,8 @@ public class AsteroidHandController : MonoBehaviour {
 		arrowhead.SetActive (false);
 		handIsEmpty = true;
 
-		Debug.Log("Throw successful");
-
-		audioSource.PlayOneShot(throwAudio);
+		if (Application.loadedLevelName != "Instructions") {
+			audioSource.PlayOneShot (throwAudio);
+		}		
 	}
 }

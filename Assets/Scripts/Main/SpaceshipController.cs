@@ -5,35 +5,37 @@ using System.Collections.Generic;
 public class SpaceshipController : MonoBehaviour
 {
 
-	public GameObject normalShipPF, fastShipPF, shieldedShipPF, attackerShipPF;
+	public GameObject normalShipPF, vanishedShipPF, attackerShipPF;
 	public GameObject[] spipPrefabs;
-	public float shipSpawnInterval = 3f;
+	public float shipSpawnInterval = 1f;
 	public int round1Ship = 5;
 	public int round2Ship = 10;
-	public int round3Ship = 15;
+	public float round1Time = 30f;
+	public float round2Time = 70f;
+
 	AudioSource audioSource;
-
-	//public int curActiveShipCount = 0;
-	//public int maxActiveShipCount = 10;
-
 	public int totShipsDestroyed = 0;
-	public int levelShipCount = 20;
 	public Transform[] spawnPoints;
 
+	float spaceSheepSpeedMultiplier = 1f;
+	float spawnTimer = 0f;
 
 	// Use this for initialization
 	void Start ()
 	{
-
 		audioSource = GetComponent<AudioSource> ();
-		InvokeRepeating ("SpawnShip", shipSpawnInterval, shipSpawnInterval);
-
+	
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-
+		spawnTimer += Time.deltaTime;
+		Debug.Log ("spawnTimer :"+ spawnTimer);
+		if (spawnTimer > shipSpawnInterval) {
+			spawnTimer = 0;
+			SpawnShip();
+		}
 	}
 
 	public void onShipDestroyed ()
@@ -55,30 +57,37 @@ public class SpaceshipController : MonoBehaviour
 		GameObject newShip;
 		Vector3 randShipPos = new Vector3 ();
 		Debug.Log ("totShipsDestroyed : " + totShipsDestroyed);
-		if (totShipsDestroyed < round1Ship || true) {
+		if (totShipsDestroyed < round1Ship && GameTimer.timer < round1Time) {
 			// if < %20 of ships then generate 
-			GameObject[] arr = new GameObject[]{normalShipPF,attackerShipPF};
-			newShip = (GameObject)Instantiate (arr [Random.Range (0, arr.Length)], getRandPosition (), Quaternion.identity);
-
-		} else if (totShipsDestroyed >= round1Ship && totShipsDestroyed < round2Ship) {
-			GameObject[] arr = new GameObject[]{normalShipPF, fastShipPF};
-			newShip = (GameObject)Instantiate (arr [Random.Range (0, arr.Length)], getRandPosition (), Quaternion.identity);
-				
-		} else if (totShipsDestroyed >= round2Ship && totShipsDestroyed < round3Ship) {
-			GameObject[] arr = new GameObject[]{normalShipPF, fastShipPF, shieldedShipPF};
+			GameObject[] arr = new GameObject[]{normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF};
+			newShip = (GameObject)Instantiate (vanishedShipPF, getRandPosition (), Quaternion.identity);
+			//arr [Random.Range (0, arr.Length)]
+		} else if ((totShipsDestroyed >= round1Ship && totShipsDestroyed < round2Ship) || GameTimer.timer >= round1Time) {
+			GameObject[] arr = new GameObject[]{normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,vanishedShipPF,vanishedShipPF,vanishedShipPF,attackerShipPF,attackerShipPF};
 			newShip = (GameObject)Instantiate (arr [Random.Range (0, arr.Length)], getRandPosition (), Quaternion.identity);
 				
-		} else {
-			GameObject[] arr = new GameObject[]{normalShipPF, fastShipPF,shieldedShipPF, attackerShipPF};
+		}else if(totShipsDestroyed >= round2Ship || GameTimer.timer >= round2Time){
+			GameObject[] arr = new GameObject[]{normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,vanishedShipPF,vanishedShipPF,vanishedShipPF,attackerShipPF,attackerShipPF};
+			newShip = (GameObject)Instantiate (arr [Random.Range (0, arr.Length)], getRandPosition (), Quaternion.identity);
+		}
+		else
+		{
+			GameObject[] arr = new GameObject[]{normalShipPF};
 			newShip = (GameObject)Instantiate (arr [Random.Range (0, arr.Length)], getRandPosition (), Quaternion.identity);
 
 		}
 
 
+		newShip.GetComponent<Ship>().spaceShipSpeed *= spaceSheepSpeedMultiplier;
 		newShip.transform.parent = transform;
-		//curActiveShipCount++;
 
 			
+	}
+
+	public void activateLastPhase(){
+		//inc speed and spawn rate after one wins the game
+		shipSpawnInterval = 0.1f;	
+		spaceSheepSpeedMultiplier = 5;
 	}
 
 }
