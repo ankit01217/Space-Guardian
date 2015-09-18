@@ -81,23 +81,23 @@ public class InstructionsScene : MonoBehaviour {
 	}
 
 	void SetUpStart () {
-		GameObject[] asteroids = GameObject.FindGameObjectsWithTag ("Asteroid");
-		foreach (GameObject asteroidSingle in asteroids) {
-			Destroy(asteroidSingle);
-		}
-		GameObject[] hands = GameObject.FindGameObjectsWithTag ("Hand");
-		foreach (GameObject hand in hands) {
-			Destroy(hand);
-		}		
-		Destroy(GameObject.FindGameObjectWithTag ("Spaceship"));
-		Destroy(GameObject.FindGameObjectWithTag ("Planet"));
-		line.SetVertexCount (0);
-
-		GameObject tempAsteroid = (GameObject) Instantiate (asteroid,
-		                                                    new Vector3 (minWorldX/2, 0, 0),
-		                                        			Quaternion.identity);
-		tempAsteroid.transform.localScale = new Vector3 (1.2f, 1.2f, 1.2f);
-		Instantiate (spaceship, new Vector3 (maxWorldX/2, 0, 0), Quaternion.identity);
+//		GameObject[] asteroids = GameObject.FindGameObjectsWithTag ("Asteroid");
+//		foreach (GameObject asteroidSingle in asteroids) {
+//			Destroy(asteroidSingle);
+//		}
+//		GameObject[] hands = GameObject.FindGameObjectsWithTag ("Hand");
+//		foreach (GameObject hand in hands) {
+//			Destroy(hand);
+//		}		
+//		Destroy(GameObject.FindGameObjectWithTag ("Spaceship"));
+//		Destroy(GameObject.FindGameObjectWithTag ("Planet"));
+//		line.SetVertexCount (0);
+//
+//		GameObject tempAsteroid = (GameObject) Instantiate (asteroid,
+//		                                                    new Vector3 (minWorldX/2, 0, 0),
+//		                                        			Quaternion.identity);
+//		tempAsteroid.transform.localScale = new Vector3 (1.2f, 1.2f, 1.2f);
+//		Instantiate (spaceship, new Vector3 (maxWorldX/2, 0, 0), Quaternion.identity);
 	}
 	
 }
