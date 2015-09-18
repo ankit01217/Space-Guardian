@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class InstructionsScene : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class InstructionsScene : MonoBehaviour {
 	public GameObject spaceship;
 	public GameObject hand;
 	public GameObject planetPF;
+	public Text timer;
 
 	GameObject planet;
 	GameObject topHand;
@@ -26,7 +28,7 @@ public class InstructionsScene : MonoBehaviour {
 		line.SetPosition(1, new Vector3(maxWorldX, 0, 0));
 
 		SetUpHand ();
-		Invoke ("SetUpStart", 6f);
+		StartCoroutine ("GoToStart");
 	}
 	
 	// Update is called once per frame
@@ -80,7 +82,13 @@ public class InstructionsScene : MonoBehaviour {
 		objectsSpawned = false;
 	}
 
-	void SetUpStart () {
+	IEnumerator GoToStart () {
+		for (int i = 5; i > 0; i--) {
+			timer.text = i.ToString();
+			yield return new WaitForSeconds(1f);
+		}
+		Application.LoadLevel ("Start");
+
 //		GameObject[] asteroids = GameObject.FindGameObjectsWithTag ("Asteroid");
 //		foreach (GameObject asteroidSingle in asteroids) {
 //			Destroy(asteroidSingle);
