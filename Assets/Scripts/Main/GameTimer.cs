@@ -26,8 +26,9 @@ public class GameTimer : MonoBehaviour
 		shieldRenderer = shield.GetComponent<MeshRenderer> ();
 		setShieldAlpha(0);
 		shield.SetActive (true);
+		fader.GetComponent<Animator>().SetTrigger("FadeOut");
 
-
+	
 	}
 
 	// Use this for initialization
