@@ -57,10 +57,9 @@ public class GameTimer : MonoBehaviour
 
 		if (GameManager.isGameOver == false && isFlickering == false) {
 			timerText.text = (int)timer + "% complete";
-			setShieldAlpha (timer);
+			//setShieldAlpha (timer);
 			
 		}
-
 
 
 		if (timer == 100f && GameManager.isGameOver == false) {
@@ -96,12 +95,14 @@ public class GameTimer : MonoBehaviour
 	void startShieldFlickerAnimation(){
 		audioSource.PlayOneShot (flickerAudio);
 		isFlickering = true;
+		setShieldAlpha (1);
 		LeanTween.alpha (shield, 0, 0.15f).setEase(LeanTweenType.easeOutCirc).setLoopPingPong(2).setOnComplete(endShieldFlickerAnimation);
 	}
 
 	void endShieldFlickerAnimation(){
 		isFlickering = false;
 		audioSource.PlayOneShot (shieldRefillAudio);
+		LeanTween.alpha (shield, 0, 0.01f);
 
 	}
 
