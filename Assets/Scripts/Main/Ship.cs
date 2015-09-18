@@ -33,6 +33,7 @@ public class Ship : MonoBehaviour
 	GameObject laserBeam;
 	float timeCount;
 	private bool isCreateLaserBeam=false;
+
 	bool inScreen (Vector3 pos)
 	{
 		//Debug.Log (pos);

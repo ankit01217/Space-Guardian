@@ -108,7 +108,7 @@ public class GameTimer : MonoBehaviour
 
 	void startTransition(){
 		fader.GetComponent<Animator>().SetTrigger("FadeIn");
-		Invoke("startEndCinematic",1f);
+		Invoke("startEndCinematic",1.4f);
 	}
 
 	void startEndCinematic(){
