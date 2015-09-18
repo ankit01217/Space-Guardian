@@ -22,7 +22,7 @@ public class VideoPlayer : MonoBehaviour {
 			if(isVideoComplete == false)
 			{
 				isVideoComplete = true;
-				Application.LoadLevel(1);
+				AutoFade.LoadLevel(1,2,1,Color.black);
 			}
 
 		}

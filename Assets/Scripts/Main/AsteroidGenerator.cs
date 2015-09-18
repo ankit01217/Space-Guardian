@@ -45,6 +45,7 @@ public class AsteroidGenerator : MonoBehaviour
 		}
 
 		GameObject newAsteroid = (GameObject)Instantiate (asteroid, pos, Quaternion.identity);
+		newAsteroid.transform.Rotate (Vector3.right, 90);
 		newAsteroid.transform.SetParent (transform);
 		newAsteroid.GetComponent<Asteroid> ().SetVelocity (velocity);
 	}

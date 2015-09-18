@@ -14,15 +14,17 @@ public class Alien : MonoBehaviour {
 
 		audioSource = GetComponent<AudioSource> ();
 		animator = GetComponent<Animator> ();
-		startAlienAnimation ();
+		Invoke("sartAlienAnimation", Random.Range(0,3));
+
 
 	}
 
 	void Start () {
+	
 	}
 
 
-	void startAlienAnimation(){
+	void sartAlienAnimation(){
 		animator.SetTrigger("Move");
 	
 	}

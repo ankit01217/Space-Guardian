@@ -18,9 +18,7 @@ public class Asteroid : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (Application.loadedLevelName != "Instructions") {
-			audioSource = GetComponent<AudioSource> ();
-		}
+		audioSource = GetComponent<AudioSource> ();
 		alienController = GameObject.FindObjectOfType<AlienController> ();
 	}
 
@@ -44,13 +42,9 @@ public class Asteroid : MonoBehaviour {
 			pickedUp = true;
 			hand = other.gameObject;
 		} else if (thrown && other.gameObject.tag == "Spaceship") {
-			if(Application.loadedLevelName == "Main"){
-				audioSource.PlayOneShot (blastAudio);
-				other.gameObject.SendMessage("hitSpaceShip");
-			} else if (Application.loadedLevelName == "Start") {				
-				audioSource.PlayOneShot (blastAudio);
-				GameObject.Find("GameManager").GetComponent<StartScene>().SendMessage("PrepareMain");
-			}
+			Debug.Log("Spaceship hit!");
+			audioSource.PlayOneShot (blastAudio);
+			other.gameObject.SendMessage("hitSpaceShip");
 			DestroyAsteroid();
 		} else if (other.gameObject.tag == "Planet") {
 			if (thrown) {
