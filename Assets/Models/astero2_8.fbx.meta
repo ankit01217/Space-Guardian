@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 4398579b5141ef048a7b5dad5e10e6dd
-timeCreated: 1442530851
+guid: 19d0b2b319ea783479386e4f865ef0ee
+timeCreated: 1442525692
 licenseType: Pro
 ModelImporter:
   serializedVersion: 18
@@ -17,7 +17,7 @@ ModelImporter:
     3300002: pTorus1
     4300000: pSolid1
     4300002: pTorus1
-    7400000: Take 001
+    7400000: AsteroidNew
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -38,7 +38,39 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: AsteroidNew
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: pSolid1
+        weight: 1
+      - path: pTorus1
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []

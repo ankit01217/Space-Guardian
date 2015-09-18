@@ -9,7 +9,7 @@ public class GameTimer : MonoBehaviour
 	public GameObject shield;
 	public float maxAlpha = 0.5f;
 	public float flickerPerc = 10f;
-	public Image tranTint;
+	public Image fader;
 	public AudioClip timerAudio,gameEndAudio, flickerAudio, shieldCompleteAudio, shieldRefillAudio;
 	public static float timer = 90f;
 
@@ -21,11 +21,13 @@ public class GameTimer : MonoBehaviour
 	SpaceshipController spaceshipController;
 
 	void Awake(){
-		tranTint.enabled = false;
+
 		timer = 0;
 		shieldRenderer = shield.GetComponent<MeshRenderer> ();
 		setShieldAlpha(0);
 		shield.SetActive (true);
+
+
 	}
 
 	// Use this for initialization
@@ -34,6 +36,8 @@ public class GameTimer : MonoBehaviour
 		audioSource = GetComponent<AudioSource> ();
 		spaceshipController = GameObject.FindObjectOfType<SpaceshipController> ();
 		InvokeRepeating ("updateTimer", 0.01f, 0.01f);
+
+
 	}
 
 
@@ -44,7 +48,7 @@ public class GameTimer : MonoBehaviour
 			timer = Mathf.Clamp (timer + Time.deltaTime * timerSpeed,0f,100f);
 		}
 
-		if (timer >= 90f && isFlickerEnabled == false) {
+		if (timer >= 100f && isFlickerEnabled == false) {
 			isFlickerEnabled = true;
 			//do flicker animation of shield and set timer to 80% after that
 			startShieldFlickerAnimation();
@@ -53,10 +57,9 @@ public class GameTimer : MonoBehaviour
 
 		if (GameManager.isGameOver == false && isFlickering == false) {
 			timerText.text = (int)timer + "% complete";
-			setShieldAlpha (timer);
+			//setShieldAlpha (timer);
 			
 		}
-
 
 
 		if (timer == 100f && GameManager.isGameOver == false) {
@@ -92,25 +95,25 @@ public class GameTimer : MonoBehaviour
 	void startShieldFlickerAnimation(){
 		audioSource.PlayOneShot (flickerAudio);
 		isFlickering = true;
+		setShieldAlpha (1);
 		LeanTween.alpha (shield, 0, 0.15f).setEase(LeanTweenType.easeOutCirc).setLoopPingPong(2).setOnComplete(endShieldFlickerAnimation);
 	}
 
 	void endShieldFlickerAnimation(){
 		isFlickering = false;
 		audioSource.PlayOneShot (shieldRefillAudio);
+		LeanTween.alpha (shield, 0, 0.01f);
 
 	}
 
 
 	void startTransition(){
-		tranTint.enabled = true;
-		Invoke("startEndCinematic",1f);
-
+		fader.GetComponent<Animator>().SetTrigger("FadeIn");
+		Invoke("startEndCinematic",1.4f);
 	}
 
 	void startEndCinematic(){
 		Application.LoadLevel(2);
-
 	}
 
 	// Update is called once per frame
