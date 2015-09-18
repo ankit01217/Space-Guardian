@@ -269,7 +269,7 @@ public class Ship : MonoBehaviour
 	}
 	void hitPlanet ()
 	{
-		Debug.Log ("hit plqnet");
+		Debug.Log ("hit planet");
 		alienController.killRandomAlien (this.transform.position);
 		Destroy (this.gameObject);
 
@@ -336,10 +336,12 @@ public class Ship : MonoBehaviour
 	void OnTriggerEnter (Collider other)
 	{
 		Debug.Log ("OnTriggerEnter");
-		//if(isGameOver && other.gameObject.tag == "Shield" )
-		if (other.gameObject.tag == "Planet") {
+		if (GameManager.isGameOver && other.gameObject.tag == "Shield") {
+			Destroy(gameObject);
+		}
 
-			Invoke ("hitPlenet", 0.1f);
+		if (other.gameObject.tag == "Planet") {
+			Invoke ("hitPlanet", 0.1f);
 		}
 	}
 }

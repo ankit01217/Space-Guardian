@@ -21,7 +21,6 @@ public class GameTimer : MonoBehaviour
 	SpaceshipController spaceshipController;
 
 	void Awake(){
-		tranTint.enabled = false;
 		timer = 0;
 		shieldRenderer = shield.GetComponent<MeshRenderer> ();
 		setShieldAlpha(0);
@@ -44,7 +43,7 @@ public class GameTimer : MonoBehaviour
 			timer = Mathf.Clamp (timer + Time.deltaTime * timerSpeed,0f,100f);
 		}
 
-		if (timer >= 90f && isFlickerEnabled == false) {
+		if (timer >= 100f && isFlickerEnabled == false) {
 			isFlickerEnabled = true;
 			//do flicker animation of shield and set timer to 80% after that
 			startShieldFlickerAnimation();
@@ -103,14 +102,12 @@ public class GameTimer : MonoBehaviour
 
 
 	void startTransition(){
-		tranTint.enabled = true;
-		Invoke("startEndCinematic",1f);
+		Invoke("startEndCinematic",0.6f);
 
 	}
 
 	void startEndCinematic(){
 		Application.LoadLevel(2);
-
 	}
 
 	// Update is called once per frame
