@@ -42,8 +42,8 @@ public class Ship : MonoBehaviour
 			if(Vector3.Distance(transform.position,planet.transform.position)<16)return false;
 			else return true;
 		}
-
-			
+		
+		
 		else
 			return false;
 		
@@ -59,14 +59,14 @@ public class Ship : MonoBehaviour
 	{
 		if (!freeze) {
 			//gameObject.transform.Translate (-Vector3.up * spaceShipSpeed * 0.05f);
-
+			
 			//GameObject randAlien = aliens [Random.Range (0, aliens.Length)];
 			//targetPosition = randAlien.transform.position;
-
+			
 			//Vector3 dir =  targetPosition - transform.position;
 			//gameObject.transform.Translate(dir * Time.deltaTime, Space.World);
 			gameObject.transform.Translate (Vector3.forward * spaceShipSpeed * 0.05f);
-
+			
 			/*
 		Vector3 newpoas = new Vector3 ();
 		newpoas.x = Mathf.Lerp (transform.position.x, targetPosition.x, spaceShipSpeed * Time.deltaTime);
@@ -74,7 +74,7 @@ public class Ship : MonoBehaviour
 		newpoas.z = Mathf.Lerp (transform.position.z, targetPosition.z, spaceShipSpeed * Time.deltaTime);
 		gameObject.transform.position = newpoas;
 	 */
-
+			
 			if (startRandomDir == false && spaceShipType == ATTACKER && inScreen (gameObject.transform.position)) {
 				startRandomDir = true;
 				InvokeRepeating ("randomDirection", 3f, 2f);
@@ -84,80 +84,87 @@ public class Ship : MonoBehaviour
 				rotateDegree=170;
 				freezeRotatebackward ();
 				Invoke ("unfreezeRotatebackward", 1f);
-				Debug.Log ("!!!");
-
+				//	Debug.Log ("!!!");
+				
 			}
 		}
 		
 	}
 	void resetLaser(){
 		attackerShoot = false;
+		attackerTarget = new Vector3 (0, 0, 0);
 		timeCount = 0;
+		isCreateLaserBeam = false;
+		if (laserBeam)
+			Destroy (laserBeam);
 	}
 	void startAttackAsteroid(){
+		//Debug.Log("asteroidAttackAtart!!!!!!!");
 		GameObject[] asteroid = GameObject.FindGameObjectsWithTag ("Asteroid");
-		for (int i=0; i<asteroid.Length; i++) {
-			if(asteroid[i].GetComponent<Asteroid>().grabable==true)
+		for (int i=asteroid.Length -1; i>=0; i--) {
+			if(asteroid[i].GetComponent<Asteroid>().grabable==true && asteroid[i].GetComponent<Renderer>().isVisible)
 			{
-				int tmp=Random.Range (0, asteroid.Length);
+				Debug.Log(i+"asteroidAttack!!!!!!!");
+				//int tmp=Random.Range (0, asteroid.Length);
 				//GameObject laserbeam=(GameObject)Instantiate(laser,this.gameObject.transform.position,Quaternion.identity);
 				//LeanTween.move ( laserbeam,asteroid[tmp].transform.position,0.2f );
 				attackerShoot=true;
-				attackerTarget=asteroid[tmp].transform.position;
+				attackerTarget=new Vector3(asteroid[i].transform.position.x,asteroid[i].transform.position.y,asteroid[i].transform.position.z);
 				
-				asteroid [tmp].SendMessage ("AsteroidHit");
+				asteroid [i].SendMessage ("AsteroidHit");
 				//Invoke("unfreezeAsteroidAttackerMove",0.5f);
 				//float curScale = this.transform.localScale.x;
 				
 				freeze=false;
-				Invoke("resetLaser",1f);
+				Invoke("resetLaser",2f);
 				break;
 			}
 		}
-
+		
+		
 	}
 	
-
+	
 	void asteroidAttackerAttack ()
 	{
 		//Debug.Log("attack!");
 		freeze = true;
 		Invoke ("startAttackAsteroid", 1.5f);
 		//float curScale = this.transform.localScale.x;
-	//	LeanTween.cancel (this.gameObject);
-	//	this.gameObject.transform.localScale = new Vector3 (curScale, curScale, curScale);
-	//	LeanTween.scale( this.gameObject, new Vector3 (curScale + 0.3f, curScale + 0.3f, curScale + 0.3f), 0.15f).setEase(LeanTweenType.easeOutBounce).setLoopPingPong(-1);
+		//	LeanTween.cancel (this.gameObject);
+		//	this.gameObject.transform.localScale = new Vector3 (curScale, curScale, curScale);
+		//	LeanTween.scale( this.gameObject, new Vector3 (curScale + 0.3f, curScale + 0.3f, curScale + 0.3f), 0.15f).setEase(LeanTweenType.easeOutBounce).setLoopPingPong(-1);
 		anim.SetTrigger("attack");
-
-
+		
+		
 		
 	}
 	void vanishing(){
 		float distance = Vector3.Distance (planet.transform.position, transform.position);
 		float newPosX = (float)Random.Range (0, 360f)/10f - 18f;
-		float newPosY = Mathf.Sqrt (distance * distance - newPosX * newPosX);
-
+		float newPosY = Mathf.Sqrt (Mathf.Abs( distance * distance - newPosX * newPosX));
+		
 		GameObject newShip = (GameObject)Instantiate (this.gameObject, new Vector3 (newPosX, newPosY - 12.8f, 18f), Quaternion.identity);
-
+		
 		Destroy (this.gameObject);
 	}
 	void startVanished(){
 		anim.SetTrigger ("vanish");
 		Invoke ("vanishing", 2f);
-
+		
 	}
 	void functioningSpaceShip ()
 	{
 		switch (spaceShipType) {
 		case "attacker":
 			//Invoke("asteroidAttackerAttack",3f);
-			InvokeRepeating ("asteroidAttackerAttack", 6f, 6.5f);
+			InvokeRepeating ("asteroidAttackerAttack", 6f, 7f);
 			break;
 		case "vanished":
-
+			
 			InvokeRepeating("startVanished",5f,3f);
 			break;
-
+			
 		}
 	}
 	void randomDirection ()
@@ -182,17 +189,17 @@ public class Ship : MonoBehaviour
 			//LeanTween.rotateAround(this.gameObject,new Vector3(0,0,1f),Random.Range(-170f,-20f),0.5f);
 			rotateDegree=Random.Range(-170f,-20f);
 		}
-			
-			//gameObject.transform.Rotate (new Vector3 (Random.Range (45, 360), 0, 0));
-
+		
+		//gameObject.transform.Rotate (new Vector3 (Random.Range (45, 360), 0, 0));
+		
 		//}
-
+		
 		//gameObject.transform.Rotate (new Vector3 (Random.Range(0,360), 0, 0));
 		//Vector3.savepos = gameObject.transform.position;
-
+		
 		//gameObject.transform.Translate (Vector3.forward * spaceShipSpeed * 6f);
-
-
+		
+		
 		/*Vector3 temppos=gameObject.transform.position+new Vector3(dir.x,dir.y,0);
 		if(inScreen(temppos)){
 			//Debug.Log (ATTACKER);
@@ -207,7 +214,7 @@ public class Ship : MonoBehaviour
 	{
 		//gameObject model = gameObject.GetComponent<SpaceshipModel> ();
 		gameObject.transform.Rotate (new Vector3 (0, 0, 180));
-
+		
 	}
 	void pointAtPlenet ()
 	{
@@ -215,15 +222,15 @@ public class Ship : MonoBehaviour
 		if (gameObject.transform.position.x < 0) {
 			fixPosition ();
 		}
-
+		
 	}
 	void setUpSpaceShip ()
 	{
-
+		
 		//gameObject.transform.LookAt (planet.transform.position);
 		//gameObject.transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
 		//gameObject.transform.RotateAround (Vector3.forward, 20*);
-/*
+		/*
 		if (transform.position.x < -12) {
 			transform.Rotate( new Vector3(0,0,1),35);
 
@@ -241,8 +248,8 @@ public class Ship : MonoBehaviour
 		}
 */
 		pointAtPlenet ();
-
-
+		
+		
 		/*
 		switch (spaceShipType) {
 		case "normal":
@@ -263,19 +270,19 @@ public class Ship : MonoBehaviour
 			spaceShipSpeed=2;
 			break;
 		}*/
-
+		
 	}
 	
 	void hitSpaceShip ()
 	{
 		//spaceShipLife --;
-	/*	if (spaceShipType == SHIELDED) {
+		/*	if (spaceShipType == SHIELDED) {
 			Debug.Log ("HAHAHAHA");
 			GameObject.FindGameObjectWithTag ("shieldSphere").SetActive (false);
 			spaceShipType = NORMAL;
 		} else if (spaceShipLife <= 0) {*/
-			spaceshipController.onShipDestroyed ();
-			Destroy (gameObject);
+		spaceshipController.onShipDestroyed ();
+		Destroy (gameObject);
 		//}
 	}
 	void hitPlanet ()
@@ -283,41 +290,41 @@ public class Ship : MonoBehaviour
 		Debug.Log ("hit plqnet");
 		alienController.killRandomAlien (this.transform.position);
 		Destroy (this.gameObject);
-
+		
 	}
-
-
+	
+	
 	// Use this for initialization
-
+	
 	void Start ()
 	{
 		//if (spaceShipType == VANISHED) {
-			anim=GetComponentInChildren<Animator>();
-
+		anim=GetComponentInChildren<Animator>();
+		
 		
 		audioSource = GetComponent<AudioSource> ();
 		rend = GetComponentInChildren<Renderer> ();
 		aliens = (GameObject[])GameObject.FindGameObjectsWithTag ("Alien");
 		alienController = GameObject.FindObjectOfType<AlienController> ();
 		spaceshipController = GameObject.FindObjectOfType<SpaceshipController> ();
-
+		
 		//transform.rotation = Quaternion.identity;
 		planet = GameObject.FindGameObjectWithTag ("Planet");
 		Random.seed = (int)System.DateTime.Now.Ticks;
 		setUpSpaceShip ();
 		functioningSpaceShip ();
-
-
+		
+		
 		//curScale  = this.transform.localScale.x;
 		//LeanTween.scale( this.gameObject, new Vector3 (curScale + 0.1f, curScale + 0.1f, curScale + 0.1f), 0.25f).setEase(LeanTweenType.easeOutCirc).setLoopPingPong(-1);
-
+		
 	}
 	
 	void Update ()
 	{
-
+		
 		if (rend && rend.isVisible && !isInToScreen) {
-
+			
 			audioSource.PlayOneShot (shipClips [Random.Range (0, 3)]);
 			isInToScreen = true;
 			//		AudioSource tmp=Random
@@ -328,16 +335,17 @@ public class Ship : MonoBehaviour
 				laserBeam=(GameObject)Instantiate(laser,this.gameObject.transform.position,Quaternion.identity);
 				isCreateLaserBeam=true;
 				timeCount=0;
+			}else if(laserBeam){
+				Vector3 newpoas = new Vector3 ();
+				timeCount+=Time.deltaTime;
+				float flyingspeed=5*(timeCount);
+				newpoas.x = Mathf.Lerp (transform.position.x, attackerTarget.x, flyingspeed);
+				newpoas.y = Mathf.Lerp (transform.position.y, attackerTarget.y,  flyingspeed);
+				newpoas.z = attackerTarget.z;
+				laserBeam.transform.position = newpoas;
+				laserBeam.transform.position=newpoas;
 			}
-			Vector3 newpoas = new Vector3 ();
-			timeCount+=Time.deltaTime;
-			float flyingspeed=10*(timeCount);
-			newpoas.x = Mathf.Lerp (transform.position.x, attackerTarget.x, flyingspeed);
-			newpoas.y = Mathf.Lerp (transform.position.y, attackerTarget.y,  flyingspeed);
-			newpoas.z = Mathf.Lerp (transform.position.z, attackerTarget.z, flyingspeed);
-			laserBeam.transform.position = newpoas;
-			laserBeam.transform.position=newpoas;
-
+			
 		}
 		if (rotateDegree!=0) {
 			if(rotateDegree>0){
@@ -349,12 +357,12 @@ public class Ship : MonoBehaviour
 				gameObject.transform.Rotate (new Vector3 (tmp, 0, 0));
 				rotateDegree-=tmp;
 			}
-
+			
 		}
-
-
 		
-
+		
+		
+		
 	}
 	void OnTriggerEnter (Collider other)
 	{
@@ -363,7 +371,7 @@ public class Ship : MonoBehaviour
 			Destroy(gameObject);
 		}
 		if (other.gameObject.tag == "Planet") {
-
+			
 			Invoke ("hitPlanet", 0.1f);
 		}
 	}
