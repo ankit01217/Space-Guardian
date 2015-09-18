@@ -49,7 +49,7 @@ public class Asteroid : MonoBehaviour {
 				other.gameObject.SendMessage("hitSpaceShip");
 			} else if (Application.loadedLevelName == "Start") {				
 				audioSource.PlayOneShot (blastAudio);
-				GameObject.Find("GameManager").GetComponent<StartScene>().StartGame();
+				GameObject.Find("GameManager").GetComponent<StartScene>().SendMessage("PrepareMain");
 			}
 			DestroyAsteroid();
 		} else if (other.gameObject.tag == "Planet") {

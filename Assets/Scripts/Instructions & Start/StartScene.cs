@@ -9,7 +9,7 @@ public class StartScene : MonoBehaviour {
 	public GameObject asteroid;
 	public GameObject pointMan;
 	public Text text;
-	public Image blackScreen;
+	public GameObject blackScreen;
 
 	float minWorldX;
 	float maxWorldX;
@@ -18,7 +18,6 @@ public class StartScene : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		FreezeScene ();
 		minWorldX = cam.ViewportToWorldPoint (new Vector3 (0, 0, 0)).x;
 		maxWorldX = cam.ViewportToWorldPoint (new Vector3 (1, 0, 0)).x;
 
@@ -31,27 +30,19 @@ public class StartScene : MonoBehaviour {
 
 	}
 
-	public void StartGame () {		
-		// Deactivate everything
-		Invoke ("FreezeScene", 0.5f);
-		pointMan.SetActive (false);
-//		GameObject controller = GameObject.Find ("Controllers");
-//		controller.transform.GetChild(0).GetComponent<AsteroidHandController>().enabled = false;
-//		controller.transform.GetChild(1).GetComponent<AsteroidHandController>().enabled = false;
-//		GameObject.Find ("Asteroid(Clone)").GetComponent<Asteroid>().enabled = false;
-
-		// wait for 3s and load main
-		Debug.Log ("test");
+	void PrepareMain () {
+		StartCoroutine ("StartGame");
 	}
 
-	void FreezeScene () {
+
+	IEnumerator StartGame () {
 		text.text = "Good job!";
-		//Time.timeScale = 0;
+		text.fontSize = 150;
+		yield return new WaitForSeconds(1f);
+		
+		blackScreen.GetComponent<Animator> ().SetTrigger ("FadeIn");
+		yield return new WaitForSeconds(1.5f);
 
-
-	}
-
-	void FadeToBlack () {
-
+		Application.LoadLevel ("Main");
 	}
 }
