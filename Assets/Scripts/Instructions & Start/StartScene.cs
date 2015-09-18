@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class StartScene : MonoBehaviour {
 
@@ -7,6 +8,8 @@ public class StartScene : MonoBehaviour {
 	public GameObject ship;
 	public GameObject asteroid;
 	public GameObject pointMan;
+	public Text text;
+	public Image blackScreen;
 
 	float minWorldX;
 	float maxWorldX;
@@ -15,6 +18,7 @@ public class StartScene : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		FreezeScene ();
 		minWorldX = cam.ViewportToWorldPoint (new Vector3 (0, 0, 0)).x;
 		maxWorldX = cam.ViewportToWorldPoint (new Vector3 (1, 0, 0)).x;
 
@@ -40,7 +44,14 @@ public class StartScene : MonoBehaviour {
 		Debug.Log ("test");
 	}
 
-	void FreezeScene () {		
-		Time.timeScale = 0;
+	void FreezeScene () {
+		text.text = "Good job!";
+		//Time.timeScale = 0;
+
+
+	}
+
+	void FadeToBlack () {
+
 	}
 }
