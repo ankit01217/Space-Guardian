@@ -131,7 +131,7 @@ public class Ship : MonoBehaviour
 	void asteroidAttackerAttack ()
 	{
 		//Debug.Log("attack!");
-		if (gameObject.GetComponent<Renderer> ().isVisible) {
+		if (rend.isVisible) {
 			freeze = true;
 			Invoke ("startAttackAsteroid", 1.5f);
 			//float curScale = this.transform.localScale.x;
