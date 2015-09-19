@@ -86,8 +86,8 @@ public class SpaceshipController : MonoBehaviour
 
 	public void activateLastPhase(){
 		//inc speed and spawn rate after one wins the game
-		shipSpawnInterval = 0.1f;	
-		spaceSheepSpeedMultiplier = 5;
+		shipSpawnInterval = 0.2f;	
+		spaceSheepSpeedMultiplier = 4;
 	}
 
 }

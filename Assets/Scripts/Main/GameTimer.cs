@@ -107,14 +107,13 @@ public class GameTimer : MonoBehaviour
 
 	}
 
-
 	void startTransition(){
 		fader.GetComponent<Animator>().SetTrigger("FadeIn");
 		Invoke("startEndCinematic",1.4f);
 	}
 
 	void startEndCinematic(){
-		Application.LoadLevel(2);
+		Application.LoadLevel(4);
 	}
 
 	// Update is called once per frame
