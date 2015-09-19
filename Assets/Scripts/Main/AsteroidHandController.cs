@@ -56,7 +56,7 @@ public class AsteroidHandController : MonoBehaviour {
 
 
 	void OnTriggerEnter (Collider other) {
-		if (asteroid == null && other.tag == "Asteroid" && other.GetComponent<Asteroid>().grabable) {
+		if (handIsEmpty && other.tag == "Asteroid" && other.GetComponent<Asteroid>().grabable) {
 			asteroid = other.gameObject;
 
 			handIsEmpty = false;
