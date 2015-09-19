@@ -13,10 +13,14 @@ public class SpaceshipController : MonoBehaviour
 	public float round1Time = 30f;
 	public float round2Time = 70f;
 
+	public float shipSpawnIntervalSpeed = 2f;
+	public float spaceSheepSpeedMultiplierSpeed = 2;
+
 	AudioSource audioSource;
 	public int totShipsDestroyed = 0;
 	public Transform[] spawnPoints;
 
+	bool isLastPhaseActivated = false;
 	float spaceSheepSpeedMultiplier = 1f;
 	float spawnTimer = 0f;
 
@@ -35,6 +39,11 @@ public class SpaceshipController : MonoBehaviour
 		if (spawnTimer > shipSpawnInterval) {
 			spawnTimer = 0;
 			SpawnShip();
+		}
+
+		if (isLastPhaseActivated == true) {
+			shipSpawnInterval = Mathf.Clamp(shipSpawnInterval - shipSpawnIntervalSpeed*Time.deltaTime,0.2f,1f);	
+			spaceSheepSpeedMultiplier = Mathf.Clamp(spaceSheepSpeedMultiplier + spaceSheepSpeedMultiplierSpeed * Time.deltaTime,1f,4f);
 		}
 	}
 
@@ -86,8 +95,9 @@ public class SpaceshipController : MonoBehaviour
 
 	public void activateLastPhase(){
 		//inc speed and spawn rate after one wins the game
-		shipSpawnInterval = 0.2f;	
-		spaceSheepSpeedMultiplier = 4;
+		isLastPhaseActivated = true;
+		//shipSpawnInterval = 0.2f;	
+		//spaceSheepSpeedMultiplier = 4;
 	}
 
 }
