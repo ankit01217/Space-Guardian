@@ -5,6 +5,7 @@ public class Ship : MonoBehaviour
 {
 	private GameObject planet;
 	public string spaceShipType;
+	public GameObject explosion;
 	public int spaceShipLife;
 	public float spaceShipSpeed;
 	public GameObject laser;
@@ -130,13 +131,17 @@ public class Ship : MonoBehaviour
 	void asteroidAttackerAttack ()
 	{
 		//Debug.Log("attack!");
-		freeze = true;
-		Invoke ("startAttackAsteroid", 1.5f);
-		//float curScale = this.transform.localScale.x;
-		//	LeanTween.cancel (this.gameObject);
-		//	this.gameObject.transform.localScale = new Vector3 (curScale, curScale, curScale);
-		//	LeanTween.scale( this.gameObject, new Vector3 (curScale + 0.3f, curScale + 0.3f, curScale + 0.3f), 0.15f).setEase(LeanTweenType.easeOutBounce).setLoopPingPong(-1);
-		anim.SetTrigger("attack");
+		if (rend.isVisible) {
+			freeze = true;
+			Invoke ("startAttackAsteroid", 1.5f);
+			//float curScale = this.transform.localScale.x;
+			//	LeanTween.cancel (this.gameObject);
+			//	this.gameObject.transform.localScale = new Vector3 (curScale, curScale, curScale);
+			//	LeanTween.scale( this.gameObject, new Vector3 (curScale + 0.3f, curScale + 0.3f, curScale + 0.3f), 0.15f).setEase(LeanTweenType.easeOutBounce).setLoopPingPong(-1);
+			anim.SetTrigger("attack");
+
+		}
+
 		
 		
 		
@@ -375,6 +380,7 @@ public class Ship : MonoBehaviour
 	{
 		Debug.Log ("OnTriggerEnter");
 		if (GameManager.isGameOver && other.gameObject.tag == "Shield") {
+			Instantiate(explosion, transform.position, Quaternion.identity);
 			Destroy(gameObject);
 		}
 		if (other.gameObject.tag == "Planet") {

@@ -46,7 +46,7 @@ public class AlienController : MonoBehaviour {
 				Debug.Log ("game over");
 				GameManager.isGameOver = true;
 				audioSource.PlayOneShot (gameoverClip);
-				Application.LoadLevel (2);
+				Application.LoadLevel ("GameEndFailure");
 
 			}
 		}
