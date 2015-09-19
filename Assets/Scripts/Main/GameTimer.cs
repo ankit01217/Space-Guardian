@@ -12,7 +12,9 @@ public class GameTimer : MonoBehaviour
 	public Image fader;
 	public AudioClip timerAudio,gameEndAudio, flickerAudio, shieldCompleteAudio, shieldRefillAudio;
 	public static float timer = 90f;
+	public float endPhasePerc = 90f;
 
+	bool isEndPhaseEnabled = false;
 	MeshRenderer shieldRenderer;
 	AudioSource audioSource;
 	bool isTimerAudioEnabled = false;
@@ -57,25 +59,30 @@ public class GameTimer : MonoBehaviour
 		}
 
 		if (GameManager.isGameOver == false && isFlickering == false) {
-			timerText.text = (int)timer + "% complete";
+			timerText.text = "Shield completion: " + (int)timer + "%";
 			//setShieldAlpha (timer);
 			
 		}
 
+		if (timer >= endPhasePerc && isEndPhaseEnabled == false) {
+			isEndPhaseEnabled = true;
+			spaceshipController.activateLastPhase();
+
+		}
 
 		if (timer == 100f && GameManager.isGameOver == false) {
 			//game ends here
 			//shwo end cinematic and shield completion animaion
 			Debug.Log ("Game Over");
 			GameManager.isGameOver = true;
-			spaceshipController.activateLastPhase();
+			audioSource.PlayOneShot (shieldCompleteAudio);
 
 			LeanTween.alpha (shield, 0, 0.01f);
-			audioSource.PlayOneShot (shieldCompleteAudio);
-			Color newColor = new Color (1, 0.90f, 91/255f, 0.35f);
-			shieldRenderer.material.color = newColor;
+			//Color newColor = new Color (1, 0.90f, 91/255f, 0.35f);
+			//shieldRenderer.material.color = newColor;
 			LeanTween.alpha (shield, 0.3f, 0.5f).setEase(LeanTweenType.easeOutCirc);
-			Invoke("startTransition",5f);
+
+			Invoke("startTransition",1f);
 
 		}
 

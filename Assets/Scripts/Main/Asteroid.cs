@@ -40,7 +40,10 @@ public class Asteroid : MonoBehaviour {
 
 
 	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.tag == "Planet") {
+		if (grabable && other.gameObject.tag == "Hand" && other.GetComponent<AsteroidHandController> ().handIsEmpty) {
+			pickedUp = true;
+			hand = other.gameObject;
+		} else if (other.gameObject.tag == "Planet") {
 			if (thrown) {
 				alienController.killRandomAlien(transform.position);
 				DestroyAsteroid();
@@ -51,10 +54,7 @@ public class Asteroid : MonoBehaviour {
 	}
 
 	void OnTriggerStay(Collider other) {
-		if (grabable && other.gameObject.tag == "Hand" && other.GetComponent<AsteroidHandController> ().handIsEmpty) {
-			pickedUp = true;
-			hand = other.gameObject;
-		} else if (thrown && other.gameObject.tag == "Spaceship" && !hit) {
+		if (thrown && other.gameObject.tag == "Spaceship" && !hit) {
 			hit = true;
 			if(Application.loadedLevelName == "Main"){
 				audioSource.PlayOneShot (blastAudio);
