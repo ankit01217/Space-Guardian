@@ -15,6 +15,8 @@ public class InstructionsScene : MonoBehaviour {
 	public GameObject tick;
 	public int duration = 8;
 	public GameObject fader;
+	public AudioClip counterAudio;
+	AudioSource audioSource;
 
 	GameObject planet;
 	GameObject topHand;
@@ -27,6 +29,7 @@ public class InstructionsScene : MonoBehaviour {
 	void Start () {
 		minWorldX = cam.ViewportToWorldPoint (new Vector3 (0, 0, 0)).x;
 		maxWorldX = cam.ViewportToWorldPoint (new Vector3 (1, 0, 0)).x;
+		audioSource = GetComponent<AudioSource> ();
 
 		line.SetPosition(0, new Vector3(minWorldX, 0, 0));
 		line.SetPosition(1, new Vector3(maxWorldX, 0, 0));
@@ -85,6 +88,8 @@ public class InstructionsScene : MonoBehaviour {
 		for (int i = duration; i > 0; i--) {
 			timer.text = i.ToString();
 			yield return new WaitForSeconds(1f);
+			audioSource.PlayOneShot(counterAudio);
+
 		}
 		Animator anim = fader.GetComponent<Animator> ();
 		anim.SetTrigger ("FadeIn");

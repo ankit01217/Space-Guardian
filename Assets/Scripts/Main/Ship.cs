@@ -35,6 +35,8 @@ public class Ship : MonoBehaviour
 	private bool isCreateLaserBeam=false;
 	//private bool isRotate=false;
 	private float rotateDegree=0;
+	public AudioClip appaerSound,disappearSound,laserSound;
+
 	bool inScreen (Vector3 pos)
 	{
 		//Debug.Log (pos);
@@ -145,10 +147,13 @@ public class Ship : MonoBehaviour
 		float newPosY = Mathf.Sqrt (Mathf.Abs( distance * distance - newPosX * newPosX));
 		
 		GameObject newShip = (GameObject)Instantiate (this.gameObject, new Vector3 (newPosX, newPosY - 12.8f, 18f), Quaternion.identity);
-		
+		newShip.GetComponent<AudioSource>().PlayOneShot(appaerSound);
+
 		Destroy (this.gameObject);
 	}
 	void startVanished(){
+
+		audioSource.PlayOneShot(disappearSound);
 		anim.SetTrigger ("vanish");
 		Invoke ("vanishing", 2f);
 		
@@ -335,6 +340,8 @@ public class Ship : MonoBehaviour
 				laserBeam=(GameObject)Instantiate(laser,this.gameObject.transform.position,Quaternion.identity);
 				isCreateLaserBeam=true;
 				timeCount=0;
+				audioSource.PlayOneShot(laserSound);
+
 			}else if(laserBeam){
 				Vector3 newpoas = new Vector3 ();
 				timeCount+=Time.deltaTime;
