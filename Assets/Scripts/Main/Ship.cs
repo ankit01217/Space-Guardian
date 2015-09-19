@@ -130,13 +130,17 @@ public class Ship : MonoBehaviour
 	void asteroidAttackerAttack ()
 	{
 		//Debug.Log("attack!");
-		freeze = true;
-		Invoke ("startAttackAsteroid", 1.5f);
-		//float curScale = this.transform.localScale.x;
-		//	LeanTween.cancel (this.gameObject);
-		//	this.gameObject.transform.localScale = new Vector3 (curScale, curScale, curScale);
-		//	LeanTween.scale( this.gameObject, new Vector3 (curScale + 0.3f, curScale + 0.3f, curScale + 0.3f), 0.15f).setEase(LeanTweenType.easeOutBounce).setLoopPingPong(-1);
-		anim.SetTrigger("attack");
+		if (gameObject.GetComponent<Renderer> ().isVisible) {
+			freeze = true;
+			Invoke ("startAttackAsteroid", 1.5f);
+			//float curScale = this.transform.localScale.x;
+			//	LeanTween.cancel (this.gameObject);
+			//	this.gameObject.transform.localScale = new Vector3 (curScale, curScale, curScale);
+			//	LeanTween.scale( this.gameObject, new Vector3 (curScale + 0.3f, curScale + 0.3f, curScale + 0.3f), 0.15f).setEase(LeanTweenType.easeOutBounce).setLoopPingPong(-1);
+			anim.SetTrigger("attack");
+
+		}
+
 		
 		
 		
