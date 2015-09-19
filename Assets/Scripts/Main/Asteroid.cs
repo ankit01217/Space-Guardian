@@ -13,7 +13,7 @@ public class Asteroid : MonoBehaviour {
 
 	AlienController alienController;
 	AudioSource audioSource;
-
+	bool hit = false;
 	GameObject hand;
 
 	// Use this for initialization
@@ -40,10 +40,22 @@ public class Asteroid : MonoBehaviour {
 
 
 	void OnTriggerEnter(Collider other) {
-		if (grabable && other.gameObject.tag == "Hand" && other.GetComponent<AsteroidHandController>().handIsEmpty) {
+		if (other.gameObject.tag == "Planet") {
+			if (thrown) {
+				alienController.killRandomAlien(transform.position);
+				DestroyAsteroid();
+			} else {
+				grabable = false;
+			}
+		}
+	}
+
+	void OnTriggerStay(Collider other) {
+		if (grabable && other.gameObject.tag == "Hand" && other.GetComponent<AsteroidHandController> ().handIsEmpty) {
 			pickedUp = true;
 			hand = other.gameObject;
-		} else if (thrown && other.gameObject.tag == "Spaceship") {
+		} else if (thrown && other.gameObject.tag == "Spaceship" && !hit) {
+			hit = true;
 			if(Application.loadedLevelName == "Main"){
 				audioSource.PlayOneShot (blastAudio);
 				other.gameObject.SendMessage("hitSpaceShip");
@@ -52,13 +64,6 @@ public class Asteroid : MonoBehaviour {
 				GameObject.Find("GameManager").GetComponent<StartScene>().SendMessage("PrepareMain");
 			}
 			DestroyAsteroid();
-		} else if (other.gameObject.tag == "Planet") {
-			if (thrown) {
-				alienController.killRandomAlien(transform.position);
-				DestroyAsteroid();
-			} else {
-				grabable = false;
-			}
 		}
 	}
 
@@ -70,7 +75,7 @@ public class Asteroid : MonoBehaviour {
 
 	void AsteroidHit () {
 		GetComponent<Rigidbody> ().velocity = Vector3.zero;
-		Invoke("DestroyAsteroid", 0.5f);
+		Invoke("DestroyAsteroid", 0.3f);
 	}
 
 
