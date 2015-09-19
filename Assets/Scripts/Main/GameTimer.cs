@@ -57,7 +57,7 @@ public class GameTimer : MonoBehaviour
 		}
 
 		if (GameManager.isGameOver == false && isFlickering == false) {
-			timerText.text = (int)timer + "% complete";
+			timerText.text = "Shield completion: " + (int)timer + "%";
 			//setShieldAlpha (timer);
 			
 		}
