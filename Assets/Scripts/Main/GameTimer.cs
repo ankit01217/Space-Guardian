@@ -113,7 +113,7 @@ public class GameTimer : MonoBehaviour
 	}
 
 	void startEndCinematic(){
-		Application.LoadLevel(4);
+		Application.LoadLevel("GameEndSuccess");
 	}
 
 	// Update is called once per frame

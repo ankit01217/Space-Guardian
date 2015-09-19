@@ -10,7 +10,10 @@ public class VideoPlayer : MonoBehaviour {
 	bool isVideoComplete = false;
 	// Use this for initialization
 	void Start () {
-		movTerxture = (MovieTexture)GetComponent<Renderer>().material.mainTexture;
+		//movTerxture = (MovieTexture)GetComponent<Renderer>().material.mainTexture;
+		RawImage rim = GetComponent<RawImage>();
+		movTerxture = (MovieTexture)rim.mainTexture;
+
 		movTerxture.Play();
 
 	}
@@ -34,6 +37,6 @@ public class VideoPlayer : MonoBehaviour {
 	}
 
 	void startInstructions(){
-		Application.LoadLevel(1);
+		Application.LoadLevel("Instructions");
 	}
 }
