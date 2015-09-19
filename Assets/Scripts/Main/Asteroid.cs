@@ -10,11 +10,13 @@ public class Asteroid : MonoBehaviour {
 	public AudioClip blastAudio;
 	public Animator anim;
 	public GameObject glow;
+	public SpriteRenderer asteroidTimer;
 
 	AlienController alienController;
 	AudioSource audioSource;
 	bool hit = false;
 	GameObject hand;
+	Sprite[] asteroidSprites; 
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +24,7 @@ public class Asteroid : MonoBehaviour {
 			audioSource = GetComponent<AudioSource> ();
 		}
 		alienController = GameObject.FindObjectOfType<AlienController> ();
+		asteroidSprites = Resources.LoadAll<Sprite>("asteroid timer");
 	}
 
 	public void SetVelocity (Vector3 velocity) {
@@ -30,12 +33,22 @@ public class Asteroid : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (pickedUp) {
+		if (pickedUp && grabable) {
+			StartCoroutine("AsteroidTimer");
 			grabable = false;
 			anim.SetBool ("pickedUp", true);
-		} else {
+		} else if (!pickedUp) {
 			anim.SetBool ("pickedUp", false);
 		}
+	}
+
+	IEnumerator AsteroidTimer () {
+		asteroidTimer.enabled = true;
+		for (int i = 0; i < 30; i++) {
+			asteroidTimer.sprite = asteroidSprites[i];
+			yield return new WaitForSeconds(1f/50f);
+		}
+		asteroidTimer.enabled = false;
 	}
 
 
