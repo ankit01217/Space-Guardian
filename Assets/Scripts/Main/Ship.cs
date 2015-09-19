@@ -131,7 +131,7 @@ public class Ship : MonoBehaviour
 	void asteroidAttackerAttack ()
 	{
 		//Debug.Log("attack!");
-		if (gameObject.GetComponent<Renderer> ().isVisible) {
+		if (rend.isVisible) {
 			freeze = true;
 			Invoke ("startAttackAsteroid", 1.5f);
 			//float curScale = this.transform.localScale.x;
@@ -148,7 +148,8 @@ public class Ship : MonoBehaviour
 	}
 	void vanishing(){
 		float distance = Vector3.Distance (planet.transform.position, transform.position);
-		float newPosX = (float)Random.Range (0, 360f)/10f - 18f;
+		float newPosX = (float)Random.Range (-15f,15f);
+
 		float newPosY = Mathf.Sqrt (Mathf.Abs( distance * distance - newPosX * newPosX));
 		
 		GameObject newShip = (GameObject)Instantiate (this.gameObject, new Vector3 (newPosX, newPosY - 12.8f, 18f), Quaternion.identity);
