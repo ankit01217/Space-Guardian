@@ -84,6 +84,7 @@ public class AsteroidHandController : MonoBehaviour {
 	void ThrowAsteroid () {
 		if(Application.loadedLevelName == "Start") {
 			Instantiate(asteroidPF, asteroid.transform.position, Quaternion.identity);
+			//StartCoroutine("StartSceneAsteroid", asteroid.transform.position);
 		}
 
 		// We only want the direction along the x-y plane
@@ -104,5 +105,10 @@ public class AsteroidHandController : MonoBehaviour {
 		if (Application.loadedLevelName != "Instructions") {
 			audioSource.PlayOneShot (throwAudio);
 		}		
+	}
+
+	IEnumerator StartSceneAsteroid (Vector3 position) {
+		yield return new WaitForSeconds (0.2f);
+		Instantiate(asteroidPF, position, Quaternion.identity);
 	}
 }
