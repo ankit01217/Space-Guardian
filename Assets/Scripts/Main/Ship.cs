@@ -5,6 +5,7 @@ public class Ship : MonoBehaviour
 {
 	private GameObject planet;
 	public string spaceShipType;
+	public GameObject explosion;
 	public int spaceShipLife;
 	public float spaceShipSpeed;
 	public GameObject laser;
@@ -379,6 +380,7 @@ public class Ship : MonoBehaviour
 	{
 		Debug.Log ("OnTriggerEnter");
 		if (GameManager.isGameOver && other.gameObject.tag == "Shield") {
+			Instantiate(explosion, transform.position, Quaternion.identity);
 			Destroy(gameObject);
 		}
 		if (other.gameObject.tag == "Planet") {
