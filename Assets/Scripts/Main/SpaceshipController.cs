@@ -13,13 +13,12 @@ public class SpaceshipController : MonoBehaviour
 	public float round1Time = 30f;
 	public float round2Time = 70f;
 
-	public float shipSpawnIntervalSpeed = 2f;
-	public float spaceSheepSpeedMultiplierSpeed = 2;
+	public float shipSpawnIntervalSpeed = 0.0005f;
+	public float spaceSheepSpeedMultiplierSpeed = 0.0005f;
 
 	AudioSource audioSource;
 	public int totShipsDestroyed = 0;
 	public Transform[] spawnPoints;
-
 	bool isLastPhaseActivated = false;
 	float spaceSheepSpeedMultiplier = 1f;
 	float spawnTimer = 0f;
@@ -28,7 +27,7 @@ public class SpaceshipController : MonoBehaviour
 	void Start ()
 	{
 		audioSource = GetComponent<AudioSource> ();
-	
+		SpawnShip();
 	}
 	
 	// Update is called once per frame
@@ -39,11 +38,13 @@ public class SpaceshipController : MonoBehaviour
 		if (spawnTimer > shipSpawnInterval) {
 			spawnTimer = 0;
 			SpawnShip();
+
+
 		}
 
 		if (isLastPhaseActivated == true) {
-			shipSpawnInterval = Mathf.Clamp(shipSpawnInterval - shipSpawnIntervalSpeed*Time.deltaTime,0.2f,1f);	
-			spaceSheepSpeedMultiplier = Mathf.Clamp(spaceSheepSpeedMultiplier + spaceSheepSpeedMultiplierSpeed * Time.deltaTime,1f,4f);
+			shipSpawnInterval = Mathf.Clamp(shipSpawnInterval - shipSpawnIntervalSpeed*Time.deltaTime,0.8f,1f);	
+			spaceSheepSpeedMultiplier = Mathf.Clamp(spaceSheepSpeedMultiplier + spaceSheepSpeedMultiplierSpeed * Time.deltaTime,1f,1.6f);
 		}
 	}
 
@@ -72,11 +73,11 @@ public class SpaceshipController : MonoBehaviour
 			newShip = (GameObject)Instantiate (arr[Random.Range (0, arr.Length)], getRandPosition (), Quaternion.identity);
 			//arr [Random.Range (0, arr.Length)]
 		} else if ((totShipsDestroyed >= round1Ship && totShipsDestroyed < round2Ship) || GameTimer.timer >= round1Time) {
-			GameObject[] arr = new GameObject[]{normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,vanishedShipPF,vanishedShipPF,vanishedShipPF,attackerShipPF,attackerShipPF};
+			GameObject[] arr = new GameObject[]{normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,vanishedShipPF,vanishedShipPF,normalShipPF,attackerShipPF};
 			newShip = (GameObject)Instantiate (arr[Random.Range (0, arr.Length)], getRandPosition (), Quaternion.identity);
 				
 		}else if(totShipsDestroyed >= round2Ship || GameTimer.timer >= round2Time){
-			GameObject[] arr = new GameObject[]{normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,vanishedShipPF,vanishedShipPF,vanishedShipPF,attackerShipPF,attackerShipPF};
+			GameObject[] arr = new GameObject[]{normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,vanishedShipPF,vanishedShipPF,attackerShipPF,attackerShipPF};
 			newShip = (GameObject)Instantiate (arr [Random.Range (0, arr.Length)], getRandPosition (), Quaternion.identity);
 		}
 		else
@@ -96,8 +97,6 @@ public class SpaceshipController : MonoBehaviour
 	public void activateLastPhase(){
 		//inc speed and spawn rate after one wins the game
 		isLastPhaseActivated = true;
-		//shipSpawnInterval = 0.2f;	
-		//spaceSheepSpeedMultiplier = 4;
 	}
 
 }

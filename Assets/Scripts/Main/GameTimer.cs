@@ -21,6 +21,7 @@ public class GameTimer : MonoBehaviour
 	bool isFlickerEnabled = false;
 	bool isFlickering = false;
 	SpaceshipController spaceshipController;
+	bool isFlickerComplete = false;
 
 	void Awake(){
 
@@ -64,7 +65,7 @@ public class GameTimer : MonoBehaviour
 			
 		}
 
-		if (timer >= endPhasePerc && isEndPhaseEnabled == false) {
+		if (timer >= endPhasePerc && isEndPhaseEnabled == false && isFlickerComplete == true) {
 			isEndPhaseEnabled = true;
 			spaceshipController.activateLastPhase();
 
@@ -101,17 +102,23 @@ public class GameTimer : MonoBehaviour
 
 
 	void startShieldFlickerAnimation(){
-		audioSource.PlayOneShot (flickerAudio);
 		isFlickering = true;
 		setShieldAlpha (1);
+		Invoke ("startFlickerTween", 2f);
+	
+	}
+
+	void startFlickerTween(){
+		audioSource.PlayOneShot (flickerAudio);
 		LeanTween.alpha (shield, 0, 0.15f).setEase(LeanTweenType.easeOutCirc).setLoopPingPong(2).setOnComplete(endShieldFlickerAnimation);
+
 	}
 
 	void endShieldFlickerAnimation(){
 		isFlickering = false;
 		audioSource.PlayOneShot (shieldRefillAudio);
 		LeanTween.alpha (shield, 0, 0.01f);
-
+		isFlickerComplete = true;
 	}
 
 	void startTransition(){
