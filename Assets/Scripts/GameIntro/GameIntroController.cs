@@ -9,7 +9,7 @@ public class GameIntroController : MonoBehaviour {
 	public RawImage videoPlayer;
 	public AudioClip titleAudio, introAudio;
 	AudioSource audioSource;
-	private MovieTexture movTerxture;
+	private MovieTexture movTexture;
 	bool isVideoComplete = false;
 
 
@@ -33,15 +33,15 @@ public class GameIntroController : MonoBehaviour {
 		Destroy (titlePage.gameObject);
 
 		RawImage rim = videoPlayer.GetComponent<RawImage>();
-		movTerxture = (MovieTexture)rim.mainTexture;
-		movTerxture.Play();
+		movTexture = (MovieTexture)rim.mainTexture;
+		movTexture.Play();
 		audioSource.PlayOneShot (introAudio);
 
 	}
 	
 	void Update () {
 		
-		if (movTerxture.isPlaying) {
+		if (movTexture.isPlaying) {
 			Debug.Log ("isPlaying");
 		} else {
 			Debug.Log ("Video Complete");
@@ -57,7 +57,7 @@ public class GameIntroController : MonoBehaviour {
 	}
 
 	void onSkip(){
-		movTerxture.Stop();
+		movTexture.Stop();
 		fader.GetComponent<Animator>().SetTrigger("FadeIn");
 		Invoke("startInstructions",1.5f);
 

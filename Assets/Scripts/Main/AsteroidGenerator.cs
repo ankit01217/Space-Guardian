@@ -14,13 +14,11 @@ public class AsteroidGenerator : MonoBehaviour
 	float zPlane = 18f;
 	float minWorldX;
 	float maxWorldX;
-	bool initDone = false;
 
 	// Use this for initialization
 	void Start () {
 		minWorldX = cam.ViewportToWorldPoint (new Vector3 (0, 0, 0)).x;
 		maxWorldX = cam.ViewportToWorldPoint (new Vector3 (1, 0, 0)).x;
-		InitialSpawn ();
 		InvokeRepeating ("SpawnAsteroid", 0, spawnRate);
 	}
 	
@@ -29,20 +27,9 @@ public class AsteroidGenerator : MonoBehaviour
 
 	}
 
-	void InitialSpawn () {
-		for (int i = 0; i < initCount; i++) {
-			SpawnAsteroid ();
-		}
-		initDone = true;
-	}
-
 	void SpawnAsteroid () {
 		Vector3 pos, velocity;
-		if (initDone) {
-			GetPosAndVelocity (Random.Range (1, 4), out pos, out velocity);
-		} else {
-			GetPosAndVelocity (0, out pos, out velocity);
-		}
+		GetPosAndVelocity (Random.Range (1, 4), out pos, out velocity);
 
 		GameObject newAsteroid = (GameObject)Instantiate (asteroid, pos, Quaternion.identity);
 		newAsteroid.transform.SetParent (transform);
@@ -52,14 +39,6 @@ public class AsteroidGenerator : MonoBehaviour
 	// Only generate on the left, top and right of screen
 	void GetPosAndVelocity (int type, out Vector3 pos, out Vector3 velocity) {
 		switch (type) {
-		// initial spawn within viewport
-		case 0:
-			pos = new Vector3 (Random.Range (minWorldX + maxWorldX / 2, maxWorldX - maxWorldX / 2),
-			                      Random.Range (0, cam.orthographicSize - 1), zPlane);
-			velocity = new Vector3 (Random.Range (minWorldX + 1, maxWorldX - 1), 
-			                     	   Random.Range (-cam.orthographicSize, cam.orthographicSize),
-			                       	   0).normalized * RandSpeed ();
-			break;
 
 		// spawn on top
 		case 1: 
@@ -67,7 +46,6 @@ public class AsteroidGenerator : MonoBehaviour
 			velocity = new Vector3 (Random.Range (minWorldX, maxWorldX),
 			                       	   -cam.orthographicSize,
 			                       	   0).normalized * RandSpeed ();
-				//Debug.Log (velocity);
 			break;
 
 		// spawn to the left

@@ -158,10 +158,12 @@ public class Ship : MonoBehaviour
 		Destroy (this.gameObject);
 	}
 	void startVanished(){
+		if (rend.isVisible) {
+			audioSource.PlayOneShot(disappearSound);
+			anim.SetTrigger ("vanish");
+			Invoke ("vanishing", 2f);
+		}
 
-		audioSource.PlayOneShot(disappearSound);
-		anim.SetTrigger ("vanish");
-		Invoke ("vanishing", 2f);
 		
 	}
 	void functioningSpaceShip ()
@@ -173,7 +175,7 @@ public class Ship : MonoBehaviour
 			break;
 		case "vanished":
 			
-			InvokeRepeating("startVanished",5f,3f);
+			InvokeRepeating("startVanished",5f,5f);
 			break;
 			
 		}
