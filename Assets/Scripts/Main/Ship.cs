@@ -292,10 +292,12 @@ public class Ship : MonoBehaviour
 			GameObject.FindGameObjectWithTag ("shieldSphere").SetActive (false);
 			spaceShipType = NORMAL;
 		} else if (spaceShipLife <= 0) {*/
+
 		spaceshipController.onShipDestroyed ();
 		Destroy (gameObject);
 		//}
 	}
+
 	void hitPlanet ()
 	{
 		Debug.Log ("hit plqnet");

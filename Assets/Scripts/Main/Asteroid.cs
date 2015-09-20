@@ -7,7 +7,7 @@ public class Asteroid : MonoBehaviour {
 	public bool thrown = false;
 	public bool grabable = true;
 	public GameObject explosion;
-	public AudioClip blastAudio;
+	public AudioClip blastAudio, asteroidTimerAudio;
 	public Animator anim;
 	public GameObject glow;
 	public SpriteRenderer asteroidTimer;
@@ -37,6 +37,8 @@ public class Asteroid : MonoBehaviour {
 			StartCoroutine("AsteroidTimer");
 			grabable = false;
 			anim.SetBool ("pickedUp", true);
+			audioSource.PlayOneShot(asteroidTimerAudio);
+
 		} else if (!pickedUp) {
 			anim.SetBool ("pickedUp", false);
 		}

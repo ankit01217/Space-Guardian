@@ -4,15 +4,16 @@ using UnityEngine.UI;
 
 public class GameTimer : MonoBehaviour
 {
-	public Text timerText;
+	public Text timerText, messageText;
 	public float timerSpeed;
 	public GameObject shield;
 	public float maxAlpha = 0.5f;
 	public float flickerPerc = 10f;
 	public Image fader;
-	public AudioClip timerAudio,gameEndAudio, flickerAudio, shieldCompleteAudio, shieldRefillAudio;
+	public AudioClip timerAudio,gameEndAudio, flickerAudio, shieldCompleteAudio, shieldRefillAudio, shieldBrokenAliensAudio, shieldCompleteAliensAudio;
 	public static float timer = 90f;
 	public float endPhasePerc = 90f;
+
 
 	bool isEndPhaseEnabled = false;
 	MeshRenderer shieldRenderer;
@@ -21,10 +22,12 @@ public class GameTimer : MonoBehaviour
 	bool isFlickerEnabled = false;
 	bool isFlickering = false;
 	SpaceshipController spaceshipController;
+	bool isFlickerComplete = false;
 
 	void Awake(){
 
 		timer = 0;
+		messageText.text = "";
 		shieldRenderer = shield.GetComponent<MeshRenderer> ();
 		setShieldAlpha(0);
 		shield.SetActive (true);
@@ -53,7 +56,11 @@ public class GameTimer : MonoBehaviour
 
 		if (timer >= 100f && isFlickerEnabled == false) {
 			isFlickerEnabled = true;
+			audioSource.PlayOneShot (shieldCompleteAudio);
+
 			//do flicker animation of shield and set timer to 80% after that
+			messageText.text = "hoo,hoo,woo,hoo,hoo! We have almost fixed the shield!";
+			audioSource.PlayOneShot(shieldCompleteAliensAudio);
 			startShieldFlickerAnimation();
 			timer = flickerPerc;
 		}
@@ -64,7 +71,7 @@ public class GameTimer : MonoBehaviour
 			
 		}
 
-		if (timer >= endPhasePerc && isEndPhaseEnabled == false) {
+		if (timer >= endPhasePerc && isEndPhaseEnabled == false && isFlickerComplete == true) {
 			isEndPhaseEnabled = true;
 			spaceshipController.activateLastPhase();
 
@@ -81,6 +88,9 @@ public class GameTimer : MonoBehaviour
 			//Color newColor = new Color (1, 0.90f, 91/255f, 0.35f);
 			//shieldRenderer.material.color = newColor;
 			LeanTween.alpha (shield, 0.3f, 0.5f).setEase(LeanTweenType.easeOutCirc);
+
+			audioSource.PlayOneShot(shieldCompleteAliensAudio);
+			messageText.text = "hoo,hoo,woo,hoo,hoo! We have fixed the shield!";
 
 			Invoke("startTransition",1f);
 
@@ -101,17 +111,34 @@ public class GameTimer : MonoBehaviour
 
 
 	void startShieldFlickerAnimation(){
-		audioSource.PlayOneShot (flickerAudio);
+		messageText.text = "";
 		isFlickering = true;
 		setShieldAlpha (1);
+		Invoke ("startFlickerTween", 3f);
+	
+	}
+
+	void startFlickerTween(){
+
+		audioSource.PlayOneShot (flickerAudio);
 		LeanTween.alpha (shield, 0, 0.15f).setEase(LeanTweenType.easeOutCirc).setLoopPingPong(2).setOnComplete(endShieldFlickerAnimation);
+
 	}
 
 	void endShieldFlickerAnimation(){
+		messageText.text = "Oh no! Shield is not ready yet! Please give us a little more time...";
+		audioSource.PlayOneShot(shieldBrokenAliensAudio);
+
 		isFlickering = false;
 		audioSource.PlayOneShot (shieldRefillAudio);
 		LeanTween.alpha (shield, 0, 0.01f);
+		isFlickerComplete = true;
 
+		Invoke ("clearMessage", 3f);
+	}
+
+	void clearMessage(){
+		messageText.text = "";
 	}
 
 	void startTransition(){

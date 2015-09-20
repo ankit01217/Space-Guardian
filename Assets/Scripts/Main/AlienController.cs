@@ -1,13 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class AlienController : MonoBehaviour {
 
 	GameObject[] aliens;
 	AudioSource audioSource;
 	public AudioClip gameoverClip;
+	public int maxAliens = 20;
 	private GameObject planet;
 	private float rotationSpeed = 10f;
+	private int totAliensKilled = 0;
+	public Image fader;
+
 
 	// Use this for initialization
 	void Start () {
@@ -38,21 +43,30 @@ public class AlienController : MonoBehaviour {
 			//GameObject alien = aliens [Random.Range (0, aliens.Length)];
 			Alien alienScript = alien.GetComponent<Alien>();
 			alienScript.die();
+			totAliensKilled++;
 			
 		}
 
 		if (Application.loadedLevelName == "Main") {
-			if (aliens.Length == 0 && GameManager.isGameOver == false) {
+			if ((aliens.Length == 0 || totAliensKilled >= maxAliens) && GameManager.isGameOver == false) {
 				Debug.Log ("game over");
 				GameManager.isGameOver = true;
 				audioSource.PlayOneShot (gameoverClip);
-				Application.LoadLevel ("GameEndFailure");
 
+				fader.GetComponent<Animator>().SetTrigger("FadeIn");
+				Invoke("startEndCinematic",1.4f);
+
+		
 			}
 		}
 
 	}
 
+
+	void startEndCinematic(){
+		Application.LoadLevel ("GameEndFailure");
+
+	} 
 
 	
 	// Update is called once per frame
