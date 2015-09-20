@@ -36,7 +36,7 @@ public class Ship : MonoBehaviour
 	private bool isCreateLaserBeam=false;
 	//private bool isRotate=false;
 	private float rotateDegree=0;
-	public AudioClip appaerSound,disappearSound,laserSound,shipBlastAudio;
+	public AudioClip appaerSound,disappearSound,laserSound;
 
 	bool inScreen (Vector3 pos)
 	{
@@ -293,11 +293,11 @@ public class Ship : MonoBehaviour
 			spaceShipType = NORMAL;
 		} else if (spaceShipLife <= 0) {*/
 
-		audioSource.PlayOneShot(shipBlastAudio);
 		spaceshipController.onShipDestroyed ();
 		Destroy (gameObject);
 		//}
 	}
+
 	void hitPlanet ()
 	{
 		Debug.Log ("hit plqnet");

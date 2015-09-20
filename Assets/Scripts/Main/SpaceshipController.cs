@@ -15,6 +15,7 @@ public class SpaceshipController : MonoBehaviour
 
 	public float shipSpawnIntervalSpeed = 0.0005f;
 	public float spaceSheepSpeedMultiplierSpeed = 0.0005f;
+	public AudioClip shipBlastAudio;
 
 	AudioSource audioSource;
 	public int totShipsDestroyed = 0;
@@ -52,6 +53,8 @@ public class SpaceshipController : MonoBehaviour
 	{
 		//curActiveShipCount = Mathf.Clamp (curActiveShipCount - 1, 0, maxActiveShipCount);
 		totShipsDestroyed++;
+		audioSource.PlayOneShot(shipBlastAudio);
+		
 		Debug.Log ("total ships destroyed :" + totShipsDestroyed);
 	}
 
