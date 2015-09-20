@@ -59,7 +59,7 @@ public class GameTimer : MonoBehaviour
 			audioSource.PlayOneShot (shieldCompleteAudio);
 
 			//do flicker animation of shield and set timer to 80% after that
-			messageText.text = "hoo,hoo,woo,hoo,hoo! We have almost fixed the shield!";
+			messageText.text = "Woohoo! We have almost fixed the shield!";
 			audioSource.PlayOneShot(shieldCompleteAliensAudio);
 			startShieldFlickerAnimation();
 			timer = flickerPerc;
@@ -88,9 +88,7 @@ public class GameTimer : MonoBehaviour
 			//Color newColor = new Color (1, 0.90f, 91/255f, 0.35f);
 			//shieldRenderer.material.color = newColor;
 			LeanTween.alpha (shield, 0.3f, 0.5f).setEase(LeanTweenType.easeOutCirc);
-
 			audioSource.PlayOneShot(shieldCompleteAliensAudio);
-			messageText.text = "hoo,hoo,woo,hoo,hoo! We have fixed the shield!";
 
 			Invoke("startTransition",1f);
 
