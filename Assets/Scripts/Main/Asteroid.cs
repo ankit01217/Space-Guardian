@@ -20,9 +20,7 @@ public class Asteroid : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (Application.loadedLevelName != "Instructions") {
-			audioSource = GetComponent<AudioSource> ();
-		}
+		audioSource = GetComponent<AudioSource> ();
 		alienController = GameObject.FindObjectOfType<AlienController> ();
 		asteroidSprites = Resources.LoadAll<Sprite>("asteroid timer");
 	}
@@ -63,7 +61,7 @@ public class Asteroid : MonoBehaviour {
 				alienController.killRandomAlien(transform.position);
 				DestroyAsteroid();
 			} else {
-				grabable = false;
+				//grabable = false;
 			}
 		}
 	}
@@ -84,7 +82,7 @@ public class Asteroid : MonoBehaviour {
 
 	void OnTriggerExit (Collider other) {
 		if (!thrown && other.gameObject.tag == "Planet") {
-			grabable = true;
+			//grabable = true;
 		}
 	}
 

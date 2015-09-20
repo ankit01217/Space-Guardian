@@ -11,6 +11,7 @@ public class StartScene : MonoBehaviour {
 	public Text text;
 	public GameObject fader;
 
+	int counter = 0;
 	float minWorldX;
 	float maxWorldX;
 	GameObject asteroidInstance;
@@ -23,6 +24,7 @@ public class StartScene : MonoBehaviour {
 
 		Instantiate (asteroid, new Vector3 (minWorldX / 2, 0, 0), Quaternion.identity);
 		Instantiate (ship, new Vector3 (maxWorldX / 2, 0, 0), Quaternion.identity);
+		Instantiate (ship, new Vector3 (maxWorldX / 3, cam.orthographicSize/2, 0), Quaternion.identity);
 	}
 	
 	// Update is called once per frame
@@ -31,13 +33,16 @@ public class StartScene : MonoBehaviour {
 	}
 
 	void PrepareMain () {
-		StartCoroutine ("StartGame");
+		counter++;
+		if (counter == 2) {		// there are 2 ships
+			StartCoroutine ("StartGame");
+		}
 	}
 
 
 	IEnumerator StartGame () {
 		text.text = "Good job!";
-		text.fontSize = 150;
+		text.fontSize = 140;
 		yield return new WaitForSeconds(1f);
 		
 		Animator anim = fader.GetComponent<Animator> ();
