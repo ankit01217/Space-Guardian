@@ -20,6 +20,8 @@ public class Asteroid : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		audioSource = GetComponent<AudioSource> ();
 		if (Application.loadedLevelName != "Instructions") {
 			audioSource = GetComponent<AudioSource> ();
 		}
