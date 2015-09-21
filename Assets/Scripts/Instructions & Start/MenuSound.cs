@@ -19,12 +19,9 @@ public class MenuSound : MonoBehaviour {
 			AudioBegin = true;
 		} 
 	}
+
 	void Update () {
-		if(Application.loadedLevelName == "Instructions")
-		{
-			//audio.Stop();
-			AudioBegin = false;
-		}
+
 	}
 
 
