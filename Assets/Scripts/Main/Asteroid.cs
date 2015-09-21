@@ -56,6 +56,8 @@ public class Asteroid : MonoBehaviour {
 		if (grabable && other.gameObject.tag == "Hand" && other.GetComponent<AsteroidHandController> ().handIsEmpty) {
 			pickedUp = true;
 			hand = other.gameObject;
+		} else if (thrown && other.tag == "Shield") {
+			DestroyAsteroid();
 		} else if (other.gameObject.tag == "Planet") {
 			if (thrown) {
 				alienController.killRandomAlien(transform.position);

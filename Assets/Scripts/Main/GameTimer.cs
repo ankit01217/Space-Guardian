@@ -31,7 +31,7 @@ public class GameTimer : MonoBehaviour
 		messageText.text = "";
 		shieldRenderer = shield.GetComponent<MeshRenderer> ();
 		setShieldAlpha(0);
-		shield.SetActive (true);
+		//shield.SetActive (true);
 		fader.GetComponent<Animator>().SetTrigger("FadeOut");
 
 	
@@ -110,6 +110,7 @@ public class GameTimer : MonoBehaviour
 
 
 	void startShieldFlickerAnimation(){
+		shield.SetActive (true);
 		isFlickering = true;
 		setShieldAlpha (1);
 		Invoke ("startFlickerTween", 5f);
@@ -123,7 +124,7 @@ public class GameTimer : MonoBehaviour
 	}
 
 	void endShieldFlickerAnimation(){
-		messageText.text = "Oh no! Shield is not ready yet! Please give us a little more time...";
+		messageText.text = "Oh no! Shield is still broken! Please give us more time...";
 		audioSource.PlayOneShot(flicker_voiceover);
 		audioSource.PlayOneShot(shieldBrokenAliensAudio);
 
@@ -131,7 +132,7 @@ public class GameTimer : MonoBehaviour
 		audioSource.PlayOneShot (shieldRefillAudio);
 		LeanTween.alpha (shield, 0, 0.01f);
 		isFlickerComplete = true;
-
+		shield.SetActive (false);
 		Invoke ("clearMessage", 3f);
 	}
 

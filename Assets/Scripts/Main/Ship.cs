@@ -388,7 +388,7 @@ public class Ship : MonoBehaviour
 	void OnTriggerEnter (Collider other)
 	{
 		Debug.Log ("OnTriggerEnter");
-		if (GameManager.isGameOver && other.gameObject.tag == "Shield") {
+		if (other.gameObject.tag == "Shield") {
 			Instantiate(explosion, transform.position, Quaternion.identity);
 			Destroy(gameObject);
 		}
