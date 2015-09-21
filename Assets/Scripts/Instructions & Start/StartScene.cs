@@ -10,7 +10,6 @@ public class StartScene : MonoBehaviour {
 	public GameObject pointMan;
 	public Text text;
 	public GameObject fader;
-	AudioSource audioSource;
 
 	int counter = 0;
 	float minWorldX;
@@ -20,9 +19,6 @@ public class StartScene : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		audioSource = GetComponent<AudioSource>();
-		audioSource.time = 8f;
-		audioSource.Play();
 
 		minWorldX = cam.ViewportToWorldPoint (new Vector3 (0, 0, 0)).x;
 		maxWorldX = cam.ViewportToWorldPoint (new Vector3 (1, 0, 0)).x;

@@ -70,10 +70,10 @@ public class Asteroid : MonoBehaviour {
 		if (thrown && other.gameObject.tag == "Spaceship" && !hit) {
 			hit = true;
 			if(Application.loadedLevelName == "Main"){
-				audioSource.PlayOneShot (blastAudio);
+				//audioSource.PlayOneShot (blastAudio);
 				other.gameObject.SendMessage("hitSpaceShip");
 			} else if (Application.loadedLevelName == "Start") {				
-				audioSource.PlayOneShot (blastAudio);
+				//audioSource.PlayOneShot (blastAudio);
 				GameObject.Find("GameManager").GetComponent<StartScene>().SendMessage("PrepareMain");
 			}
 			DestroyAsteroid();
@@ -87,6 +87,7 @@ public class Asteroid : MonoBehaviour {
 	}
 
 	void AsteroidHit () {
+		audioSource.PlayOneShot (blastAudio);
 		GetComponent<Rigidbody> ().velocity = Vector3.zero;
 		Invoke("DestroyAsteroid", 0.3f);
 	}
