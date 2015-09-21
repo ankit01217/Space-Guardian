@@ -11,6 +11,7 @@ public class GameTimer : MonoBehaviour
 	public float flickerPerc = 10f;
 	public Image fader;
 	public AudioClip timerAudio,gameEndAudio, flickerAudio, shieldCompleteAudio, shieldRefillAudio, shieldBrokenAliensAudio, shieldCompleteAliensAudio;
+	public AudioClip flicker_voiceover, fixedshield_voiceover;
 	public static float timer = 90f;
 	public float endPhasePerc = 90f;
 
@@ -60,7 +61,7 @@ public class GameTimer : MonoBehaviour
 
 			//do flicker animation of shield and set timer to 80% after that
 			messageText.text = "Woohoo! We have almost fixed the shield!";
-			audioSource.PlayOneShot(shieldCompleteAliensAudio);
+			audioSource.PlayOneShot(fixedshield_voiceover);
 			startShieldFlickerAnimation();
 			timer = flickerPerc;
 		}
@@ -109,15 +110,13 @@ public class GameTimer : MonoBehaviour
 
 
 	void startShieldFlickerAnimation(){
-		messageText.text = "";
 		isFlickering = true;
 		setShieldAlpha (1);
-		Invoke ("startFlickerTween", 3f);
+		Invoke ("startFlickerTween", 5f);
 	
 	}
 
 	void startFlickerTween(){
-
 		audioSource.PlayOneShot (flickerAudio);
 		LeanTween.alpha (shield, 0, 0.15f).setEase(LeanTweenType.easeOutCirc).setLoopPingPong(2).setOnComplete(endShieldFlickerAnimation);
 
@@ -125,6 +124,7 @@ public class GameTimer : MonoBehaviour
 
 	void endShieldFlickerAnimation(){
 		messageText.text = "Oh no! Shield is not ready yet! Please give us a little more time...";
+		audioSource.PlayOneShot(flicker_voiceover);
 		audioSource.PlayOneShot(shieldBrokenAliensAudio);
 
 		isFlickering = false;
