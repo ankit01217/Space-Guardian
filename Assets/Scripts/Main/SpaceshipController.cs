@@ -73,7 +73,7 @@ public class SpaceshipController : MonoBehaviour
 		if (totShipsDestroyed < round1Ship && GameTimer.timer < round1Time) {
 			// if < %20 of ships then generate 
 			GameObject[] arr = new GameObject[]{normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF};
-			newShip = (GameObject)Instantiate (arr[Random.Range (0, arr.Length)], getRandPosition (), Quaternion.identity);
+			newShip = (GameObject)Instantiate (arr [Random.Range (0, arr.Length)], getRandPosition (), Quaternion.identity);
 			//arr [Random.Range (0, arr.Length)]
 		} else if ((totShipsDestroyed >= round1Ship && totShipsDestroyed < round2Ship) || GameTimer.timer >= round1Time) {
 			GameObject[] arr = new GameObject[]{normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,vanishedShipPF,vanishedShipPF,normalShipPF,attackerShipPF};

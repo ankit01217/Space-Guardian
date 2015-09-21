@@ -152,7 +152,7 @@ public class Ship : MonoBehaviour
 
 		float newPosY = Mathf.Sqrt (Mathf.Abs( distance * distance - newPosX * newPosX));
 		
-		GameObject newShip = (GameObject)Instantiate (this.gameObject, new Vector3 (newPosX, newPosY - 12.8f, 18f), Quaternion.identity);
+		GameObject newShip = (GameObject)Instantiate (this.gameObject, new Vector3 (newPosX, newPosY - 11.5f, 18f), Quaternion.identity);
 		newShip.GetComponent<AudioSource>().PlayOneShot(appaerSound);
 
 		Destroy (this.gameObject);
