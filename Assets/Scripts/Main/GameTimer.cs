@@ -64,6 +64,14 @@ public class GameTimer : MonoBehaviour
 			audioSource.PlayOneShot(fixedshield_voiceover);
 			startShieldFlickerAnimation();
 			timer = flickerPerc;
+
+
+			if (isEndPhaseEnabled == false) {
+				isEndPhaseEnabled = true;
+				spaceshipController.activateLastPhase();
+				
+			}
+
 		}
 
 		if (GameManager.isGameOver == false && isFlickering == false) {
@@ -72,11 +80,6 @@ public class GameTimer : MonoBehaviour
 			
 		}
 
-		if (timer >= endPhasePerc && isEndPhaseEnabled == false && isFlickerComplete == true) {
-			isEndPhaseEnabled = true;
-			spaceshipController.activateLastPhase();
-
-		}
 
 		if (timer == 100f && GameManager.isGameOver == false) {
 			//game ends here
@@ -85,13 +88,14 @@ public class GameTimer : MonoBehaviour
 			GameManager.isGameOver = true;
 			audioSource.PlayOneShot (shieldCompleteAudio);
 
+			shield.SetActive (true);
 			LeanTween.alpha (shield, 0, 0.01f);
 			//Color newColor = new Color (1, 0.90f, 91/255f, 0.35f);
 			//shieldRenderer.material.color = newColor;
 			LeanTween.alpha (shield, 0.3f, 0.5f).setEase(LeanTweenType.easeOutCirc);
 			audioSource.PlayOneShot(shieldCompleteAliensAudio);
 
-			Invoke("startTransition",1f);
+			Invoke("startTransition",5f);
 
 		}
 
