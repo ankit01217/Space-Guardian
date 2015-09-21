@@ -6,6 +6,7 @@ public class VideoPlayer : MonoBehaviour {
 
 	private MovieTexture movTerxture;
 	public Image fader;
+	public GameObject winText;
 
 	bool isVideoComplete = false;
 	// Use this for initialization
@@ -29,8 +30,11 @@ public class VideoPlayer : MonoBehaviour {
 			{
 				isVideoComplete = true;
 				fader.GetComponent<Animator>().SetTrigger("FadeIn");
-				Invoke("startInstructions",1.5f);
-
+				if(Application.loadedLevelName == "GameIntro") {
+					Invoke("startInstructions",1.5f);
+				} else if(Application.loadedLevelName == "GameEndSuccess") {
+					winText.SetActive(true);
+				}
 			}
 
 		}
