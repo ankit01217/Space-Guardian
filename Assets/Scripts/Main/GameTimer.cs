@@ -15,7 +15,7 @@ public class GameTimer : MonoBehaviour
 	public static float timer = 90f;
 	public float endPhasePerc = 90f;
 
-
+	bool isShieldMessageIsShown = false;
 	bool isEndPhaseEnabled = false;
 	MeshRenderer shieldRenderer;
 	AudioSource audioSource;
@@ -55,13 +55,17 @@ public class GameTimer : MonoBehaviour
 			timer = Mathf.Clamp (timer + Time.deltaTime * timerSpeed,0f,100f);
 		}
 
+		if (timer >= 80f && isShieldMessageIsShown == false) {
+			isShieldMessageIsShown = true;
+			messageText.text = "Woohoo! We have almost fixed the shield!";
+			audioSource.PlayOneShot(fixedshield_voiceover);
+			Invoke("clearMessage",fixedshield_voiceover.length);
+			
+		
+		}
 		if (timer >= 100f && isFlickerEnabled == false) {
 			isFlickerEnabled = true;
 			audioSource.PlayOneShot (shieldCompleteAudio);
-
-			//do flicker animation of shield and set timer to 80% after that
-			messageText.text = "Woohoo! We have almost fixed the shield!";
-			audioSource.PlayOneShot(fixedshield_voiceover);
 			startShieldFlickerAnimation();
 			timer = flickerPerc;
 
@@ -129,6 +133,8 @@ public class GameTimer : MonoBehaviour
 
 	void endShieldFlickerAnimation(){
 		messageText.text = "Oh no! Shield is still broken! Please give us more time...";
+		Invoke("clearMessage",flicker_voiceover.length);
+
 		audioSource.PlayOneShot(flicker_voiceover);
 		audioSource.PlayOneShot(shieldBrokenAliensAudio);
 
@@ -137,7 +143,7 @@ public class GameTimer : MonoBehaviour
 		LeanTween.alpha (shield, 0, 0.01f);
 		isFlickerComplete = true;
 		shield.SetActive (false);
-		Invoke ("clearMessage", 3f);
+
 	}
 
 	void clearMessage(){

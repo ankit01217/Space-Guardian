@@ -18,7 +18,6 @@ public class GameIntroController : MonoBehaviour {
 	void Start () {
 		audioSource = GetComponent<AudioSource> ();
 		audioSource.PlayOneShot (titleAudio);
-
 		Invoke("startFadingAnim",3f);
 
 	}
@@ -26,7 +25,11 @@ public class GameIntroController : MonoBehaviour {
 	void startFadingAnim(){
 		fader.GetComponent<Animator>().SetTrigger("FadeIn");
 		Invoke("startIntroVideo",1.5f);
+		//Invoke("startInstrutionScene",1.5f);
+	}
 
+	void startInstrutionScene(){
+		Application.LoadLevel("Instructions");
 	}
 
 	void startIntroVideo(){

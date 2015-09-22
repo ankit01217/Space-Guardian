@@ -44,8 +44,8 @@ public class SpaceshipController : MonoBehaviour
 		}
 
 		if (isLastPhaseActivated == true) {
-			shipSpawnInterval = Mathf.Clamp(shipSpawnInterval - shipSpawnIntervalSpeed*Time.deltaTime,0.8f,5f);	
-			spaceShipSpeedMultiplier = Mathf.Clamp(spaceShipSpeedMultiplier + spaceShipSpeedMultiplierSpeed * Time.deltaTime,1f,1.6f);
+			shipSpawnInterval = Mathf.Clamp(shipSpawnInterval - shipSpawnIntervalSpeed*Time.deltaTime,0.5f,5f);	
+			spaceShipSpeedMultiplier = Mathf.Clamp(spaceShipSpeedMultiplier + spaceShipSpeedMultiplierSpeed * Time.deltaTime,1f,4f);
 		}
 	}
 

@@ -15,7 +15,7 @@ public class MenuSound : MonoBehaviour {
 		audio = GetComponent<AudioSource>();
 		if (!AudioBegin) {
 			audio.Play ();
-			DontDestroyOnLoad (gameObject);
+			//DontDestroyOnLoad (gameObject);
 			AudioBegin = true;
 		} 
 	}
