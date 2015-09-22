@@ -36,7 +36,7 @@ public class Ship : MonoBehaviour
 	private bool isCreateLaserBeam=false;
 	//private bool isRotate=false;
 	private float rotateDegree=0;
-	public AudioClip appaerSound,disappearSound,laserSound,shipBlastAudio;
+	public AudioClip appaerSound,disappearSound,laserSound;
 
 	bool inScreen (Vector3 pos)
 	{
@@ -152,16 +152,18 @@ public class Ship : MonoBehaviour
 
 		float newPosY = Mathf.Sqrt (Mathf.Abs( distance * distance - newPosX * newPosX));
 		
-		GameObject newShip = (GameObject)Instantiate (this.gameObject, new Vector3 (newPosX, newPosY - 12.8f, 18f), Quaternion.identity);
+		GameObject newShip = (GameObject)Instantiate (this.gameObject, new Vector3 (newPosX, newPosY - 11.5f, 18f), Quaternion.identity);
 		newShip.GetComponent<AudioSource>().PlayOneShot(appaerSound);
 
 		Destroy (this.gameObject);
 	}
 	void startVanished(){
+		if (rend.isVisible) {
+			audioSource.PlayOneShot(disappearSound);
+			anim.SetTrigger ("vanish");
+			Invoke ("vanishing", 2f);
+		}
 
-		audioSource.PlayOneShot(disappearSound);
-		anim.SetTrigger ("vanish");
-		Invoke ("vanishing", 2f);
 		
 	}
 	void functioningSpaceShip ()
@@ -173,7 +175,7 @@ public class Ship : MonoBehaviour
 			break;
 		case "vanished":
 			
-			InvokeRepeating("startVanished",5f,3f);
+			InvokeRepeating("startVanished",5f,5f);
 			break;
 			
 		}
@@ -293,11 +295,11 @@ public class Ship : MonoBehaviour
 			spaceShipType = NORMAL;
 		} else if (spaceShipLife <= 0) {*/
 
-		audioSource.PlayOneShot(shipBlastAudio);
 		spaceshipController.onShipDestroyed ();
 		Destroy (gameObject);
 		//}
 	}
+
 	void hitPlanet ()
 	{
 		Debug.Log ("hit plqnet");
@@ -386,7 +388,7 @@ public class Ship : MonoBehaviour
 	void OnTriggerEnter (Collider other)
 	{
 		Debug.Log ("OnTriggerEnter");
-		if (GameManager.isGameOver && other.gameObject.tag == "Shield") {
+		if (other.gameObject.tag == "Shield") {
 			Instantiate(explosion, transform.position, Quaternion.identity);
 			Destroy(gameObject);
 		}

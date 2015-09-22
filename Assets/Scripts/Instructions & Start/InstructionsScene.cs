@@ -92,9 +92,9 @@ public class InstructionsScene : MonoBehaviour {
 
 		}
 
-		//Animator anim = fader.GetComponent<Animator> ();
-		//anim.SetTrigger ("FadeIn");
-		//yield return new WaitForSeconds (anim.GetCurrentAnimatorClipInfo(0).Length);
+		Animator anim = fader.GetComponent<Animator> ();
+		anim.SetTrigger ("FadeIn");
+		yield return new WaitForSeconds (anim.GetCurrentAnimatorClipInfo(0).Length);
 		Application.LoadLevel ("Start");
 	}
 	

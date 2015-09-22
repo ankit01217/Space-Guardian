@@ -10,9 +10,12 @@ public class ShipMovement : MonoBehaviour {
 	Vector3 botBound;
 	float speed = 3f;
 	Animator anim;
+	AudioSource audioSource;
 
 	// Use this for initialization
 	void Start () {
+
+		audioSource = GetComponent<AudioSource> ();
 		if (Application.loadedLevelName == "Start") {
 			cam = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<Camera> ();
 			topBound = new Vector3 (transform.position.x, cam.orthographicSize / 2, 0);
@@ -41,6 +44,8 @@ public class ShipMovement : MonoBehaviour {
 	}
 
 	void OnTriggerEnter (Collider other) {
+
+		audioSource.Play ();
 		Destroy (gameObject, 0.1f);
 
 		if (Application.loadedLevelName == "Start") {

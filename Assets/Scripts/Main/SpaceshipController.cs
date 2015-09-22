@@ -7,20 +7,21 @@ public class SpaceshipController : MonoBehaviour
 
 	public GameObject normalShipPF, vanishedShipPF, attackerShipPF;
 	public GameObject[] spipPrefabs;
-	public float shipSpawnInterval = 1f;
+	public float shipSpawnInterval;
 	public int round1Ship = 5;
 	public int round2Ship = 10;
-	public float round1Time = 30f;
-	public float round2Time = 70f;
+	public float round1Time;
+	public float round2Time;
 
-	public float shipSpawnIntervalSpeed = 0.0005f;
-	public float spaceSheepSpeedMultiplierSpeed = 0.0005f;
+	public float shipSpawnIntervalSpeed;
+	public float spaceShipSpeedMultiplierSpeed;
+	public AudioClip shipBlastAudio;
 
 	AudioSource audioSource;
 	public int totShipsDestroyed = 0;
 	public Transform[] spawnPoints;
 	bool isLastPhaseActivated = false;
-	float spaceSheepSpeedMultiplier = 1f;
+	float spaceShipSpeedMultiplier = 1f;
 	float spawnTimer = 0f;
 
 	// Use this for initialization
@@ -43,8 +44,8 @@ public class SpaceshipController : MonoBehaviour
 		}
 
 		if (isLastPhaseActivated == true) {
-			shipSpawnInterval = Mathf.Clamp(shipSpawnInterval - shipSpawnIntervalSpeed*Time.deltaTime,0.8f,1f);	
-			spaceSheepSpeedMultiplier = Mathf.Clamp(spaceSheepSpeedMultiplier + spaceSheepSpeedMultiplierSpeed * Time.deltaTime,1f,1.6f);
+			shipSpawnInterval = Mathf.Clamp(shipSpawnInterval - shipSpawnIntervalSpeed*Time.deltaTime,0.5f,5f);	
+			spaceShipSpeedMultiplier = Mathf.Clamp(spaceShipSpeedMultiplier + spaceShipSpeedMultiplierSpeed * Time.deltaTime,1f,4f);
 		}
 	}
 
@@ -52,6 +53,8 @@ public class SpaceshipController : MonoBehaviour
 	{
 		//curActiveShipCount = Mathf.Clamp (curActiveShipCount - 1, 0, maxActiveShipCount);
 		totShipsDestroyed++;
+		audioSource.PlayOneShot(shipBlastAudio);
+		
 		Debug.Log ("total ships destroyed :" + totShipsDestroyed);
 	}
 
@@ -67,28 +70,25 @@ public class SpaceshipController : MonoBehaviour
 		GameObject newShip;
 		Vector3 randShipPos = new Vector3 ();
 		Debug.Log ("totShipsDestroyed : " + totShipsDestroyed);
-		if (totShipsDestroyed < round1Ship && GameTimer.timer < round1Time) {
-			// if < %20 of ships then generate 
-			GameObject[] arr = new GameObject[]{normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF};
-			newShip = (GameObject)Instantiate (arr[Random.Range (0, arr.Length)], getRandPosition (), Quaternion.identity);
-			//arr [Random.Range (0, arr.Length)]
-		} else if ((totShipsDestroyed >= round1Ship && totShipsDestroyed < round2Ship) || GameTimer.timer >= round1Time) {
-			GameObject[] arr = new GameObject[]{normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,vanishedShipPF,vanishedShipPF,normalShipPF,attackerShipPF};
-			newShip = (GameObject)Instantiate (arr[Random.Range (0, arr.Length)], getRandPosition (), Quaternion.identity);
-				
-		}else if(totShipsDestroyed >= round2Ship || GameTimer.timer >= round2Time){
-			GameObject[] arr = new GameObject[]{normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,vanishedShipPF,vanishedShipPF,attackerShipPF,attackerShipPF};
+		if (GameTimer.timer > round1Time) {
+			GameObject[] arr = new GameObject[]{normalShipPF,normalShipPF,normalShipPF,normalShipPF,vanishedShipPF,attackerShipPF,vanishedShipPF,vanishedShipPF,vanishedShipPF,attackerShipPF};
 			newShip = (GameObject)Instantiate (arr [Random.Range (0, arr.Length)], getRandPosition (), Quaternion.identity);
+
 		}
-		else
+		else if (GameTimer.timer > round1Time) 
 		{
-			GameObject[] arr = new GameObject[]{normalShipPF};
-			newShip = (GameObject)Instantiate (arr [Random.Range (0, arr.Length)], getRandPosition (), Quaternion.identity);
+			GameObject[] arr = new GameObject[]{normalShipPF,normalShipPF,normalShipPF,normalShipPF,normalShipPF,vanishedShipPF,vanishedShipPF,attackerShipPF,normalShipPF,attackerShipPF};
+			newShip = (GameObject)Instantiate (arr[Random.Range (0, arr.Length)], getRandPosition (), Quaternion.identity);
+
+
+		}
+		else{
+			newShip = (GameObject)Instantiate (normalShipPF, getRandPosition (), Quaternion.identity);
 
 		}
 
 
-		newShip.GetComponent<Ship>().spaceShipSpeed *= spaceSheepSpeedMultiplier;
+		newShip.GetComponent<Ship>().spaceShipSpeed *= spaceShipSpeedMultiplier;
 		newShip.transform.parent = transform;
 
 			
