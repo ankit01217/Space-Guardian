@@ -44,6 +44,16 @@ public class InstructionsScene : MonoBehaviour {
 		    	topHand.GetComponent<HandMovement>().moveLeft && !objectsSpawned) {
 			SpawnObjects();
 		}
+
+		if(Input.GetKeyDown(KeyCode.C) == true){
+			Application.LoadLevel("GameIntro");
+		}
+		else if(Input.GetKeyDown(KeyCode.G) == true){
+			Application.LoadLevel("Main");
+		}
+		else if(Input.GetKeyDown(KeyCode.I) == true){
+			Application.LoadLevel("Instructions");
+		}
 	}
 
 

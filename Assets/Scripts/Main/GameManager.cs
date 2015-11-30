@@ -17,6 +17,16 @@ public class GameManager : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			ShowPointMan();
 		}
+
+		if(Input.GetKeyDown(KeyCode.C) == true){
+			Application.LoadLevel("GameIntro");
+		}
+		else if(Input.GetKeyDown(KeyCode.G) == true){
+			Application.LoadLevel("Main");
+		}
+		else if(Input.GetKeyDown(KeyCode.I) == true){
+			Application.LoadLevel("Instructions");
+		}
 	}
 
 	// toggle visibility for debugging
